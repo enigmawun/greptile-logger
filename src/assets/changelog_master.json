@@ -1,0 +1,131 @@
+{
+  "date": "2025-05-25",
+  "changelog": {
+    "Configuration Changes": [
+      {
+        "id": "config-1",
+        "type": "configuration",
+        "title": "Removed MODE Environment Variable",
+        "status": "complete",
+        "detailed_changes": [
+          ".env.development",
+          ".env.production"
+        ],
+        "motivation": "Simplify setup and remove redundant configuration.",
+        "files_involved": [
+          ".env.development",
+          ".env.production"
+        ],
+        "repos_involved": [
+          "main"
+        ],
+        "public_explanation": "The environment variables were streamlined for easier setup and to avoid confusion.",
+        "developer_explanation": "Vite already determines the mode automatically via the CLI. Explicit declaration is unnecessary.",
+        "contributors": []
+      }
+    ],
+    "Dependency and Tooling Updates": [
+      {
+        "id": "deps-1",
+        "type": "dependency",
+        "title": "Rolled Back Excalidraw NPM Package Version",
+        "status": "complete",
+        "detailed_changes": [
+          "package.json",
+          "yarn.lock"
+        ],
+        "motivation": "Ensure project stability after regressions in newer versions.",
+        "files_involved": [
+          "dev-docs/package.json",
+          "dev-docs/yarn.lock"
+        ],
+        "repos_involved": [
+          "main"
+        ],
+        "public_explanation": "A temporary rollback to a more stable version to ensure functionality.",
+        "developer_explanation": "The newer version introduced regressions or incompatibilities. Reverting ensures reliability.",
+        "contributors": []
+      },
+      {
+        "id": "deps-2",
+        "type": "tooling",
+        "title": "Added Yarnrc to Use Node Modules",
+        "status": "complete",
+        "detailed_changes": [
+          ".yarnrc.yml"
+        ],
+        "motivation": "Improve compatibility with existing tooling and editors.",
+        "files_involved": [
+          ".yarnrc.yml"
+        ],
+        "repos_involved": [
+          "main"
+        ],
+        "public_explanation": "Improves compatibility with tooling and IDEs.",
+        "developer_explanation": "Switches from Plug\u2019n\u2019Play (PnP) to node_modules resolution for better compatibility.",
+        "contributors": []
+      }
+    ],
+    "Removals and Deprecations": [
+      {
+        "id": "docs-1",
+        "type": "documentation",
+        "title": "Removed Internal AI Coding Guidelines",
+        "status": "complete",
+        "detailed_changes": [
+          ".github/copilot-instructions.md"
+        ],
+        "motivation": "Avoid confusion with outdated or unused documentation.",
+        "files_involved": [
+          ".github/copilot-instructions.md"
+        ],
+        "repos_involved": [
+          "main"
+        ],
+        "public_explanation": "Internal AI coding guidelines were removed from the repo to simplify contribution docs.",
+        "developer_explanation": "No longer reflects the dev team\u2019s workflow. Centralized documentation is preferred.",
+        "contributors": []
+      },
+      {
+        "id": "docs-2",
+        "type": "documentation",
+        "title": "Removed CLAUDE.md Developer Guide",
+        "status": "complete",
+        "detailed_changes": [
+          "CLAUDE.md"
+        ],
+        "motivation": "Deprecated internal documentation removed to reduce clutter.",
+        "files_involved": [
+          "CLAUDE.md"
+        ],
+        "repos_involved": [
+          "main"
+        ],
+        "public_explanation": "Deprecated internal documentation has been removed to reduce clutter.",
+        "developer_explanation": "Contents are outdated and replaced by dev-docs.",
+        "contributors": []
+      }
+    ],
+    "Documentation Updates": [
+      {
+        "id": "api-1",
+        "type": "breaking",
+        "title": "captureUpdate Renamed to commitToStore",
+        "status": "complete",
+        "detailed_changes": [
+          "api/props/excalidraw-api.mdx"
+        ],
+        "motivation": "Simplify API and reduce internal coupling.",
+        "files_involved": [
+          "dev-docs/docs/@excalidraw/excalidraw/api/props/excalidraw-api.mdx"
+        ],
+        "repos_involved": [
+          "main"
+        ],
+        "public_explanation": "The prop controlling history tracking has been renamed for clarity.",
+        "developer_explanation": "Replaced enum-based configuration with a simpler boolean flag.",
+        "contributors": []
+      }
+    ]
+  }
+}
