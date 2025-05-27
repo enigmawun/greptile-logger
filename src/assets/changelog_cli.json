@@ -1,0 +1,188 @@
+{
+  "date": "2025-06-15",
+  "version": "0.1.0",
+  "summary": "We're excited to introduce the first version of our new CLI tool! This release brings powerful automation to your changelog management workflow. You can now automatically generate beautiful changelogs from your GitHub commits, with support for AI-powered change descriptions coming soon. We've made it easy to get started with a simple command-line interface, and we're working on Docker support to make deployment even smoother. For teams working across multiple repositories, we're building support for unified changelog generation. We've also added better error handling and rate limit management to ensure a reliable experience. Whether you're a solo developer or part of a large team, this tool will help you maintain clear, consistent changelogs with minimal effort!",
+  "changelog": [
+    {
+      "id": "3ee64f28-4008-43b1-ae52-57d66438c7e2",
+      "type": "configuration",
+      "title": "Support build and runtime functionality for new CLI module",
+      "status": "complete",
+      "detailed_changes": [
+        "Added dependencies: Octokit, dotenv, commander",
+        "Setup workspace link in root `package.json` and `package-lock.json`",
+        "Created `tsconfig.base.json` and per-package `tsconfig.json`"
+      ],
+      "files": [
+        "package.json",
+        "package-lock.json",
+        "packages/cli/package.json",
+        "tsconfig.base.json",
+        "packages/cli/tsconfig.json"
+      ],
+      "repos": ["@change-logger/cli"],
+      "impact": "Developers need to run 'yarn install' to get the new dependencies. Users will need to install the CLI package to access new features.",
+      "public_explanation": "We're excited to announce that we've set up the foundation for a new command-line tool! This will make it easier to work with GitHub and manage your changes directly from your terminal. Stay tuned for more features coming soon!",
+      "developer_explanation": "This configuration includes TypeScript support and sets up the CLI as a workspace package with linked dependencies and build tooling.",
+      "contributors": ["@Avouchment"]
+    },
+    {
+      "id": "c3d4e5f6-a7b8-6c5d-0e1f-2a3b4c5d6e7f",
+      "type": "configuration",
+      "title": "Make the tool more accessible through containerization",
+      "status": "planned",
+      "detailed_changes": [
+        "Planning Dockerfile structure",
+        "Designing volume mappings",
+        "Configuring build pipeline"
+      ],
+      "files": ["Dockerfile", "docker-compose.yml", "scripts/docker-build.sh"],
+      "repos": ["@change-logger/docker"],
+      "impact": "No immediate action required. When released, users will need Docker installed to use the containerized version. Developers will need to update their deployment scripts to use the new Docker configuration.",
+      "public_explanation": "We're working on something exciting - Docker support! This will make it super easy to run our tools in any environment. No more worrying about dependencies or setup - just pull and run!",
+      "developer_explanation": "Creating Docker containers to simplify deployment and ensure consistent environments across different systems.",
+      "contributors": ["@DockerMaster", "@ContainerGuru"]
+    },
+    {
+      "id": "e9aa1b54-e2f1-460e-ba11-44e49bb75ed5",
+      "type": "deprecation",
+      "title": "Ensure consistency and support modular publishing",
+      "status": "complete",
+      "detailed_changes": [
+        "Removed legacy `cli` package from `node_modules`",
+        "Replaced with scoped `@change-logger/cli`",
+        "Updated package references in documentation"
+      ],
+      "files": ["package-lock.json"],
+      "repos": ["@change-logger/cli"],
+      "impact": "Developers need to update their package.json to use @change-logger/cli instead of the old package name. Users need to reinstall the CLI package.",
+      "public_explanation": "We've given our CLI tool a new home! It's now under a proper package name that makes it easier to find and use. This change helps us keep everything organized and makes it clearer which version you're using.",
+      "developer_explanation": "The old linked CLI directory was removed and replaced with a scoped package to support mono-repo publishing and dependency resolution.",
+      "contributors": ["@Avouchment"]
+    },
+    {
+      "id": "d4e5f6a7-b8c9-7d6e-1f2a-3b4c5d6e7f8a",
+      "type": "deprecation",
+      "title": "Prepare for API v2 release",
+      "status": "in progress",
+      "detailed_changes": [
+        "Adding deprecation warnings to old endpoints",
+        "Creating migration guides",
+        "Implementing graceful fallbacks"
+      ],
+      "files": [
+        "packages/api/src/legacy.ts",
+        "docs/migration.md",
+        "packages/api/src/middleware/deprecation.ts"
+      ],
+      "repos": ["@change-logger/api"],
+      "impact": "Developers using the API need to review the migration guide and plan to update their API calls to v2 endpoints. Users may see deprecation warnings in their applications.",
+      "public_explanation": "We're working on making our API even better! As part of this, we're gradually moving some older features to our new system. Don't worry - we'll make sure you have plenty of time to update your code, and we'll help you every step of the way!",
+      "developer_explanation": "Adding deprecation notices and migration paths for legacy API endpoints to ensure smooth transition to v2.",
+      "contributors": ["@APIMaster", "@LegacyExpert"]
+    },
+    {
+      "id": "e3ffd4fb-50c1-4080-9579-6b7cd49d4e8c",
+      "type": "feature",
+      "title": "Automate changelog creation and provide better project visibility",
+      "status": "complete",
+      "detailed_changes": [
+        "Implemented `generateChangeLog` and `analyze-changes` commands using Commander.js",
+        "Added utility functions for markdown generation, repo/branch introspection, and AI-prompt formatting",
+        "Configured `CHANGELOG.md` and `CODE_DIFFS.md` output from GitHub commit diffs"
+      ],
+      "files": [
+        "packages/cli/src/index.ts",
+        "packages/cli/src/commands/analyze-changes.ts",
+        "packages/cli/src/utils/git-utils.ts",
+        "packages/cli/src/utils/markdown.ts",
+        "packages/cli/src/utils/analyze-changes.ts"
+      ],
+      "repos": ["@change-logger/cli"],
+      "impact": "Developers can now use the new CLI commands to generate changelogs. Users will see more detailed and consistent changelog entries.",
+      "public_explanation": "We're thrilled to introduce our new command-line tool! Now you can automatically generate beautiful changelogs from your GitHub commits. No more manual updates - just run a command and get a professional changelog that keeps everyone in the loop about your project's progress!",
+      "developer_explanation": "The CLI compares the current branch to a stable branch, fetches commit diffs using Octokit, and generates Markdown changelogs and raw diffs. It includes subcommands and file-based prompts for AI change summaries.",
+      "contributors": ["@Avouchment"]
+    },
+    {
+      "id": "f8a7b6c5-d4e3-4f2a-9b1c-8d7e6f5a4b3c",
+      "type": "feature",
+      "title": "Reduce manual effort in writing change descriptions",
+      "status": "in progress",
+      "detailed_changes": [
+        "Integrating OpenAI API for automatic change descriptions",
+        "Adding context-aware prompt engineering",
+        "Implementing caching for API responses"
+      ],
+      "files": [
+        "packages/cli/src/utils/ai.ts",
+        "packages/cli/src/config/prompts.ts",
+        "packages/cli/src/utils/cache.ts"
+      ],
+      "repos": ["@change-logger/ai"],
+      "impact": "No immediate action required. When released, developers will need to configure their OpenAI API key to use the AI features. Users will see more detailed and consistent change descriptions.",
+      "public_explanation": "We're working on something exciting - AI-powered changelog summaries! Soon, our tool will automatically write clear, helpful descriptions of your changes. This means less time writing changelogs and more time coding!",
+      "developer_explanation": "Using OpenAI's API to generate human-like summaries of code changes, with caching to optimize API usage.",
+      "contributors": ["@SarahDev", "@AIConnoisseur"]
+    },
+    {
+      "id": "b2c3d4e5-f6a7-5b4c-9d8e-0f1a2b3c4d5e",
+      "type": "feature",
+      "title": "Support organizations with multiple repositories",
+      "status": "planned",
+      "detailed_changes": [
+        "Designing repository group management",
+        "Planning cross-repo change tracking",
+        "Architecting unified changelog generation"
+      ],
+      "files": [
+        "packages/cli/src/commands/group.ts",
+        "packages/cli/src/utils/repo-group.ts",
+        "packages/cli/src/config/groups.ts"
+      ],
+      "repos": ["@change-logger/core", "@change-logger/cli"],
+      "impact": "No immediate action required. When released, developers will need to configure repository groups. Users will be able to track changes across multiple repositories.",
+      "public_explanation": "We're planning something big - support for multiple repositories! Soon you'll be able to track changes across all your projects in one place. Perfect for teams working on multiple related projects!",
+      "developer_explanation": "Designing a system to track and manage changes across multiple repositories with unified changelog generation.",
+      "contributors": ["@Architect", "@MultiRepoGuru"]
+    },
+    {
+      "id": "3ecc31d3-0815-44f6-9efa-b2a8fae2268e",
+      "type": "bug fix",
+      "title": "Prevent silent errors and guide developers when GitHub access fails",
+      "status": "complete",
+      "detailed_changes": [
+        "Added `test-token` command to validate GitHub authentication and access",
+        "Improved console error messages for repo/branch failures",
+        "Enhanced error reporting with actionable suggestions"
+      ],
+      "files": ["packages/cli/src/index.ts"],
+      "repos": ["@change-logger/cli"],
+      "impact": "Developers should run the test-token command to verify their GitHub access. Users will see more helpful error messages when something goes wrong.",
+      "public_explanation": "We've made our CLI tool more user-friendly! Now it gives clear, helpful messages when something goes wrong, and includes a handy tool to check your GitHub access. No more guessing what went wrong!",
+      "developer_explanation": "We handle CLI errors with clear logs and exit codes. The new `test-token` command validates token scope and access to repos/orgs using Octokit.",
+      "contributors": ["@Avouchment"]
+    },
+    {
+      "id": "a1b2c3d4-e5f6-4a3b-8c7d-9e0f1a2b3c4d",
+      "type": "bug fix",
+      "title": "Handle GitHub API rate limits more gracefully",
+      "status": "in progress",
+      "detailed_changes": [
+        "Implementing exponential backoff for rate limits",
+        "Adding rate limit monitoring dashboard",
+        "Improving error handling for API failures"
+      ],
+      "files": [
+        "packages/cli/src/utils/github.ts",
+        "packages/cli/src/components/rate-limit.tsx",
+        "packages/cli/src/utils/retry.ts"
+      ],
+      "repos": ["@change-logger/cli", "@change-logger/web"],
+      "impact": "No immediate action required. When released, developers will have access to a rate limit dashboard. Users will experience fewer interruptions due to rate limits.",
+      "public_explanation": "We're making our tool more reliable! Soon it will handle GitHub's rate limits much better, so you can keep working without interruptions. We're also adding a dashboard so you can see exactly what's happening with your API usage.",
+      "developer_explanation": "Adding sophisticated retry logic and monitoring to handle GitHub API rate limits more effectively.",
+      "contributors": ["@GitHubExpert", "@RateLimitMaster"]
+    }
+  ]
+}

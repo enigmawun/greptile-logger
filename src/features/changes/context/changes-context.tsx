@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useDialogState from '../../../hooks/use-dialog-state';
 import { Change } from '../data/schema';
-
+import { useChanges } from '../hooks/use-changes';
 type ChangesDialogType = 'feature' | 'bug' | 'deprecation' | 'task';
 
 interface ChangesContextType {
@@ -9,6 +9,9 @@ interface ChangesContextType {
   setOpen: (str: ChangesDialogType | null) => void;
   currentRow: Change | null;
   setCurrentRow: React.Dispatch<React.SetStateAction<Change | null>>;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  filteredChanges: Change[];
 }
 
 const ChangesContext = React.createContext<ChangesContextType | null>(null);
@@ -18,12 +21,30 @@ interface Props {
 }
 
 export default function ChangeProvider({ children }: Props) {
-  const [open, setOpen] = useDialogState<ChangesDialogType>(null);
-  const [currentRow, setCurrentRow] = useState<Change | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // You will need to get the full list of changes, e.g. from props or a data hook
+  const { data: ChangelogData } = useChanges();
+  const allChanges = data || [];
+  const filteredChanges = allChanges.filter(
+    (change) =>
+      change.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      change.detailed_changes.some((detail) =>
+        detail.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+  );
 
   return (
     <ChangesContext.Provider
-      value={{ open, setOpen, currentRow, setCurrentRow }}
+      value={{
+        open,
+        setOpen,
+        currentRow,
+        setCurrentRow,
+        searchQuery,
+        setSearchQuery,
+        filteredChanges,
+      }}
     >
       {children}
     </ChangesContext.Provider>

@@ -1,35 +1,44 @@
 import { z } from 'zod';
 
-const changeCategorySchema = z.union([
+const changeTypeSchema = z.union([
+  z.literal('configuration'),
+  z.literal('dependency'),
+  z.literal('tooling'),
+  z.literal('breaking'),
   z.literal('feature'),
   z.literal('bug fix'),
-  z.literal('configuration'),
   z.literal('deprecation'),
-  z.literal('documentation'),
 ]);
-export type changeCategory = z.infer<typeof changeCategorySchema>;
+export type ChangeType = z.infer<typeof changeTypeSchema>;
 
 const changeStatusSchema = z.union([
   z.literal('complete'),
   z.literal('in progress'),
   z.literal('planned'),
 ]);
-export type changeStatus = z.infer<typeof changeStatusSchema>;
+export type ChangeStatus = z.infer<typeof changeStatusSchema>;
+
 const changeSchema = z.object({
-  id: z.string().uuid().optional(),
-  type: changeCategorySchema,
-  version: z.string(),
+  id: z.string(),
+  type: changeTypeSchema,
   title: z.string(),
-  date: z.date().optional(),
   status: changeStatusSchema,
-  detailed_changes: z.array(z.string()).optional(),
-  motivation: z.string().optional(),
-  files: z.array(z.string()).optional(),
-  repos: z.array(z.string()).optional(),
-  public_explanation: z.string().optional(),
-  developer_explanation: z.string().optional(),
-  contributors: z.array(z.string()).optional(),
+  detailed_changes: z.array(z.string()),
+  files: z.array(z.string()),
+  repos: z.array(z.string()),
+  impact: z.string(),
+  public_explanation: z.string(),
+  developer_explanation: z.string(),
+  contributors: z.array(z.string()),
 });
 export type Change = z.infer<typeof changeSchema>;
+
+const changelogSchema = z.object({
+  date: z.string(),
+  summary: z.string(),
+  version: z.string(),
+  changelog: z.array(changeSchema),
+});
+export type Changelog = z.infer<typeof changelogSchema>;
 
 export const changeListSchema = z.array(changeSchema);
