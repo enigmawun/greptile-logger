@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  IconArrowRightDashed,
-  IconDeviceLaptop,
-  IconMoon,
-  IconSun,
-} from '@tabler/icons-react';
+import { IconArrowRightDashed } from '@tabler/icons-react';
 import { useSearch } from '@/context/search-context';
 import { sidebarData } from '@/components/layout/data/searchdata';
 import {
@@ -15,9 +10,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from '@/components/ui/command';
-import type { SidebarData } from '@/components/layout/types';
 
 import { ScrollArea } from './ui/scroll-area';
 

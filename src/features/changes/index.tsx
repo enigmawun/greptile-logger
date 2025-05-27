@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-import { useEffect, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -7,7 +6,6 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { ChangeSummary } from './components/change-desc';
-import Summary from '../summary';
 import { Change } from './data/schema';
 
 interface ChangesProps extends PropsWithChildren {

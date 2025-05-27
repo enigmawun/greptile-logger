@@ -2,26 +2,31 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 
 import './App.css';
-import { Main } from '@/components/layout/main';
 import { SearchProvider } from '@/context/search-context';
 import { SearchChanges } from '@/features/changes/components/search';
 import { Header } from '@/components/layout/header';
 import { Breadcrumb } from '@/components/ui/breadcrumb';
-import { SelectDropdown } from '@/components/select-dropdown';
 import Changes from './features/changes';
 import Summary from './features/summary';
 import type { VersionLog } from '@/types/changelog';
-import mockdata from '@/assets/changelog_master.json';
-import mockdata2 from '@/assets/changelog_cli.json';
+import mockdata from '/CHANGE_ANALYSIS.md?raw';
 
 // Transform the mock data into the expected Changelog format
 const transformMockData = (): VersionLog[] => {
-  // Transform each change to match our schema
+  // Extract JSON from markdown content
+  const jsonMatch = mockdata.match(/```json\n([\s\S]*?)\n```/);
+  if (!jsonMatch) {
+    console.error('No JSON found in markdown file. Content:', mockdata);
+    return [];
+  }
 
-  const combinedChanges = [JSON.parse(JSON.stringify(mockdata))];
-  combinedChanges.push(JSON.parse(JSON.stringify(mockdata2)));
-  console.log(combinedChanges);
-  return combinedChanges;
+  try {
+    const jsonData = JSON.parse(jsonMatch[1].trim());
+    return [jsonData];
+  } catch (error) {
+    console.error('Error parsing JSON from markdown:', error);
+    return [];
+  }
 };
 
 function App() {
