@@ -22,7 +22,7 @@ export default function Changes({ children, changelog, date }: ChangesProps) {
         </h2>
         {children}
       </div>
-      <div className='flex flex-col flex-start gap-y-4 p-4 outline-none text-left rounded-md'>
+      <div className='flex flex-col flex-start gap-y-2 p-2 md:gap-y-4 md:p-4 outline-none text-left rounded-md'>
         {changelog.map((change) => (
           <Card key={change.id}>
             <CardHeader>

@@ -54,8 +54,8 @@ export const Header = ({
 
       <header
         className={cn(
-          'bg-background flex h-16 items-center gap-3 p-4 sm:gap-4',
-          fixed && 'header-fixed peer/header fixed z-50 w-[inherit] rounded-md',
+          'bg-background flex h-16 items-center gap-3 m-4 p-4 sm:gap-4',
+          fixed && 'peer/header w-[inherit] rounded-md',
           offset > 10 && fixed ? 'shadow-sm' : 'shadow-none',
           className
         )}
@@ -63,7 +63,7 @@ export const Header = ({
       >
         <h3 className='text-4xl font-bold'>Change Log</h3>
         <Separator orientation='vertical' className='h-6' />
-        <span className='text-muted-foreground'>
+        <span className='text-muted-foreground hidden sm:block'>
           Read about our latest updates and features.
         </span>
       </header>

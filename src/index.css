@@ -71,6 +71,31 @@ h1 {
   line-height: 1.1;
 }
 
+/* Add media query for small viewports */
+@media (max-width: 400px) {
+  :root {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2.4em;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  h3 {
+    font-size: 1.4em;
+  }
+
+  p,
+  span,
+  a {
+    font-size: 0.9em;
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
