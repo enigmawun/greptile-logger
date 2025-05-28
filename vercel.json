@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm install --platform=linux --arch=x64 && npm run build",
+  "buildCommand": "npm_config_platform=linux npm_config_arch=x64 npm_config_libc=glibc npm install && npm run build",
   "framework": "vite",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "installCommand": "npm install --platform=linux --arch=x64"
 }
