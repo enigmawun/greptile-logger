@@ -1,3903 +1,6049 @@
-# Code Differences between main and backend
+# Code Differences between main and tailwind
 
 ## Summary
-- Total files changed: 57
-- Total additions: 13892
-- Total deletions: 80
+
+- Total files changed: 27
+- Total additions: 5017
+- Total deletions: 132
 
 ## File Changes
 
-  File: .env
-  Status: added
-  Additions: 3
-  Deletions: 0
-  Changes: 3
-  
-Patch:
-@@ -0,0 +1,3 @@
-+PORT=3000
-+OPENAI_API_KEY=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
-+GITHUB_TOKEN=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
-\ No newline at end of file
-  ---
-  File: CHANGELOG.md
-  Status: added
-  Additions: 26
-  Deletions: 0
-  Changes: 26
-  
+File: CHANGELOG.md
+Status: added
+Additions: 26
+Deletions: 0
+Changes: 26
+
 Patch:
 @@ -0,0 +1,26 @@
 +# Changelog
-+
-+## Changes since last merged PR (#0)
-+
-+- Last Merged PR: #0 (a6a0603)
-+- Current Branch: backend (a43c9d8)
-+
-+### Other Changes
-+
-+- deprecating table but save old files (d471e25)
-+- added api (a43c9d8)
-+
-+## Detailed Commit List
-+
-+### deprecating table but save old files
-+
-+- **Author:** Avouchment
-+- **Date:** 5/25/2025, 5:44:33 PM
-+- **Commit:** [d471e25](https://github.com/enigmawun/greptile-logger/commit/d471e253b1b6db89593d8b05203d0439665d346b)
-+
-+### added api
-+
-+- **Author:** Avouchment
-+- **Date:** 5/27/2025, 12:05:52 PM
-+- **Commit:** [a43c9d8](https://github.com/enigmawun/greptile-logger/commit/a43c9d870ef91e196a038462b8c72757355e94a5)
-+
-  ---
+
+- +## Changes since last merged PR (#0)
+- +- Last Merged PR: #0 (2d7716b)
+  +- Current Branch: feature (4d962ef)
+- +### Other Changes
+- +- cli updates (8b9a913)
+  +- more error handling (4d962ef)
+- +## Detailed Commit List
+- +### cli updates
+- +- **Author:** Avouchment
+  +- **Date:** 5/17/2025, 3:54:56 PM
+  +- **Commit:** [8b9a913](https://github.com/enigmawun/change-logger/commit/8b9a913a73121dde29ba1f30b1c24900be6fc354)
+- +### more error handling
+- +- **Author:** Avouchment
+  +- **Date:** 5/17/2025, 4:17:23 PM
+  +- **Commit:** [4d962ef](https://github.com/enigmawun/change-logger/commit/4d962ef65fd3ea063c3078f7b956bbab63c46015)
+- ***
   File: CHANGE_ANALYSIS.md
   Status: added
-  Additions: 112
+  Additions: 1336
   Deletions: 0
-  Changes: 112
-  
+  Changes: 1336
+
 Patch:
-@@ -0,0 +1,112 @@
-+Here's the analysis of the code changes you uploaded, organized into a structured change log:
-+
-+```json
-+{
-+  "date": "2025-06-15",
-+  "summary": "This release brings significant improvements, including a new CLI tool for changelog management, preparation for an upcoming API version, enhanced project visibility, and various stability improvements. With these updates, users can expect a smoother experience while developers gain more powerful tools for managing changes.",
-+  "version": "0.1.0",
-+  "changelog": [
-+    {
-+      "id": "cli-1",
-+      "type": "feature",
-+      "title": "Introduce a new Command-Line Interface (CLI) for changelog generation",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Implemented `generateChangeLog` and `analyze-changes` commands using Commander.js",
-+        "Added utility functions for markdown generation, repo/branch introspection, and AI-prompt formatting",
-+        "Configured output of `CHANGELOG.md` and `CODE_DIFFS.md` from GitHub commit diffs"
-+      ],
-+      "files": [
-+        "packages/cli/src/index.ts",
-+        "packages/cli/src/commands/analyze-changes.ts",
-+        "packages/cli/src/utils/git-utils.ts",
-+        "packages/cli/src/utils/markdown.ts",
-+        "packages/cli/src/utils/analyze-changes.ts"
-+      ],
-+      "repos": "@change-logger/cli",
-+      "impact": "Developers can now use the new CLI commands to generate changelogs. Users will see more detailed and consistent changelog entries.",
-+      "public_explanation": "We're thrilled to introduce our new command-line tool! Now you can automatically generate beautiful changelogs from your GitHub commits. No more manual updates - just run a command and get a professional changelog that keeps everyone in the loop about your project's progress!",
-+      "developer_explanation": "The CLI compares the current branch to a stable branch, fetches commit diffs using Octokit, and generates Markdown changelogs and raw diffs. It includes subcommands and file-based prompts for AI change summaries.",
-+      "contributors": ["@Avouchment"]
-+    },
-+    {
-+      "id": "api-1",
-+      "type": "deprecation",
-+      "title": "Prepare for API v2 release",
-+      "status": "in progress",
-+      "detailed_changes": [
-+        "Adding deprecation warnings to old endpoints",
-+        "Creating migration guides",
-+        "Implementing graceful fallbacks"
-+      ],
-+      "files": [
-+        "packages/api/src/middleware/deprecation.ts",
-+        "packages/api/src/legacy.ts"
-+      ],
-+      "repos": "@change-logger/api",
-+      "impact": "Developers using the API need to review the migration guide and plan to update their API calls to v2 endpoints. Users may see deprecation warnings in their applications.",
-+      "public_explanation": "We're working on making our API even better! As part of this, we're gradually moving some older features to our new system. Don't worry - we'll make sure you have plenty of time to update your code, and we'll help you every step of the way!",
-+      "developer_explanation": "Adding deprecation notices and migration paths for legacy API endpoints to ensure smooth transition to v2.",
-+      "contributors": ["@APIMaster", "@LegacyExpert"]
-+    },
-+    {
-+      "id": "config-1",
-+      "type": "configuration",
-+      "title": "Simplify setup and remove redundant configuration.",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Removed explicit MODE declarations from environment files",
-+        "Implemented Vite's automatic mode detection",
-+        "Updated environment variable references to use import.meta.env"
-+      ],
-+      "files": [".env.development", ".env.production"],
-+      "repos": "main",
-+      "impact": "Developers need to update any custom build scripts that directly reference process.env.MODE to use import.meta.env.MODE instead. No action needed for users.",
-+      "public_explanation": "We've made it easier to run the app in different environments! Now the app automatically knows whether it's running in development or production mode, so you don't have to worry about setting it up manually.",
-+      "developer_explanation": "This change removes MODE declarations because Vite now determines the mode automatically. If you're relying on `process.env.MODE` directly in your own builds or scripts, you should replace it with `import.meta.env.MODE` or use Vite's built-in mode support.",
-+      "contributors": ["@ViteExpert", "@ConfigMaster"]
-+    },
-+    {
-+      "id": "deps-1",
-+      "type": "dependency",
-+      "title": "Ensure project stability after regressions in newer versions.",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Reverted to Excalidraw version 0.17.6 for stability",
-+        "Updated package.json and yarn.lock files",
-+        "Removed dependencies on newer version features"
-+      ],
-+      "files": ["dev-docs/package.json", "dev-docs/yarn.lock"],
-+      "repos": "main",
-+      "impact": "Developers using features from Excalidraw 0.18.0 will need to modify their code to use 0.17.6 compatible features. Users may notice some newer drawing features are temporarily unavailable.",
-+      "public_explanation": "We've made a small adjustment to ensure everything runs smoothly! We've temporarily switched back to a more stable version of our drawing tool. While this means you won't see the very latest features right now, it ensures a more reliable experience for everyone.",
-+      "developer_explanation": "Projects depending on new features or fixes in `0.18.0` will no longer have access to them. If you were using a newly added prop or behavior from `0.18.0`, you'll need to adjust to what's available in `0.17.6`. This rollback ensures stability.",
-+      "contributors": ["@ExcalidrawMaintainer", "@DependencyExpert"]
-+    }
-+  ],
-+  "files": [
-+    "packages/cli/src/index.ts",
-+    "packages/cli/src/commands/analyze-changes.ts",
-+    "packages/cli/src/utils/git-utils.ts",
-+    "packages/cli/src/utils/markdown.ts",
-+    "packages/api/src/middleware/deprecation.ts",
-+    "packages/api/src/legacy.ts",
-+    ".env.development",
-+    ".env.production",
-+    "dev-docs/package.json",
-+    "dev-docs/yarn.lock"
-+  ]
-+}
-+```
-+
-+### Explanation:
-+
-+1. **New Features**: The introduction of a CLI tool is aimed at enhancing the developer experience by automating changelog generation. A public-facing explanation highlights its user-friendly nature, while the developer note discusses the underlying function and utility of the tool.
-+
-+2. **Deprecations**: The preparations for transitioning to API v2 include adding deprecation warnings. This change ensures that users are informed well in advance of upcoming breaking changes.
-+
-+3. **Configuration Changes**: Simplifying the configuration process makes it easier for developers to deploy applications in different environments, reducing the likelihood of errors due to misconfigurations.
-+
-+4. **Dependency Management**: The rollback to a stable version of a dependency guarantees greater reliability for users, although it may restrict access to newer features temporarily.
-+
-+Each change is categorized by type for easy reference, detailing its impact both on users and developers to facilitate smoother transitions and updates.
-  ---
+@@ -0,0 +1,1336 @@
++# Change Analysis Report
+
+- +## Overview
+  +This report provides an analysis of the code changes between versions.
+- +## AI Analysis +`
++[AI Analysis will be inserted here]
++`
+- +## Original Changes
+  +For reference, here are the original code changes:
+- +# Code Differences between main and feature
+- +## Summary
+  +- Total files changed: 14
+  +- Total additions: 947
+  +- Total deletions: 44
+- +## File Changes
+-
+- File: README.md
+- Status: modified
+- Additions: 100
+- Deletions: 0
+- Changes: 100
+- +Patch:
+  +@@ -170,3 +170,103 @@ This project uses:
+- ## License
+-
+- [Your chosen license]
+  ++
+  ++# Change Logger CLI
+  ++
+  ++A CLI tool for generating changelogs by comparing commits between branches in your GitHub repository.
+  ++
+  ++## Installation
+  ++
+  ++`bash
+++npm install -g change-logger
+++`
+  ++
+  ++## Configuration
+  ++
+  ++1. Set up your GitHub token:
+  ++
+  ++`bash
+++export GITHUB_TOKEN=your_github_token
+++`
+  ++
+  ++2. (Optional) Create a config file at `~/.change-logger.json`:
+  ++
+  ++`json
+++{
+++  "defaultRepo": "owner/repo",
+++  "githubToken": "your_github_token",
+++  "outputPath": "CHANGELOG.md"
+++}
+++`
+  ++
+  ++## Usage
+  ++
+  ++### Generate Changelog
+  ++
+  ++`bash
+++change-logger generateChangeLog [options]
+++`
+  ++
+  ++Options:
+  ++
+  ++- `-r, --repo <repo>`: GitHub repository (owner/repo)
+  ++- `-b, --base <branch>`: Base branch to compare against (default: 'main')
+  ++- `-o, --output <file>`: Output file path (default: 'CHANGELOG.md')
+  ++- `-s, --stable <branch>`: Stable branch to compare against (default: 'main')
+  ++
+  ++Example:
+  ++
+  ++`bash
+++change-logger generateChangeLog -r octocat/Hello-World -b feature-branch -s main
+++`
+  ++
+  ++### Set Up Git Hooks
+  ++
+  ++To automatically generate changelogs on commit:
+  ++
+  ++`bash
+++change-logger setup-hooks
+++`
+  ++
+  ++## Output Format
+  ++
+  ++The generated changelog includes:
+  ++
+  ++- Comparison between stable and current branches
+  ++- Categorized changes (breaking, features, fixes, other)
+  ++- Detailed commit information
+  ++- Links to GitHub commits
+  ++
+  ++Example output:
+  ++
+  ++`markdown
+++# Changelog
+++
+++## Changes between main and feature-branch
+++
+++- Stable Branch: main (a1b2c3d)
+++- Current Branch: feature-branch (e4f5g6h)
+++
+++### New Features
+++
+++- Added new authentication system (a1b2c3d)
+++
+++### Bug Fixes
+++
+++- Fixed login page crash (e4f5g6h)
+++
+++## Detailed Commit List
+++
+++...
+++`
+  ++
+  ++## Requirements
+  ++
+  ++- Node.js 14+
+  ++- GitHub repository
+  ++- GitHub personal access token
+  ++
+  ++## License
+  ++
+  ++MIT
+  ++TESTING SOME CHANGES
+- ***
+- File: package-lock.json
+- Status: modified
+- Additions: 314
+- Deletions: 8
+- Changes: 322
+- +Patch:
+  +@@ -10,6 +10,7 @@
+-         "packages/*"
+-       ],
+-       "devDependencies": {
+  ++ "@change-logger/cli": "workspace:\*",
+-         "@types/node": "^22.15.18",
+-         "prettier": "^3.5.3",
+-         "turbo": "^2.5.3",
+  +@@ -68,6 +69,10 @@
+-         "node": ">=6.9.0"
+-       }
+-     },
+  ++ "node_modules/@change-logger/cli": {
+  ++ "resolved": "packages/cli",
+  ++ "link": true
+  ++ },
+-     "node_modules/@cspotcode/source-map-support": {
+-       "version": "0.8.1",
+-       "resolved": "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz",
+  +@@ -946,6 +951,177 @@
+-         "node": ">= 8"
+-       }
+-     },
+  ++ "node_modules/@octokit/auth-token": {
+  ++ "version": "3.0.4",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/auth-token/-/auth-token-3.0.4.tgz",
+  ++ "integrity": "sha512-TWFX7cZF2LXoCvdmJWY7XVPi74aSY0+FfBZNSXEXFkMpjcqsQwDSYVv5FhRFaI0V1ECnwbz4j59T/G+rXNWaIQ==",
+  ++ "license": "MIT",
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/core": {
+  ++ "version": "4.2.4",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/core/-/core-4.2.4.tgz",
+  ++ "integrity": "sha512-rYKilwgzQ7/imScn3M9/pFfUf4I1AZEH3KhyJmtPdE2zfaXAn2mFfUy4FbKewzc2We5y/LlKLj36fWJLKC2SIQ==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/auth-token": "^3.0.0",
+  ++ "@octokit/graphql": "^5.0.0",
+  ++ "@octokit/request": "^6.0.0",
+  ++ "@octokit/request-error": "^3.0.0",
+  ++ "@octokit/types": "^9.0.0",
+  ++ "before-after-hook": "^2.2.0",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/endpoint": {
+  ++ "version": "7.0.6",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/endpoint/-/endpoint-7.0.6.tgz",
+  ++ "integrity": "sha512-5L4fseVRUsDFGR00tMWD/Trdeeihn999rTMGRMC1G/Ldi1uWlWJzI98H4Iak5DB/RVvQuyMYKqSK/R6mbSOQyg==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/types": "^9.0.0",
+  ++ "is-plain-object": "^5.0.0",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/graphql": {
+  ++ "version": "5.0.6",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/graphql/-/graphql-5.0.6.tgz",
+  ++ "integrity": "sha512-Fxyxdy/JH0MnIB5h+UQ3yCoh1FG4kWXfFKkpWqjZHw/p+Kc8Y44Hu/kCgNBT6nU1shNumEchmW/sUO1JuQnPcw==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/request": "^6.0.0",
+  ++ "@octokit/types": "^9.0.0",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/openapi-types": {
+  ++ "version": "18.1.1",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-18.1.1.tgz",
+  ++ "integrity": "sha512-VRaeH8nCDtF5aXWnjPuEMIYf1itK/s3JYyJcWFJT8X9pSNnBtriDf7wlEWsGuhPLl4QIH4xM8fqTXDwJ3Mu6sw==",
+  ++ "license": "MIT"
+  ++ },
+  ++ "node_modules/@octokit/plugin-paginate-rest": {
+  ++ "version": "6.1.2",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-6.1.2.tgz",
+  ++ "integrity": "sha512-qhrmtQeHU/IivxucOV1bbI/xZyC/iOBhclokv7Sut5vnejAIAEXVcGQeRpQlU39E0WwK9lNvJHphHri/DB6lbQ==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/tsconfig": "^1.0.2",
+  ++ "@octokit/types": "^9.2.3"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ },
+  ++ "peerDependencies": {
+  ++ "@octokit/core": ">=4"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/plugin-request-log": {
+  ++ "version": "1.0.4",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz",
+  ++ "integrity": "sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==",
+  ++ "license": "MIT",
+  ++ "peerDependencies": {
+  ++ "@octokit/core": ">=3"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/plugin-rest-endpoint-methods": {
+  ++ "version": "7.2.3",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-7.2.3.tgz",
+  ++ "integrity": "sha512-I5Gml6kTAkzVlN7KCtjOM+Ruwe/rQppp0QU372K1GP7kNOYEKe8Xn5BW4sE62JAHdwpq95OQK/qGNyKQMUzVgA==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/types": "^10.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ },
+  ++ "peerDependencies": {
+  ++ "@octokit/core": ">=3"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/plugin-rest-endpoint-methods/node_modules/@octokit/types": {
+  ++ "version": "10.0.0",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/types/-/types-10.0.0.tgz",
+  ++ "integrity": "sha512-Vm8IddVmhCgU1fxC1eyinpwqzXPEYu0NrYzD3YZjlGjyftdLBTeqNblRC0jmJmgxbJIsQlyogVeGnrNaaMVzIg==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/openapi-types": "^18.0.0"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/request": {
+  ++ "version": "6.2.8",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/request/-/request-6.2.8.tgz",
+  ++ "integrity": "sha512-ow4+pkVQ+6XVVsekSYBzJC0VTVvh/FCTUUgTsboGq+DTeWdyIFV8WSCdo0RIxk6wSkBTHqIK1mYuY7nOBXOchw==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/endpoint": "^7.0.0",
+  ++ "@octokit/request-error": "^3.0.0",
+  ++ "@octokit/types": "^9.0.0",
+  ++ "is-plain-object": "^5.0.0",
+  ++ "node-fetch": "^2.6.7",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/request-error": {
+  ++ "version": "3.0.3",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/request-error/-/request-error-3.0.3.tgz",
+  ++ "integrity": "sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/types": "^9.0.0",
+  ++ "deprecation": "^2.0.0",
+  ++ "once": "^1.4.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/rest": {
+  ++ "version": "19.0.13",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/rest/-/rest-19.0.13.tgz",
+  ++ "integrity": "sha512-/EzVox5V9gYGdbAI+ovYj3nXQT1TtTHRT+0eZPcuC05UFSWO3mdO9UY1C0i2eLF9Un1ONJkAk+IEtYGAC+TahA==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/core": "^4.2.1",
+  ++ "@octokit/plugin-paginate-rest": "^6.1.2",
+  ++ "@octokit/plugin-request-log": "^1.0.4",
+  ++ "@octokit/plugin-rest-endpoint-methods": "^7.1.2"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/tsconfig": {
+  ++ "version": "1.0.2",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/tsconfig/-/tsconfig-1.0.2.tgz",
+  ++ "integrity": "sha512-I0vDR0rdtP8p2lGMzvsJzbhdOWy405HcGovrspJ8RRibHnyRgggUSNO5AIox5LmqiwmatHKYsvj6VGFHkqS7lA==",
+  ++ "license": "MIT"
+  ++ },
+  ++ "node_modules/@octokit/types": {
+  ++ "version": "9.3.2",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/types/-/types-9.3.2.tgz",
+  ++ "integrity": "sha512-D4iHGTdAnEEVsB8fl95m1hiz7D5YiRdQ9b/OEb3BYRVwbLsGHcRVPz+u+BgRLNk0Q0/4iZCBqDN96j2XNxfXrA==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/openapi-types": "^18.0.0"
+  ++ }
+  ++ },
+-     "node_modules/@repo/eslint-config": {
+-       "resolved": "packages/eslint-config",
+-       "link": true
+  +@@ -1740,6 +1916,12 @@
+-         "node": ">=10.0.0"
+-       }
+-     },
+  ++ "node_modules/before-after-hook": {
+  ++ "version": "2.2.3",
+  ++ "resolved": "https://registry.npmjs.org/before-after-hook/-/before-after-hook-2.2.3.tgz",
+  ++ "integrity": "sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==",
+  ++ "license": "Apache-2.0"
+  ++ },
+-     "node_modules/bl": {
+-       "version": "4.1.0",
+-       "resolved": "https://registry.npmjs.org/bl/-/bl-4.1.0.tgz",
+  +@@ -1963,10 +2145,6 @@
+-         "node": ">=6"
+-       }
+-     },
+  +- "node_modules/cli": {
+  +- "resolved": "packages/cli",
+  +- "link": true
+  +- },
+-     "node_modules/cli-cursor": {
+-       "version": "3.1.0",
+-       "resolved": "https://registry.npmjs.org/cli-cursor/-/cli-cursor-3.1.0.tgz",
+  +@@ -2316,6 +2494,12 @@
+-         "node": ">=8"
+-       }
+-     },
+  ++ "node_modules/deprecation": {
+  ++ "version": "2.3.1",
+  ++ "resolved": "https://registry.npmjs.org/deprecation/-/deprecation-2.3.1.tgz",
+  ++ "integrity": "sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==",
+  ++ "license": "ISC"
+  ++ },
+-     "node_modules/detect-libc": {
+-       "version": "2.0.4",
+-       "resolved": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.4.tgz",
+  +@@ -2380,7 +2564,6 @@
+-       "version": "16.0.3",
+-       "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz",
+-       "integrity": "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==",
+  +- "dev": true,
+-       "license": "BSD-2-Clause",
+-       "engines": {
+-         "node": ">=12"
+  +@@ -4093,6 +4276,15 @@
+-         "node": ">=8"
+-       }
+-     },
+  ++ "node_modules/is-plain-object": {
+  ++ "version": "5.0.0",
+  ++ "resolved": "https://registry.npmjs.org/is-plain-object/-/is-plain-object-5.0.0.tgz",
+  ++ "integrity": "sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==",
+  ++ "license": "MIT",
+  ++ "engines": {
+  ++ "node": ">=0.10.0"
+  ++ }
+  ++ },
+-     "node_modules/is-regex": {
+-       "version": "1.2.1",
+-       "resolved": "https://registry.npmjs.org/is-regex/-/is-regex-1.2.1.tgz",
+  +@@ -4806,6 +4998,26 @@
+-         "lower-case": "^1.1.1"
+-       }
+-     },
+  ++ "node_modules/node-fetch": {
+  ++ "version": "2.7.0",
+  ++ "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz",
+  ++ "integrity": "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "whatwg-url": "^5.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": "4.x || >=6.0.0"
+  ++ },
+  ++ "peerDependencies": {
+  ++ "encoding": "^0.1.0"
+  ++ },
+  ++ "peerDependenciesMeta": {
+  ++ "encoding": {
+  ++ "optional": true
+  ++ }
+  ++ }
+  ++ },
+-     "node_modules/node-plop": {
+-       "version": "0.26.3",
+-       "resolved": "https://registry.npmjs.org/node-plop/-/node-plop-0.26.3.tgz",
+  +@@ -5020,7 +5232,6 @@
+-       "version": "1.4.0",
+-       "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+-       "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+  +- "dev": true,
+-       "license": "ISC",
+-       "dependencies": {
+-         "wrappy": "1"
+  +@@ -6407,6 +6618,12 @@
+-         "node": ">=8.0"
+-       }
+-     },
+  ++ "node_modules/tr46": {
+  ++ "version": "0.0.3",
+  ++ "resolved": "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz",
+  ++ "integrity": "sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==",
+  ++ "license": "MIT"
+  ++ },
+-     "node_modules/ts-api-utils": {
+-       "version": "2.1.0",
+-       "resolved": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.1.0.tgz",
+  +@@ -6753,6 +6970,12 @@
+-       "dev": true,
+-       "license": "MIT"
+-     },
+  ++ "node_modules/universal-user-agent": {
+  ++ "version": "6.0.1",
+  ++ "resolved": "https://registry.npmjs.org/universal-user-agent/-/universal-user-agent-6.0.1.tgz",
+  ++ "integrity": "sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==",
+  ++ "license": "ISC"
+  ++ },
+-     "node_modules/universalify": {
+-       "version": "2.0.1",
+-       "resolved": "https://registry.npmjs.org/universalify/-/universalify-2.0.1.tgz",
+  +@@ -6839,6 +7062,22 @@
+-       "resolved": "apps/web",
+-       "link": true
+-     },
+  ++ "node_modules/webidl-conversions": {
+  ++ "version": "3.0.1",
+  ++ "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz",
+  ++ "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==",
+  ++ "license": "BSD-2-Clause"
+  ++ },
+  ++ "node_modules/whatwg-url": {
+  ++ "version": "5.0.0",
+  ++ "resolved": "https://registry.npmjs.org/whatwg-url/-/whatwg-url-5.0.0.tgz",
+  ++ "integrity": "sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "tr46": "~0.0.3",
+  ++ "webidl-conversions": "^3.0.0"
+  ++ }
+  ++ },
+-     "node_modules/which": {
+-       "version": "2.0.2",
+-       "resolved": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+  +@@ -6980,7 +7219,6 @@
+-       "version": "1.0.2",
+-       "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+-       "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+  +- "dev": true,
+-       "license": "ISC"
+-     },
+-     "node_modules/yn": {
+  +@@ -7007,8 +7245,76 @@
+-       }
+-     },
+-     "packages/cli": {
+  ++ "name": "@change-logger/cli",
+-       "version": "1.0.0",
+  +- "license": "ISC"
+  ++ "license": "ISC",
+  ++ "dependencies": {
+  ++ "@octokit/rest": "^19.0.0",
+  ++ "commander": "^9.0.0",
+  ++ "dotenv": "^16.0.0"
+  ++ },
+  ++ "devDependencies": {
+  ++ "@octokit/types": "^14.0.0",
+  ++ "@types/node": "^18.0.0",
+  ++ "typescript": "^4.9.0"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/@octokit/openapi-types": {
+  ++ "version": "25.0.0",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-25.0.0.tgz",
+  ++ "integrity": "sha512-FZvktFu7HfOIJf2BScLKIEYjDsw6RKc7rBJCdvCTfKsVnx2GEB/Nbzjr29DUdb7vQhlzS/j8qDzdditP0OC6aw==",
+  ++ "dev": true,
+  ++ "license": "MIT"
+  ++ },
+  ++ "packages/cli/node_modules/@octokit/types": {
+  ++ "version": "14.0.0",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/types/-/types-14.0.0.tgz",
+  ++ "integrity": "sha512-VVmZP0lEhbo2O1pdq63gZFiGCKkm8PPp8AUOijlwPO6hojEVjspA0MWKP7E4hbvGxzFKNqKr6p0IYtOH/Wf/zA==",
+  ++ "dev": true,
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/openapi-types": "^25.0.0"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/@types/node": {
+  ++ "version": "18.19.100",
+  ++ "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.100.tgz",
+  ++ "integrity": "sha512-ojmMP8SZBKprc3qGrGk8Ujpo80AXkrP7G2tOT4VWr5jlr5DHjsJF+emXJz+Wm0glmy4Js62oKMdZZ6B9Y+tEcA==",
+  ++ "dev": true,
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "undici-types": "~5.26.4"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/commander": {
+  ++ "version": "9.5.0",
+  ++ "resolved": "https://registry.npmjs.org/commander/-/commander-9.5.0.tgz",
+  ++ "integrity": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+  ++ "license": "MIT",
+  ++ "engines": {
+  ++ "node": "^12.20.0 || >=14"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/typescript": {
+  ++ "version": "4.9.5",
+  ++ "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
+  ++ "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+  ++ "dev": true,
+  ++ "license": "Apache-2.0",
+  ++ "bin": {
+  ++ "tsc": "bin/tsc",
+  ++ "tsserver": "bin/tsserver"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">=4.2.0"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/undici-types": {
+  ++ "version": "5.26.5",
+  ++ "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
+  ++ "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
+  ++ "dev": true,
+  ++ "license": "MIT"
+-     },
+-     "packages/eslint-config": {
+-       "name": "@repo/eslint-config",
+- ***
+- File: package.json
+- Status: modified
+- Additions: 3
+- Deletions: 1
+- Changes: 4
+- +Patch:
+  +@@ -6,9 +6,11 @@
+-     "dev": "turbo run dev",
+-     "lint": "turbo run lint",
+-     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+  +- "check-types": "turbo run check-types"
+  ++ "check-types": "turbo run check-types",
+  ++ "changelog": "node packages/cli/dist/index.js"
+- },
+- "devDependencies": {
+  ++ "@change-logger/cli": "workspace:\*",
+-     "@types/node": "^22.15.18",
+-     "prettier": "^3.5.3",
+-     "turbo": "^2.5.3",
+- ***
+- File: packages/cli/package.json
+- Status: modified
+- Additions: 16
+- Deletions: 3
+- Changes: 19
+- +Patch:
+  +@@ -1,12 +1,25 @@
+- {
+  +- "name": "cli",
+  ++ "name": "@change-logger/cli",
+- "version": "1.0.0",
+  +- "main": "index.js",
+  ++ "main": "dist/index.js",
+  ++ "type": "commonjs",
+- "scripts": {
+  ++ "build": "tsc && node -e \"require('fs').writeFileSync('dist/index.js', '#!/usr/bin/env node\\n' + require('fs').readFileSync('dist/index.js', 'utf8'))\"",
+  ++ "dev": "tsc -w",
+-     "test": "echo \"Error: no test specified\" && exit 1"
+- },
+- "keywords": [],
+- "author": "",
+- "license": "ISC",
+  +- "description": ""
+  ++ "description": "",
+  ++ "dependencies": {
+  ++ "@octokit/rest": "^19.0.0",
+  ++ "commander": "^9.0.0",
+  ++ "dotenv": "^16.0.0"
+  ++ },
+  ++ "devDependencies": {
+  ++ "@octokit/types": "^14.0.0",
+  ++ "@types/node": "^18.0.0",
+  ++ "typescript": "^4.9.0"
+  ++ }
+- }
+- ***
+- File: packages/cli/src/README
+- Status: added
+- Additions: 2
+- Deletions: 0
+- Changes: 2
+- +Patch:
+  +@@ -0,0 +1,2 @@
+  ++change-logger generateChangeLog -r owner/repo -b modularization -s dev -d code_diffs.md
+  ++change-logger analyze-changes -d code_diffs.md -o change_analysis.md
+- ***
+- File: packages/cli/src/commands/analyze-changes.ts
+- Status: added
+- Additions: 27
+- Deletions: 0
+- Changes: 27
+- +Patch:
+  +@@ -0,0 +1,27 @@
+  ++import { Command } from 'commander';
+  ++import { analyzeChanges } from '../utils/analyze-changes';
+  ++
+  ++export function createAnalyzeChangesCommand(): Command {
+  ++ return new Command('analyze-changes')
+  ++ .description('Analyze code changes and generate a human-readable report')
+  ++ .option(
+  ++ '-d, --diff <file>',
+  ++ 'Input file containing code differences',
+  ++ 'CODE_DIFFS.md'
+  ++ )
+  ++ .option(
+  ++ '-o, --output <file>',
+  ++ 'Output file for the analysis report',
+  ++ 'CHANGE_ANALYSIS.md'
+  ++ )
+  ++ .action(async (options) => {
+  ++ try {
+  ++ await analyzeChanges({
+  ++ diffFile: options.diff,
+  ++ outputFile: options.output,
+  ++ });
+  ++ } catch (error) {
+  ++ process.exit(1);
+  ++ }
+  ++ });
+  ++}
+- ***
+- File: packages/cli/src/config/config.ts
+- Status: modified
+- Additions: 3
+- Deletions: 3
+- Changes: 6
+- +Patch:
+  +@@ -1,6 +1,6 @@
+  +-import fs from 'fs';
+  +-import path from 'path';
+  +-import os from 'os';
+  ++import _ as fs from 'fs';
+  ++import _ as path from 'path';
+  ++import \* as os from 'os';
+-
+- interface Config {
+- defaultRepo: string;
+- ***
+- File: packages/cli/src/index.ts
+- Status: modified
+- Additions: 285
+- Deletions: 24
+- Changes: 309
+- +Patch:
+  +@@ -1,10 +1,18 @@
+- import { Command } from 'commander';
+- import { Octokit } from '@octokit/rest';
+  +-import dotenv from 'dotenv';
+  +-import { generateMarkdown } from './utils/markdown';
+  ++import _ as dotenv from 'dotenv';
+  ++import _ as fs from 'fs';
+  ++import \* as path from 'path';
+  ++import { execSync } from 'child_process';
+  ++import { generateMarkdown, formatFileDiff } from './utils/markdown';
+- import { getConfig } from './config/config';
+- import { setupGitHooks } from './utils/git-hooks';
+  +-import fs from 'fs';
+  ++import { createAnalyzeChangesCommand } from './commands/analyze-changes';
+  ++import {
+  ++ getCurrentRepo,
+  ++ getCurrentBranch,
+  ++ getDefaultStableBranch,
+  ++} from './utils/git-utils';
+-
+- dotenv.config();
+- +@@ -15,45 +23,186 @@ program
+- .description('CLI tool for generating changelogs from GitHub commits')
+- .version('1.0.0');
+- ++interface GitHubError extends Error {
+  ++ status?: number;
+  ++}
+  ++
+- program
+- .command('generateChangeLog')
+- .description('Generate changelog from recent commits')
+- .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+  +- .option('-b, --base <branch>', 'Base branch to compare against', 'main')
+  ++ .option('-b, --base <branch>', 'Branch to compare (default: current branch)')
+- .option('-o, --output <file>', 'Output file path', 'CHANGELOG.md')
+  ++ .option('-s, --stable <branch>', 'Stable branch to compare against')
+  ++ .option(
+  ++ '-d, --diff <file>',
+  ++ 'Output file for code differences',
+  ++ 'CODE_DIFFS.md'
+  ++ )
+- .action(async (options) => {
+-     try {
+-       const config = await getConfig();
+-       const octokit = new Octokit({
+-         auth: process.env.GITHUB_TOKEN,
+-       });
+- +- const [owner, repo] = (options.repo || config.defaultRepo).split('/');
+  ++ // Get repository information
+  ++ let owner: string;
+  ++ let repo: string;
+  ++ if (options.repo) {
+  ++ [owner, repo] = options.repo.split('/');
+  ++ } else {
+  ++ try {
+  ++ const repoInfo = getCurrentRepo();
+  ++ owner = repoInfo.owner;
+  ++ repo = repoInfo.repo;
+  ++ console.log(`\n📦 Using repository: ${owner}/${repo}`);
+  ++ } catch (repoError) {
+  ++ console.error('\n❌ Error getting repository information:');
+  ++ console.error('Could not determine current repository.');
+  ++ console.error('Please either:');
+  ++ console.error('1. Run this command from a git repository, or');
+  ++ console.error('2. Specify the repository using -r owner/repo');
+  ++ process.exit(1);
+  ++ }
+  ++ }
+- +- // Get the latest release
+  +- const { data: releases } = await octokit.repos.listReleases({
+  +- owner,
+  +- repo,
+  +- });
+  ++ // Get branch information
+  ++ let currentBranch: string;
+  ++ let stableBranch: string;
+  ++ try {
+  ++ currentBranch = options.base || getCurrentBranch();
+  ++ console.log(`\n🌿 Current branch: ${currentBranch}`);
+- +- const latestRelease = releases[0];
+  +- const baseCommit = latestRelease?.target_commitish || options.base;
+  ++ stableBranch =
+  ++ options.stable ||
+  ++ (await getDefaultStableBranch(octokit, owner, repo));
+  ++ console.log(`🌿 Stable branch: ${stableBranch}`);
+  ++ } catch (branchError) {
+  ++ console.error('\n❌ Error getting branch information:');
+  ++ console.error(
+  ++ branchError instanceof Error ? branchError.message : 'Unknown error'
+  ++ );
+  ++ process.exit(1);
+  ++ }
+- +- // Get commits between latest release and current branch
+  +- const { data: commits } = await octokit.repos.compareCommits({
+  +- owner,
+  +- repo,
+  +- base: baseCommit,
+  +- head: 'HEAD',
+  +- });
+  ++ console.log(`\n🔄 Generating changelog for ${owner}/${repo}`);
+  ++ console.log(`📊 Comparing ${currentBranch} against ${stableBranch}`);
+  ++
+  ++ // Get the stable branch state
+  ++ try {
+  ++ const { data: stableBranchData } = await octokit.repos.getBranch({
+  ++ owner,
+  ++ repo,
+  ++ branch: stableBranch,
+  ++ });
+  ++ const stableCommit = stableBranchData.commit.sha;
+  ++ console.log(`✅ Found stable branch commit: ${stableCommit}`);
+  ++
+  ++ // Get the current branch state
+  ++ const { data: currentBranchData } = await octokit.repos.getBranch({
+  ++ owner,
+  ++ repo,
+  ++ branch: currentBranch,
+  ++ });
+  ++ const currentCommit = currentBranchData.commit.sha;
+  ++ console.log(`✅ Found current branch commit: ${currentCommit}`);
+  ++
+  ++ // Get commits between stable branch and current branch
+  ++ const { data: compareData } = await octokit.repos.compareCommits({
+  ++ owner,
+  ++ repo,
+  ++ base: stableCommit,
+  ++ head: currentCommit,
+  ++ });
+  ++
+  ++ const commits = compareData.commits || [];
+  ++ const files = compareData.files || [];
+  ++
+  ++ if (commits.length === 0) {
+  ++ console.warn(
+  ++ '\n⚠️ Warning: No commits found between stable and current branch.'
+  ++ );
+  ++ } else {
+  ++ console.log(
+  ++ `\n📝 Found ${commits.length} commits and ${files.length} changed files`
+  ++ );
+  ++ }
+  ++
+  ++ // Get the latest release for version information
+  ++ const { data: releases } = await octokit.repos.listReleases({
+  ++ owner,
+  ++ repo,
+  ++ });
+  ++
+  ++ // Generate the changelog markdown
+  ++ const latestRelease = releases[0];
+  ++ const markdown = generateMarkdown(commits, latestRelease, {
+  ++ stableBranch,
+  ++ currentBranch,
+  ++ lastMergedCommit: stableCommit,
+  ++ currentCommit,
+  ++ lastMergedPR: 0,
+  ++ });
+- +- const markdown = generateMarkdown(commits, latestRelease);
+  ++ // Generate the code differences file
+  ++ let diffContent = `# Code Differences between ${stableBranch} and ${currentBranch}\n\n`;
+  ++ diffContent += `## Summary\n`;
+  ++ diffContent += `- Total files changed: ${files.length}\n`;
+  ++ diffContent += `- Total additions: ${files.reduce((sum, file) => sum + file.additions, 0)}\n`;
+  ++ diffContent += `- Total deletions: ${files.reduce((sum, file) => sum + file.deletions, 0)}\n\n`;
+- +- // Write to file
+  +- await fs.promises.writeFile(options.output, markdown);
+  +- console.log(`Changelog generated successfully at ${options.output}`);
+  ++ diffContent += `## File Changes\n`;
+  ++ files.forEach((file) => {
+  ++ diffContent += formatFileDiff(file);
+  ++ });
+  ++
+  ++ // Write both files
+  ++ const outputPath = path.resolve(process.cwd(), options.output);
+  ++ const diffPath = path.resolve(process.cwd(), options.diff);
+  ++
+  ++ try {
+  ++ console.log(`\nSaving files:`);
+  ++ console.log(`Changelog: ${outputPath}`);
+  ++ console.log(`Code diffs: ${diffPath}\n`);
+  ++
+  ++ await fs.promises.writeFile(outputPath, markdown);
+  ++ console.log('✅ Changelog saved successfully');
+  ++
+  ++ await fs.promises.writeFile(diffPath, diffContent);
+  ++ console.log('✅ Code differences saved successfully');
+  ++
+  ++ console.log(`\nFiles have been saved to:`);
+  ++ console.log(`📝 Changelog: ${outputPath}`);
+  ++ console.log(`📝 Code diffs: ${diffPath}`);
+  ++ } catch (writeError) {
+  ++ console.error('\n❌ Error saving files:');
+  ++ console.error(
+  ++ `Failed to save to: ${writeError instanceof Error ? writeError.message : 'Unknown error'}`
+  ++ );
+  ++ console.error(`Attempted to save to:`);
+  ++ console.error(`- Changelog: ${outputPath}`);
+  ++ console.error(`- Code diffs: ${diffPath}`);
+  ++ process.exit(1);
+  ++ }
+  ++ } catch (error) {
+  ++ const err = error as Error;
+  ++ console.error('\n❌ Error generating changelog:');
+  ++ console.error(err.message);
+  ++ if (err.stack) {
+  ++ console.error('\nStack trace:');
+  ++ console.error(err.stack);
+  ++ }
+  ++ process.exit(1);
+  ++ }
+-     } catch (error) {
+  +- console.error('Error generating changelog:', error);
+  ++ const err = error as Error;
+  ++ console.error('\n❌ Error generating changelog:');
+  ++ console.error(err.message);
+  ++ if (err.stack) {
+  ++ console.error('\nStack trace:');
+  ++ console.error(err.stack);
+  ++ }
+-       process.exit(1);
+-     }
+- });
+  +@@ -71,4 +220,116 @@ program
+-     }
+- });
+- ++program
+  ++ .command('test-token')
+  ++ .description('Test GitHub token permissions')
+  ++ .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+  ++ .action(async (options) => {
+  ++ try {
+  ++ const octokit = new Octokit({
+  ++ auth: process.env.GITHUB_TOKEN,
+  ++ });
+  ++
+  ++ if (!process.env.GITHUB_TOKEN) {
+  ++ throw new Error('GITHUB_TOKEN is not set');
+  ++ }
+  ++
+  ++ console.log('Testing GitHub token...\n');
+  ++
+  ++ // Test 1: Check if token is valid
+  ++ console.log('1. Testing token validity...');
+  ++ const { data: user } = await octokit.users.getAuthenticated();
+  ++ console.log('✅ Token is valid');
+  ++ console.log(`   Authenticated as: ${user.login}\n`);
+  ++ console.log(' Raw user data:', JSON.stringify(user, null, 2), '\n');
+  ++ console.log(
+  ++ ' Octokit object structure:',
+  ++ {
+  ++ auth: octokit.auth,
+  ++ log: octokit.log,
+  ++ request: octokit.request,
+  ++ rest: Object.keys(octokit.rest),
+  ++ graphql: octokit.graphql,
+  ++ paginate: octokit.paginate,
+  ++ hook: octokit.hook,
+  ++ },
+  ++ '\n'
+  ++ );
+  ++
+  ++ // Test 2: Check organization access
+  ++ console.log('2. Testing organization access...');
+  ++ try {
+  ++ const { data: orgs } = await octokit.orgs.listForUser({
+  ++ username: user.login,
+  ++ });
+  ++ console.log('✅ Organization access successful');
+  ++ console.log(
+  ++ ' Raw organizations data:',
+  ++ JSON.stringify(orgs, null, 2),
+  ++ '\n'
+  ++ );
+  ++
+  ++ console.log(' Organizations you have access to:');
+  ++ if (orgs.length === 0) {
+  ++ console.log(' No organizations found in response');
+  ++ } else {
+  ++ orgs.forEach((org) => {
+  ++ console.log(`   - ${org.login}`);
+  ++ });
+  ++ }
+  ++ console.log();
+  ++ } catch (error) {
+  ++ console.error('❌ Failed to list organizations:', error);
+  ++ console.error('Full error object:', JSON.stringify(error, null, 2));
+  ++ }
+  ++
+  ++ // Test 3: Check repository access
+  ++ if (options.repo) {
+  ++ console.log('3. Testing repository access...');
+  ++ const [owner, repo] = options.repo.split('/');
+  ++ console.log(`   Attempting to access: ${owner}/${repo}`);
+  ++
+  ++ try {
+  ++ // First try to get organization details
+  ++ const { data: orgData } = await octokit.orgs.get({
+  ++ org: owner,
+  ++ });
+  ++ console.log(`   Organization found: ${orgData.login}`);
+  ++
+  ++ // Check organization membership
+  ++ const { data: membership } = await octokit.orgs.getMembershipForUser({
+  ++ org: owner,
+  ++ username: user.login,
+  ++ });
+  ++ console.log(`   Your role in organization: ${membership.role}`);
+  ++
+  ++ // List repositories
+  ++ console.log(' Listing repositories in organization...');
+  ++ const { data: repos } = await octokit.repos.listForOrg({
+  ++ org: owner,
+  ++ type: 'all',
+  ++ });
+  ++
+  ++ console.log(' Available repositories:');
+  ++ repos.forEach((repo) => {
+  ++ console.log(`   - ${repo.name}`);
+  ++ });
+  ++ } catch (error) {
+  ++ console.error('❌ Error accessing repository:', error);
+  ++ console.error('Full error object:', JSON.stringify(error, null, 2));
+  ++ }
+  ++ }
+  ++
+  ++ console.log('All tests passed! Your token has the correct permissions.');
+  ++ } catch (error) {
+  ++ const err = error as Error;
+  ++ console.error('❌ Test failed:', err.message);
+  ++ console.error('Full error object:', JSON.stringify(error, null, 2));
+  ++ process.exit(1);
+  ++ }
+  ++ });
+  ++
+  ++// Add the analyze-changes command
+  ++program.addCommand(createAnalyzeChangesCommand());
+  ++
+- program.parse();
+- ***
+- File: packages/cli/src/utils/analyze-changes.ts
+- Status: added
+- Additions: 61
+- Deletions: 0
+- Changes: 61
+- +Patch:
+  +@@ -0,0 +1,61 @@
+  ++import \* as fs from 'fs';
+  ++
+  ++interface AnalysisOptions {
+  ++ diffFile: string;
+  ++ outputFile: string;
+  ++}
+  ++
+  ++export async function analyzeChanges(options: AnalysisOptions): Promise<void> {
+  ++ try {
+  ++ // Read the code differences file
+  ++ const diffContent = await fs.promises.readFile(options.diffFile, 'utf-8');
+  ++
+  ++ // Format the content for AI analysis
+  ++ const analysisPrompt = `Please analyze the following code changes and generate a human-readable report that:
+++1. Summarizes the main changes and new features
+++2. Explains the impact of these changes
+++3. Highlights any breaking changes or important updates
+++4. Provides a technical overview of the changes
+++
+++Here are the code changes to analyze:
+++
+++${diffContent}`;
+  ++
+  ++ // Generate the analysis report
+  ++ let reportContent = `# Change Analysis Report\n\n`;
+  ++ reportContent += `## Overview\n`;
+  ++ reportContent += `This report provides an analysis of the code changes between versions.\n\n`;
+  ++
+  ++ // Add the AI analysis
+  ++ reportContent += `## AI Analysis\n`;
+  ++ reportContent += `\`\`\`\n`;
+++    reportContent += `[AI Analysis will be inserted here]\n`;
+++    reportContent += `\`\`\`\n\n`;
+++
+++    // Add the original changes for reference
+++    reportContent += `## Original Changes\n`;
+++    reportContent += `For reference, here are the original code changes:\n\n`;
+++    reportContent += diffContent;
+++
+++    // Write the analysis report
+++    await fs.promises.writeFile(options.outputFile, reportContent);
+++    console.log(`Analysis report generated at ${options.outputFile}`);
+  ++
+  ++ // Print instructions for AI analysis
+  ++ console.log('\nTo analyze these changes with AI:');
+  ++ console.log('1. Copy the contents of the analysis report');
+  ++ console.log(
+  ++ '2. Paste it into your preferred AI tool (e.g., ChatGPT, Claude)'
+  ++ );
+  ++ console.log(
+  ++ '3. Ask the AI to analyze the changes and generate a human-readable report'
+  ++ );
+  ++ console.log(
+  ++ '4. The AI will provide insights about new features, breaking changes, and technical details'
+  ++ );
+  ++ } catch (error) {
+  ++ const err = error as Error;
+  ++ console.error('Error:', err.message);
+  ++ throw err;
+  ++ }
+  ++}
+- ***
+- File: packages/cli/src/utils/git-hooks.ts
+- Status: modified
+- Additions: 2
+- Deletions: 2
+- Changes: 4
+- +Patch:
+  +@@ -1,5 +1,5 @@
+  +-import fs from 'fs';
+  +-import path from 'path';
+  ++import _ as fs from 'fs';
+  ++import _ as path from 'path';
+- import { execSync } from 'child_process';
+-
+- const HOOK_CONTENT = `#!/bin/sh
+- ***
+- File: packages/cli/src/utils/git-utils.ts
+- Status: added
+- Additions: 64
+- Deletions: 0
+- Changes: 64
+- +Patch:
+  +@@ -0,0 +1,64 @@
+  ++import { execSync } from 'child*process';
+  ++import { Octokit } from '@octokit/rest';
+  ++
+  ++/\*\*
+  ++ * Gets the current git repository information from the remote origin
+  ++ _ @returns Object containing owner and repo name
+  ++ _ @throws Error if not in a git repository or no remote origin found
+  ++ _/
+  ++export function getCurrentRepo(): { owner: string; repo: string } {
+  ++ try {
+  ++ const remoteUrl = execSync('git config --get remote.origin.url')
+  ++ .toString()
+  ++ .trim();
+  ++ // Handle both HTTPS and SSH URLs
+  ++ const match = remoteUrl.match(
+  ++ /github\.com[:/]([^/]+)\/([^/]+?)(?:\.git)?$/
+  ++ );
+  ++ if (!match) {
+  ++ throw new Error('Could not parse GitHub repository URL');
+  ++ }
+  ++ return {
+  ++ owner: match[1],
+  ++ repo: match[2],
+  ++ };
+  ++ } catch (error) {
+  ++ throw new Error('Not in a git repository or no remote origin found');
+  ++ }
+  ++}
+  ++
+  ++/\*\*
+  ++ _ Gets the name of the current git branch
+  ++ _ @returns Current branch name
+  ++ _ @throws Error if could not determine current branch
+  ++ _/
+  ++export function getCurrentBranch(): string {
+  ++ try {
+  ++ return execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+  ++ } catch (error) {
+  ++ throw new Error('Could not determine current branch');
+  ++ }
+  ++}
+  ++
+  ++/\*_
+  ++ _ Gets the default stable branch for a repository using GitHub API
+  ++ _ @param octokit - Octokit instance for GitHub API calls
+  ++ _ @param owner - Repository owner
+  ++ _ @param repo - Repository name
+  ++ \_ @returns Default branch name, falls back to 'main' if API call fails
+  ++ \*/
+  ++export async function getDefaultStableBranch(
+  ++ octokit: Octokit,
+  ++ owner: string,
+  ++ repo: string
+  ++): Promise<string> {
+  ++ try {
+  ++ const { data } = await octokit.repos.get({ owner, repo });
+  ++ return data.default_branch;
+  ++ } catch (error) {
+  ++ console.warn(
+  ++ 'Could not determine default branch, using "main" as fallback'
+  ++ );
+  ++ return 'main';
+  ++ }
+  ++}
+- ***
+- File: packages/cli/src/utils/markdown.ts
+- Status: modified
+- Additions: 49
+- Deletions: 3
+- Changes: 52
+- +Patch:
+  +@@ -1,4 +1,15 @@
+  +-import { Commit } from '@octokit/rest';
+  ++interface Commit {
+  ++ commit: {
+  ++ message: string;
+  ++ author: {
+  ++ name?: string;
+  ++ email?: string;
+  ++ date?: string;
+  ++ } | null;
+  ++ };
+  ++ sha: string;
+  ++ html_url: string;
+  ++}
+-
+- interface CategorizedCommits {
+- features: Commit[];
+  +@@ -7,16 +18,30 @@ interface CategorizedCommits {
+- other: Commit[];
+- }
+- ++interface MarkdownOptions {
+  ++ stableBranch: string;
+  ++ currentBranch: string;
+  ++ lastMergedCommit: string;
+  ++ currentCommit: string;
+  ++ lastMergedPR: number;
+  ++}
+  ++
+- export function generateMarkdown(
+- commits: Commit[],
+  +- latestRelease: any
+  ++ latestRelease: any,
+  ++ options: MarkdownOptions
+- ): string {
+- const categorized = categorizeCommits(commits);
+-
+- let markdown = `# Changelog\n\n`;
+- ++ // Add comparison information
+  ++ markdown += `## Changes since last merged PR (#${options.lastMergedPR})\n\n`;
+  ++ markdown += `- Last Merged PR: #${options.lastMergedPR} (${options.lastMergedCommit.substring(0, 7)})\n`;
+  ++ markdown += `- Current Branch: ${options.currentBranch} (${options.currentCommit.substring(0, 7)})\n\n`;
+  ++
+- if (latestRelease) {
+  +- markdown += `## Changes since ${latestRelease.tag_name}\n\n`;
+  ++ markdown += `### Latest Release: ${latestRelease.tag_name}\n\n`;
+- }
+-
+- if (categorized.breaking.length > 0) {
+  +@@ -51,6 +76,15 @@ export function generateMarkdown(
+-     markdown += '\n';
+- }
+- ++ // Add commit details section
+  ++ markdown += `## Detailed Commit List\n\n`;
+  ++ commits.forEach((commit) => {
+  ++ markdown += `### ${commit.commit.message.split('\n')[0]}\n\n`;
+  ++ markdown += `- **Author:** ${commit.commit.author?.name}\n`;
+  ++ markdown += `- **Date:** ${new Date(commit.commit.author?.date || '').toLocaleString()}\n`;
+  ++ markdown += `- **Commit:** [${commit.sha.substring(0, 7)}](${commit.html_url})\n\n`;
+  ++ });
+  ++
+- return markdown;
+- }
+- +@@ -88,3 +122,15 @@ function formatCommit(commit: Commit): string {
+- const hash = commit.sha.substring(0, 7);
+- return `${message} (${hash})`;
+- }
+  ++
+  ++// Add this function to format the file differences
+  ++export function formatFileDiff(file: any): string {
+  ++ return `++  File: ${file.filename}
+++  Status: ${file.status}
+++  Additions: ${file.additions}
+++  Deletions: ${file.deletions}
+++  Changes: ${file.changes}
+++  ${file.patch ?`\nPatch:\n${file.patch}` : ''}
+++  ---`;
+  ++}
+- ***
+- File: packages/cli/tsconfig.json
+- Status: added
+- Additions: 8
+- Deletions: 0
+- Changes: 8
+- +Patch:
+  +@@ -0,0 +1,8 @@
+  ++{
+  ++ "extends": "../../tsconfig.base.json",
+  ++ "compilerOptions": {
+  ++ "outDir": "./dist",
+  ++ "rootDir": "./src"
+  ++ },
+  ++ "include": ["src/**/*"]
+  ++}
+- ***
+- File: tsconfig.base.json
+- Status: added
+- Additions: 13
+- Deletions: 0
+- Changes: 13
+- +Patch:
+  +@@ -0,0 +1,13 @@
+  ++{
+  ++ "compilerOptions": {
+  ++ "target": "ES2020",
+  ++ "module": "CommonJS",
+  ++ "moduleResolution": "Node",
+  ++ "esModuleInterop": true,
+  ++ "forceConsistentCasingInFileNames": true,
+  ++ "strict": true,
+  ++ "skipLibCheck": true,
+  ++ "resolveJsonModule": true,
+  ++ "baseUrl": "."
+  ++ }
+  ++}
+- ***
+  \ No newline at end of file
+  ***
   File: CODE_DIFFS.md
   Status: added
-  Additions: 4158
+  Additions: 1323
   Deletions: 0
-  Changes: 4158
-  
-  ---
-  File: components.json
-  Status: added
-  Additions: 21
-  Deletions: 0
-  Changes: 21
-  
+  Changes: 1323
+
 Patch:
-@@ -0,0 +1,21 @@
-+{
-+  "$schema": "https://ui.shadcn.com/schema.json",
-+  "style": "new-york",
-+  "rsc": false,
-+  "tsx": true,
-+  "tailwind": {
-+    "config": "",
-+    "css": "src/index.css",
-+    "baseColor": "zinc",
-+    "cssVariables": true,
-+    "prefix": ""
-+  },
-+  "aliases": {
-+    "components": "@/components",
-+    "utils": "@/lib/utils",
-+    "ui": "@/components/ui",
-+    "lib": "@/lib",
-+    "hooks": "@/hooks"
-+  },
-+  "iconLibrary": "lucide"
-+}
-\ No newline at end of file
-  ---
-  File: index.html
+@@ -0,0 +1,1323 @@
++# Code Differences between main and feature
+
+- +## Summary
+  +- Total files changed: 14
+  +- Total additions: 947
+  +- Total deletions: 44
+- +## File Changes
+-
+- File: README.md
+- Status: modified
+- Additions: 100
+- Deletions: 0
+- Changes: 100
+- +Patch:
+  +@@ -170,3 +170,103 @@ This project uses:
+- ## License
+-
+- [Your chosen license]
+  ++
+  ++# Change Logger CLI
+  ++
+  ++A CLI tool for generating changelogs by comparing commits between branches in your GitHub repository.
+  ++
+  ++## Installation
+  ++
+  ++`bash
+++npm install -g change-logger
+++`
+  ++
+  ++## Configuration
+  ++
+  ++1. Set up your GitHub token:
+  ++
+  ++`bash
+++export GITHUB_TOKEN=your_github_token
+++`
+  ++
+  ++2. (Optional) Create a config file at `~/.change-logger.json`:
+  ++
+  ++`json
+++{
+++  "defaultRepo": "owner/repo",
+++  "githubToken": "your_github_token",
+++  "outputPath": "CHANGELOG.md"
+++}
+++`
+  ++
+  ++## Usage
+  ++
+  ++### Generate Changelog
+  ++
+  ++`bash
+++change-logger generateChangeLog [options]
+++`
+  ++
+  ++Options:
+  ++
+  ++- `-r, --repo <repo>`: GitHub repository (owner/repo)
+  ++- `-b, --base <branch>`: Base branch to compare against (default: 'main')
+  ++- `-o, --output <file>`: Output file path (default: 'CHANGELOG.md')
+  ++- `-s, --stable <branch>`: Stable branch to compare against (default: 'main')
+  ++
+  ++Example:
+  ++
+  ++`bash
+++change-logger generateChangeLog -r octocat/Hello-World -b feature-branch -s main
+++`
+  ++
+  ++### Set Up Git Hooks
+  ++
+  ++To automatically generate changelogs on commit:
+  ++
+  ++`bash
+++change-logger setup-hooks
+++`
+  ++
+  ++## Output Format
+  ++
+  ++The generated changelog includes:
+  ++
+  ++- Comparison between stable and current branches
+  ++- Categorized changes (breaking, features, fixes, other)
+  ++- Detailed commit information
+  ++- Links to GitHub commits
+  ++
+  ++Example output:
+  ++
+  ++`markdown
+++# Changelog
+++
+++## Changes between main and feature-branch
+++
+++- Stable Branch: main (a1b2c3d)
+++- Current Branch: feature-branch (e4f5g6h)
+++
+++### New Features
+++
+++- Added new authentication system (a1b2c3d)
+++
+++### Bug Fixes
+++
+++- Fixed login page crash (e4f5g6h)
+++
+++## Detailed Commit List
+++
+++...
+++`
+  ++
+  ++## Requirements
+  ++
+  ++- Node.js 14+
+  ++- GitHub repository
+  ++- GitHub personal access token
+  ++
+  ++## License
+  ++
+  ++MIT
+  ++TESTING SOME CHANGES
+- ***
+- File: package-lock.json
+- Status: modified
+- Additions: 314
+- Deletions: 8
+- Changes: 322
+- +Patch:
+  +@@ -10,6 +10,7 @@
+-         "packages/*"
+-       ],
+-       "devDependencies": {
+  ++ "@change-logger/cli": "workspace:\*",
+-         "@types/node": "^22.15.18",
+-         "prettier": "^3.5.3",
+-         "turbo": "^2.5.3",
+  +@@ -68,6 +69,10 @@
+-         "node": ">=6.9.0"
+-       }
+-     },
+  ++ "node_modules/@change-logger/cli": {
+  ++ "resolved": "packages/cli",
+  ++ "link": true
+  ++ },
+-     "node_modules/@cspotcode/source-map-support": {
+-       "version": "0.8.1",
+-       "resolved": "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz",
+  +@@ -946,6 +951,177 @@
+-         "node": ">= 8"
+-       }
+-     },
+  ++ "node_modules/@octokit/auth-token": {
+  ++ "version": "3.0.4",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/auth-token/-/auth-token-3.0.4.tgz",
+  ++ "integrity": "sha512-TWFX7cZF2LXoCvdmJWY7XVPi74aSY0+FfBZNSXEXFkMpjcqsQwDSYVv5FhRFaI0V1ECnwbz4j59T/G+rXNWaIQ==",
+  ++ "license": "MIT",
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/core": {
+  ++ "version": "4.2.4",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/core/-/core-4.2.4.tgz",
+  ++ "integrity": "sha512-rYKilwgzQ7/imScn3M9/pFfUf4I1AZEH3KhyJmtPdE2zfaXAn2mFfUy4FbKewzc2We5y/LlKLj36fWJLKC2SIQ==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/auth-token": "^3.0.0",
+  ++ "@octokit/graphql": "^5.0.0",
+  ++ "@octokit/request": "^6.0.0",
+  ++ "@octokit/request-error": "^3.0.0",
+  ++ "@octokit/types": "^9.0.0",
+  ++ "before-after-hook": "^2.2.0",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/endpoint": {
+  ++ "version": "7.0.6",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/endpoint/-/endpoint-7.0.6.tgz",
+  ++ "integrity": "sha512-5L4fseVRUsDFGR00tMWD/Trdeeihn999rTMGRMC1G/Ldi1uWlWJzI98H4Iak5DB/RVvQuyMYKqSK/R6mbSOQyg==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/types": "^9.0.0",
+  ++ "is-plain-object": "^5.0.0",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/graphql": {
+  ++ "version": "5.0.6",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/graphql/-/graphql-5.0.6.tgz",
+  ++ "integrity": "sha512-Fxyxdy/JH0MnIB5h+UQ3yCoh1FG4kWXfFKkpWqjZHw/p+Kc8Y44Hu/kCgNBT6nU1shNumEchmW/sUO1JuQnPcw==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/request": "^6.0.0",
+  ++ "@octokit/types": "^9.0.0",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/openapi-types": {
+  ++ "version": "18.1.1",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-18.1.1.tgz",
+  ++ "integrity": "sha512-VRaeH8nCDtF5aXWnjPuEMIYf1itK/s3JYyJcWFJT8X9pSNnBtriDf7wlEWsGuhPLl4QIH4xM8fqTXDwJ3Mu6sw==",
+  ++ "license": "MIT"
+  ++ },
+  ++ "node_modules/@octokit/plugin-paginate-rest": {
+  ++ "version": "6.1.2",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-6.1.2.tgz",
+  ++ "integrity": "sha512-qhrmtQeHU/IivxucOV1bbI/xZyC/iOBhclokv7Sut5vnejAIAEXVcGQeRpQlU39E0WwK9lNvJHphHri/DB6lbQ==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/tsconfig": "^1.0.2",
+  ++ "@octokit/types": "^9.2.3"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ },
+  ++ "peerDependencies": {
+  ++ "@octokit/core": ">=4"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/plugin-request-log": {
+  ++ "version": "1.0.4",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz",
+  ++ "integrity": "sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==",
+  ++ "license": "MIT",
+  ++ "peerDependencies": {
+  ++ "@octokit/core": ">=3"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/plugin-rest-endpoint-methods": {
+  ++ "version": "7.2.3",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-7.2.3.tgz",
+  ++ "integrity": "sha512-I5Gml6kTAkzVlN7KCtjOM+Ruwe/rQppp0QU372K1GP7kNOYEKe8Xn5BW4sE62JAHdwpq95OQK/qGNyKQMUzVgA==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/types": "^10.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ },
+  ++ "peerDependencies": {
+  ++ "@octokit/core": ">=3"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/plugin-rest-endpoint-methods/node_modules/@octokit/types": {
+  ++ "version": "10.0.0",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/types/-/types-10.0.0.tgz",
+  ++ "integrity": "sha512-Vm8IddVmhCgU1fxC1eyinpwqzXPEYu0NrYzD3YZjlGjyftdLBTeqNblRC0jmJmgxbJIsQlyogVeGnrNaaMVzIg==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/openapi-types": "^18.0.0"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/request": {
+  ++ "version": "6.2.8",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/request/-/request-6.2.8.tgz",
+  ++ "integrity": "sha512-ow4+pkVQ+6XVVsekSYBzJC0VTVvh/FCTUUgTsboGq+DTeWdyIFV8WSCdo0RIxk6wSkBTHqIK1mYuY7nOBXOchw==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/endpoint": "^7.0.0",
+  ++ "@octokit/request-error": "^3.0.0",
+  ++ "@octokit/types": "^9.0.0",
+  ++ "is-plain-object": "^5.0.0",
+  ++ "node-fetch": "^2.6.7",
+  ++ "universal-user-agent": "^6.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/request-error": {
+  ++ "version": "3.0.3",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/request-error/-/request-error-3.0.3.tgz",
+  ++ "integrity": "sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/types": "^9.0.0",
+  ++ "deprecation": "^2.0.0",
+  ++ "once": "^1.4.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/rest": {
+  ++ "version": "19.0.13",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/rest/-/rest-19.0.13.tgz",
+  ++ "integrity": "sha512-/EzVox5V9gYGdbAI+ovYj3nXQT1TtTHRT+0eZPcuC05UFSWO3mdO9UY1C0i2eLF9Un1ONJkAk+IEtYGAC+TahA==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/core": "^4.2.1",
+  ++ "@octokit/plugin-paginate-rest": "^6.1.2",
+  ++ "@octokit/plugin-request-log": "^1.0.4",
+  ++ "@octokit/plugin-rest-endpoint-methods": "^7.1.2"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">= 14"
+  ++ }
+  ++ },
+  ++ "node_modules/@octokit/tsconfig": {
+  ++ "version": "1.0.2",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/tsconfig/-/tsconfig-1.0.2.tgz",
+  ++ "integrity": "sha512-I0vDR0rdtP8p2lGMzvsJzbhdOWy405HcGovrspJ8RRibHnyRgggUSNO5AIox5LmqiwmatHKYsvj6VGFHkqS7lA==",
+  ++ "license": "MIT"
+  ++ },
+  ++ "node_modules/@octokit/types": {
+  ++ "version": "9.3.2",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/types/-/types-9.3.2.tgz",
+  ++ "integrity": "sha512-D4iHGTdAnEEVsB8fl95m1hiz7D5YiRdQ9b/OEb3BYRVwbLsGHcRVPz+u+BgRLNk0Q0/4iZCBqDN96j2XNxfXrA==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/openapi-types": "^18.0.0"
+  ++ }
+  ++ },
+-     "node_modules/@repo/eslint-config": {
+-       "resolved": "packages/eslint-config",
+-       "link": true
+  +@@ -1740,6 +1916,12 @@
+-         "node": ">=10.0.0"
+-       }
+-     },
+  ++ "node_modules/before-after-hook": {
+  ++ "version": "2.2.3",
+  ++ "resolved": "https://registry.npmjs.org/before-after-hook/-/before-after-hook-2.2.3.tgz",
+  ++ "integrity": "sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==",
+  ++ "license": "Apache-2.0"
+  ++ },
+-     "node_modules/bl": {
+-       "version": "4.1.0",
+-       "resolved": "https://registry.npmjs.org/bl/-/bl-4.1.0.tgz",
+  +@@ -1963,10 +2145,6 @@
+-         "node": ">=6"
+-       }
+-     },
+  +- "node_modules/cli": {
+  +- "resolved": "packages/cli",
+  +- "link": true
+  +- },
+-     "node_modules/cli-cursor": {
+-       "version": "3.1.0",
+-       "resolved": "https://registry.npmjs.org/cli-cursor/-/cli-cursor-3.1.0.tgz",
+  +@@ -2316,6 +2494,12 @@
+-         "node": ">=8"
+-       }
+-     },
+  ++ "node_modules/deprecation": {
+  ++ "version": "2.3.1",
+  ++ "resolved": "https://registry.npmjs.org/deprecation/-/deprecation-2.3.1.tgz",
+  ++ "integrity": "sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==",
+  ++ "license": "ISC"
+  ++ },
+-     "node_modules/detect-libc": {
+-       "version": "2.0.4",
+-       "resolved": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.4.tgz",
+  +@@ -2380,7 +2564,6 @@
+-       "version": "16.0.3",
+-       "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz",
+-       "integrity": "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==",
+  +- "dev": true,
+-       "license": "BSD-2-Clause",
+-       "engines": {
+-         "node": ">=12"
+  +@@ -4093,6 +4276,15 @@
+-         "node": ">=8"
+-       }
+-     },
+  ++ "node_modules/is-plain-object": {
+  ++ "version": "5.0.0",
+  ++ "resolved": "https://registry.npmjs.org/is-plain-object/-/is-plain-object-5.0.0.tgz",
+  ++ "integrity": "sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==",
+  ++ "license": "MIT",
+  ++ "engines": {
+  ++ "node": ">=0.10.0"
+  ++ }
+  ++ },
+-     "node_modules/is-regex": {
+-       "version": "1.2.1",
+-       "resolved": "https://registry.npmjs.org/is-regex/-/is-regex-1.2.1.tgz",
+  +@@ -4806,6 +4998,26 @@
+-         "lower-case": "^1.1.1"
+-       }
+-     },
+  ++ "node_modules/node-fetch": {
+  ++ "version": "2.7.0",
+  ++ "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz",
+  ++ "integrity": "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "whatwg-url": "^5.0.0"
+  ++ },
+  ++ "engines": {
+  ++ "node": "4.x || >=6.0.0"
+  ++ },
+  ++ "peerDependencies": {
+  ++ "encoding": "^0.1.0"
+  ++ },
+  ++ "peerDependenciesMeta": {
+  ++ "encoding": {
+  ++ "optional": true
+  ++ }
+  ++ }
+  ++ },
+-     "node_modules/node-plop": {
+-       "version": "0.26.3",
+-       "resolved": "https://registry.npmjs.org/node-plop/-/node-plop-0.26.3.tgz",
+  +@@ -5020,7 +5232,6 @@
+-       "version": "1.4.0",
+-       "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+-       "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+  +- "dev": true,
+-       "license": "ISC",
+-       "dependencies": {
+-         "wrappy": "1"
+  +@@ -6407,6 +6618,12 @@
+-         "node": ">=8.0"
+-       }
+-     },
+  ++ "node_modules/tr46": {
+  ++ "version": "0.0.3",
+  ++ "resolved": "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz",
+  ++ "integrity": "sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==",
+  ++ "license": "MIT"
+  ++ },
+-     "node_modules/ts-api-utils": {
+-       "version": "2.1.0",
+-       "resolved": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.1.0.tgz",
+  +@@ -6753,6 +6970,12 @@
+-       "dev": true,
+-       "license": "MIT"
+-     },
+  ++ "node_modules/universal-user-agent": {
+  ++ "version": "6.0.1",
+  ++ "resolved": "https://registry.npmjs.org/universal-user-agent/-/universal-user-agent-6.0.1.tgz",
+  ++ "integrity": "sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==",
+  ++ "license": "ISC"
+  ++ },
+-     "node_modules/universalify": {
+-       "version": "2.0.1",
+-       "resolved": "https://registry.npmjs.org/universalify/-/universalify-2.0.1.tgz",
+  +@@ -6839,6 +7062,22 @@
+-       "resolved": "apps/web",
+-       "link": true
+-     },
+  ++ "node_modules/webidl-conversions": {
+  ++ "version": "3.0.1",
+  ++ "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz",
+  ++ "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==",
+  ++ "license": "BSD-2-Clause"
+  ++ },
+  ++ "node_modules/whatwg-url": {
+  ++ "version": "5.0.0",
+  ++ "resolved": "https://registry.npmjs.org/whatwg-url/-/whatwg-url-5.0.0.tgz",
+  ++ "integrity": "sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==",
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "tr46": "~0.0.3",
+  ++ "webidl-conversions": "^3.0.0"
+  ++ }
+  ++ },
+-     "node_modules/which": {
+-       "version": "2.0.2",
+-       "resolved": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+  +@@ -6980,7 +7219,6 @@
+-       "version": "1.0.2",
+-       "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+-       "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+  +- "dev": true,
+-       "license": "ISC"
+-     },
+-     "node_modules/yn": {
+  +@@ -7007,8 +7245,76 @@
+-       }
+-     },
+-     "packages/cli": {
+  ++ "name": "@change-logger/cli",
+-       "version": "1.0.0",
+  +- "license": "ISC"
+  ++ "license": "ISC",
+  ++ "dependencies": {
+  ++ "@octokit/rest": "^19.0.0",
+  ++ "commander": "^9.0.0",
+  ++ "dotenv": "^16.0.0"
+  ++ },
+  ++ "devDependencies": {
+  ++ "@octokit/types": "^14.0.0",
+  ++ "@types/node": "^18.0.0",
+  ++ "typescript": "^4.9.0"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/@octokit/openapi-types": {
+  ++ "version": "25.0.0",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-25.0.0.tgz",
+  ++ "integrity": "sha512-FZvktFu7HfOIJf2BScLKIEYjDsw6RKc7rBJCdvCTfKsVnx2GEB/Nbzjr29DUdb7vQhlzS/j8qDzdditP0OC6aw==",
+  ++ "dev": true,
+  ++ "license": "MIT"
+  ++ },
+  ++ "packages/cli/node_modules/@octokit/types": {
+  ++ "version": "14.0.0",
+  ++ "resolved": "https://registry.npmjs.org/@octokit/types/-/types-14.0.0.tgz",
+  ++ "integrity": "sha512-VVmZP0lEhbo2O1pdq63gZFiGCKkm8PPp8AUOijlwPO6hojEVjspA0MWKP7E4hbvGxzFKNqKr6p0IYtOH/Wf/zA==",
+  ++ "dev": true,
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "@octokit/openapi-types": "^25.0.0"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/@types/node": {
+  ++ "version": "18.19.100",
+  ++ "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.100.tgz",
+  ++ "integrity": "sha512-ojmMP8SZBKprc3qGrGk8Ujpo80AXkrP7G2tOT4VWr5jlr5DHjsJF+emXJz+Wm0glmy4Js62oKMdZZ6B9Y+tEcA==",
+  ++ "dev": true,
+  ++ "license": "MIT",
+  ++ "dependencies": {
+  ++ "undici-types": "~5.26.4"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/commander": {
+  ++ "version": "9.5.0",
+  ++ "resolved": "https://registry.npmjs.org/commander/-/commander-9.5.0.tgz",
+  ++ "integrity": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+  ++ "license": "MIT",
+  ++ "engines": {
+  ++ "node": "^12.20.0 || >=14"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/typescript": {
+  ++ "version": "4.9.5",
+  ++ "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
+  ++ "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+  ++ "dev": true,
+  ++ "license": "Apache-2.0",
+  ++ "bin": {
+  ++ "tsc": "bin/tsc",
+  ++ "tsserver": "bin/tsserver"
+  ++ },
+  ++ "engines": {
+  ++ "node": ">=4.2.0"
+  ++ }
+  ++ },
+  ++ "packages/cli/node_modules/undici-types": {
+  ++ "version": "5.26.5",
+  ++ "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
+  ++ "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
+  ++ "dev": true,
+  ++ "license": "MIT"
+-     },
+-     "packages/eslint-config": {
+-       "name": "@repo/eslint-config",
+- ***
+- File: package.json
+- Status: modified
+- Additions: 3
+- Deletions: 1
+- Changes: 4
+- +Patch:
+  +@@ -6,9 +6,11 @@
+-     "dev": "turbo run dev",
+-     "lint": "turbo run lint",
+-     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+  +- "check-types": "turbo run check-types"
+  ++ "check-types": "turbo run check-types",
+  ++ "changelog": "node packages/cli/dist/index.js"
+- },
+- "devDependencies": {
+  ++ "@change-logger/cli": "workspace:\*",
+-     "@types/node": "^22.15.18",
+-     "prettier": "^3.5.3",
+-     "turbo": "^2.5.3",
+- ***
+- File: packages/cli/package.json
+- Status: modified
+- Additions: 16
+- Deletions: 3
+- Changes: 19
+- +Patch:
+  +@@ -1,12 +1,25 @@
+- {
+  +- "name": "cli",
+  ++ "name": "@change-logger/cli",
+- "version": "1.0.0",
+  +- "main": "index.js",
+  ++ "main": "dist/index.js",
+  ++ "type": "commonjs",
+- "scripts": {
+  ++ "build": "tsc && node -e \"require('fs').writeFileSync('dist/index.js', '#!/usr/bin/env node\\n' + require('fs').readFileSync('dist/index.js', 'utf8'))\"",
+  ++ "dev": "tsc -w",
+-     "test": "echo \"Error: no test specified\" && exit 1"
+- },
+- "keywords": [],
+- "author": "",
+- "license": "ISC",
+  +- "description": ""
+  ++ "description": "",
+  ++ "dependencies": {
+  ++ "@octokit/rest": "^19.0.0",
+  ++ "commander": "^9.0.0",
+  ++ "dotenv": "^16.0.0"
+  ++ },
+  ++ "devDependencies": {
+  ++ "@octokit/types": "^14.0.0",
+  ++ "@types/node": "^18.0.0",
+  ++ "typescript": "^4.9.0"
+  ++ }
+- }
+- ***
+- File: packages/cli/src/README
+- Status: added
+- Additions: 2
+- Deletions: 0
+- Changes: 2
+- +Patch:
+  +@@ -0,0 +1,2 @@
+  ++change-logger generateChangeLog -r owner/repo -b modularization -s dev -d code_diffs.md
+  ++change-logger analyze-changes -d code_diffs.md -o change_analysis.md
+- ***
+- File: packages/cli/src/commands/analyze-changes.ts
+- Status: added
+- Additions: 27
+- Deletions: 0
+- Changes: 27
+- +Patch:
+  +@@ -0,0 +1,27 @@
+  ++import { Command } from 'commander';
+  ++import { analyzeChanges } from '../utils/analyze-changes';
+  ++
+  ++export function createAnalyzeChangesCommand(): Command {
+  ++ return new Command('analyze-changes')
+  ++ .description('Analyze code changes and generate a human-readable report')
+  ++ .option(
+  ++ '-d, --diff <file>',
+  ++ 'Input file containing code differences',
+  ++ 'CODE_DIFFS.md'
+  ++ )
+  ++ .option(
+  ++ '-o, --output <file>',
+  ++ 'Output file for the analysis report',
+  ++ 'CHANGE_ANALYSIS.md'
+  ++ )
+  ++ .action(async (options) => {
+  ++ try {
+  ++ await analyzeChanges({
+  ++ diffFile: options.diff,
+  ++ outputFile: options.output,
+  ++ });
+  ++ } catch (error) {
+  ++ process.exit(1);
+  ++ }
+  ++ });
+  ++}
+- ***
+- File: packages/cli/src/config/config.ts
+- Status: modified
+- Additions: 3
+- Deletions: 3
+- Changes: 6
+- +Patch:
+  +@@ -1,6 +1,6 @@
+  +-import fs from 'fs';
+  +-import path from 'path';
+  +-import os from 'os';
+  ++import _ as fs from 'fs';
+  ++import _ as path from 'path';
+  ++import \* as os from 'os';
+-
+- interface Config {
+- defaultRepo: string;
+- ***
+- File: packages/cli/src/index.ts
+- Status: modified
+- Additions: 285
+- Deletions: 24
+- Changes: 309
+- +Patch:
+  +@@ -1,10 +1,18 @@
+- import { Command } from 'commander';
+- import { Octokit } from '@octokit/rest';
+  +-import dotenv from 'dotenv';
+  +-import { generateMarkdown } from './utils/markdown';
+  ++import _ as dotenv from 'dotenv';
+  ++import _ as fs from 'fs';
+  ++import \* as path from 'path';
+  ++import { execSync } from 'child_process';
+  ++import { generateMarkdown, formatFileDiff } from './utils/markdown';
+- import { getConfig } from './config/config';
+- import { setupGitHooks } from './utils/git-hooks';
+  +-import fs from 'fs';
+  ++import { createAnalyzeChangesCommand } from './commands/analyze-changes';
+  ++import {
+  ++ getCurrentRepo,
+  ++ getCurrentBranch,
+  ++ getDefaultStableBranch,
+  ++} from './utils/git-utils';
+-
+- dotenv.config();
+- +@@ -15,45 +23,186 @@ program
+- .description('CLI tool for generating changelogs from GitHub commits')
+- .version('1.0.0');
+- ++interface GitHubError extends Error {
+  ++ status?: number;
+  ++}
+  ++
+- program
+- .command('generateChangeLog')
+- .description('Generate changelog from recent commits')
+- .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+  +- .option('-b, --base <branch>', 'Base branch to compare against', 'main')
+  ++ .option('-b, --base <branch>', 'Branch to compare (default: current branch)')
+- .option('-o, --output <file>', 'Output file path', 'CHANGELOG.md')
+  ++ .option('-s, --stable <branch>', 'Stable branch to compare against')
+  ++ .option(
+  ++ '-d, --diff <file>',
+  ++ 'Output file for code differences',
+  ++ 'CODE_DIFFS.md'
+  ++ )
+- .action(async (options) => {
+-     try {
+-       const config = await getConfig();
+-       const octokit = new Octokit({
+-         auth: process.env.GITHUB_TOKEN,
+-       });
+- +- const [owner, repo] = (options.repo || config.defaultRepo).split('/');
+  ++ // Get repository information
+  ++ let owner: string;
+  ++ let repo: string;
+  ++ if (options.repo) {
+  ++ [owner, repo] = options.repo.split('/');
+  ++ } else {
+  ++ try {
+  ++ const repoInfo = getCurrentRepo();
+  ++ owner = repoInfo.owner;
+  ++ repo = repoInfo.repo;
+  ++ console.log(`\n📦 Using repository: ${owner}/${repo}`);
+  ++ } catch (repoError) {
+  ++ console.error('\n❌ Error getting repository information:');
+  ++ console.error('Could not determine current repository.');
+  ++ console.error('Please either:');
+  ++ console.error('1. Run this command from a git repository, or');
+  ++ console.error('2. Specify the repository using -r owner/repo');
+  ++ process.exit(1);
+  ++ }
+  ++ }
+- +- // Get the latest release
+  +- const { data: releases } = await octokit.repos.listReleases({
+  +- owner,
+  +- repo,
+  +- });
+  ++ // Get branch information
+  ++ let currentBranch: string;
+  ++ let stableBranch: string;
+  ++ try {
+  ++ currentBranch = options.base || getCurrentBranch();
+  ++ console.log(`\n🌿 Current branch: ${currentBranch}`);
+- +- const latestRelease = releases[0];
+  +- const baseCommit = latestRelease?.target_commitish || options.base;
+  ++ stableBranch =
+  ++ options.stable ||
+  ++ (await getDefaultStableBranch(octokit, owner, repo));
+  ++ console.log(`🌿 Stable branch: ${stableBranch}`);
+  ++ } catch (branchError) {
+  ++ console.error('\n❌ Error getting branch information:');
+  ++ console.error(
+  ++ branchError instanceof Error ? branchError.message : 'Unknown error'
+  ++ );
+  ++ process.exit(1);
+  ++ }
+- +- // Get commits between latest release and current branch
+  +- const { data: commits } = await octokit.repos.compareCommits({
+  +- owner,
+  +- repo,
+  +- base: baseCommit,
+  +- head: 'HEAD',
+  +- });
+  ++ console.log(`\n🔄 Generating changelog for ${owner}/${repo}`);
+  ++ console.log(`📊 Comparing ${currentBranch} against ${stableBranch}`);
+  ++
+  ++ // Get the stable branch state
+  ++ try {
+  ++ const { data: stableBranchData } = await octokit.repos.getBranch({
+  ++ owner,
+  ++ repo,
+  ++ branch: stableBranch,
+  ++ });
+  ++ const stableCommit = stableBranchData.commit.sha;
+  ++ console.log(`✅ Found stable branch commit: ${stableCommit}`);
+  ++
+  ++ // Get the current branch state
+  ++ const { data: currentBranchData } = await octokit.repos.getBranch({
+  ++ owner,
+  ++ repo,
+  ++ branch: currentBranch,
+  ++ });
+  ++ const currentCommit = currentBranchData.commit.sha;
+  ++ console.log(`✅ Found current branch commit: ${currentCommit}`);
+  ++
+  ++ // Get commits between stable branch and current branch
+  ++ const { data: compareData } = await octokit.repos.compareCommits({
+  ++ owner,
+  ++ repo,
+  ++ base: stableCommit,
+  ++ head: currentCommit,
+  ++ });
+  ++
+  ++ const commits = compareData.commits || [];
+  ++ const files = compareData.files || [];
+  ++
+  ++ if (commits.length === 0) {
+  ++ console.warn(
+  ++ '\n⚠️ Warning: No commits found between stable and current branch.'
+  ++ );
+  ++ } else {
+  ++ console.log(
+  ++ `\n📝 Found ${commits.length} commits and ${files.length} changed files`
+  ++ );
+  ++ }
+  ++
+  ++ // Get the latest release for version information
+  ++ const { data: releases } = await octokit.repos.listReleases({
+  ++ owner,
+  ++ repo,
+  ++ });
+  ++
+  ++ // Generate the changelog markdown
+  ++ const latestRelease = releases[0];
+  ++ const markdown = generateMarkdown(commits, latestRelease, {
+  ++ stableBranch,
+  ++ currentBranch,
+  ++ lastMergedCommit: stableCommit,
+  ++ currentCommit,
+  ++ lastMergedPR: 0,
+  ++ });
+- +- const markdown = generateMarkdown(commits, latestRelease);
+  ++ // Generate the code differences file
+  ++ let diffContent = `# Code Differences between ${stableBranch} and ${currentBranch}\n\n`;
+  ++ diffContent += `## Summary\n`;
+  ++ diffContent += `- Total files changed: ${files.length}\n`;
+  ++ diffContent += `- Total additions: ${files.reduce((sum, file) => sum + file.additions, 0)}\n`;
+  ++ diffContent += `- Total deletions: ${files.reduce((sum, file) => sum + file.deletions, 0)}\n\n`;
+- +- // Write to file
+  +- await fs.promises.writeFile(options.output, markdown);
+  +- console.log(`Changelog generated successfully at ${options.output}`);
+  ++ diffContent += `## File Changes\n`;
+  ++ files.forEach((file) => {
+  ++ diffContent += formatFileDiff(file);
+  ++ });
+  ++
+  ++ // Write both files
+  ++ const outputPath = path.resolve(process.cwd(), options.output);
+  ++ const diffPath = path.resolve(process.cwd(), options.diff);
+  ++
+  ++ try {
+  ++ console.log(`\nSaving files:`);
+  ++ console.log(`Changelog: ${outputPath}`);
+  ++ console.log(`Code diffs: ${diffPath}\n`);
+  ++
+  ++ await fs.promises.writeFile(outputPath, markdown);
+  ++ console.log('✅ Changelog saved successfully');
+  ++
+  ++ await fs.promises.writeFile(diffPath, diffContent);
+  ++ console.log('✅ Code differences saved successfully');
+  ++
+  ++ console.log(`\nFiles have been saved to:`);
+  ++ console.log(`📝 Changelog: ${outputPath}`);
+  ++ console.log(`📝 Code diffs: ${diffPath}`);
+  ++ } catch (writeError) {
+  ++ console.error('\n❌ Error saving files:');
+  ++ console.error(
+  ++ `Failed to save to: ${writeError instanceof Error ? writeError.message : 'Unknown error'}`
+  ++ );
+  ++ console.error(`Attempted to save to:`);
+  ++ console.error(`- Changelog: ${outputPath}`);
+  ++ console.error(`- Code diffs: ${diffPath}`);
+  ++ process.exit(1);
+  ++ }
+  ++ } catch (error) {
+  ++ const err = error as Error;
+  ++ console.error('\n❌ Error generating changelog:');
+  ++ console.error(err.message);
+  ++ if (err.stack) {
+  ++ console.error('\nStack trace:');
+  ++ console.error(err.stack);
+  ++ }
+  ++ process.exit(1);
+  ++ }
+-     } catch (error) {
+  +- console.error('Error generating changelog:', error);
+  ++ const err = error as Error;
+  ++ console.error('\n❌ Error generating changelog:');
+  ++ console.error(err.message);
+  ++ if (err.stack) {
+  ++ console.error('\nStack trace:');
+  ++ console.error(err.stack);
+  ++ }
+-       process.exit(1);
+-     }
+- });
+  +@@ -71,4 +220,116 @@ program
+-     }
+- });
+- ++program
+  ++ .command('test-token')
+  ++ .description('Test GitHub token permissions')
+  ++ .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+  ++ .action(async (options) => {
+  ++ try {
+  ++ const octokit = new Octokit({
+  ++ auth: process.env.GITHUB_TOKEN,
+  ++ });
+  ++
+  ++ if (!process.env.GITHUB_TOKEN) {
+  ++ throw new Error('GITHUB_TOKEN is not set');
+  ++ }
+  ++
+  ++ console.log('Testing GitHub token...\n');
+  ++
+  ++ // Test 1: Check if token is valid
+  ++ console.log('1. Testing token validity...');
+  ++ const { data: user } = await octokit.users.getAuthenticated();
+  ++ console.log('✅ Token is valid');
+  ++ console.log(`   Authenticated as: ${user.login}\n`);
+  ++ console.log(' Raw user data:', JSON.stringify(user, null, 2), '\n');
+  ++ console.log(
+  ++ ' Octokit object structure:',
+  ++ {
+  ++ auth: octokit.auth,
+  ++ log: octokit.log,
+  ++ request: octokit.request,
+  ++ rest: Object.keys(octokit.rest),
+  ++ graphql: octokit.graphql,
+  ++ paginate: octokit.paginate,
+  ++ hook: octokit.hook,
+  ++ },
+  ++ '\n'
+  ++ );
+  ++
+  ++ // Test 2: Check organization access
+  ++ console.log('2. Testing organization access...');
+  ++ try {
+  ++ const { data: orgs } = await octokit.orgs.listForUser({
+  ++ username: user.login,
+  ++ });
+  ++ console.log('✅ Organization access successful');
+  ++ console.log(
+  ++ ' Raw organizations data:',
+  ++ JSON.stringify(orgs, null, 2),
+  ++ '\n'
+  ++ );
+  ++
+  ++ console.log(' Organizations you have access to:');
+  ++ if (orgs.length === 0) {
+  ++ console.log(' No organizations found in response');
+  ++ } else {
+  ++ orgs.forEach((org) => {
+  ++ console.log(`   - ${org.login}`);
+  ++ });
+  ++ }
+  ++ console.log();
+  ++ } catch (error) {
+  ++ console.error('❌ Failed to list organizations:', error);
+  ++ console.error('Full error object:', JSON.stringify(error, null, 2));
+  ++ }
+  ++
+  ++ // Test 3: Check repository access
+  ++ if (options.repo) {
+  ++ console.log('3. Testing repository access...');
+  ++ const [owner, repo] = options.repo.split('/');
+  ++ console.log(`   Attempting to access: ${owner}/${repo}`);
+  ++
+  ++ try {
+  ++ // First try to get organization details
+  ++ const { data: orgData } = await octokit.orgs.get({
+  ++ org: owner,
+  ++ });
+  ++ console.log(`   Organization found: ${orgData.login}`);
+  ++
+  ++ // Check organization membership
+  ++ const { data: membership } = await octokit.orgs.getMembershipForUser({
+  ++ org: owner,
+  ++ username: user.login,
+  ++ });
+  ++ console.log(`   Your role in organization: ${membership.role}`);
+  ++
+  ++ // List repositories
+  ++ console.log(' Listing repositories in organization...');
+  ++ const { data: repos } = await octokit.repos.listForOrg({
+  ++ org: owner,
+  ++ type: 'all',
+  ++ });
+  ++
+  ++ console.log(' Available repositories:');
+  ++ repos.forEach((repo) => {
+  ++ console.log(`   - ${repo.name}`);
+  ++ });
+  ++ } catch (error) {
+  ++ console.error('❌ Error accessing repository:', error);
+  ++ console.error('Full error object:', JSON.stringify(error, null, 2));
+  ++ }
+  ++ }
+  ++
+  ++ console.log('All tests passed! Your token has the correct permissions.');
+  ++ } catch (error) {
+  ++ const err = error as Error;
+  ++ console.error('❌ Test failed:', err.message);
+  ++ console.error('Full error object:', JSON.stringify(error, null, 2));
+  ++ process.exit(1);
+  ++ }
+  ++ });
+  ++
+  ++// Add the analyze-changes command
+  ++program.addCommand(createAnalyzeChangesCommand());
+  ++
+- program.parse();
+- ***
+- File: packages/cli/src/utils/analyze-changes.ts
+- Status: added
+- Additions: 61
+- Deletions: 0
+- Changes: 61
+- +Patch:
+  +@@ -0,0 +1,61 @@
+  ++import \* as fs from 'fs';
+  ++
+  ++interface AnalysisOptions {
+  ++ diffFile: string;
+  ++ outputFile: string;
+  ++}
+  ++
+  ++export async function analyzeChanges(options: AnalysisOptions): Promise<void> {
+  ++ try {
+  ++ // Read the code differences file
+  ++ const diffContent = await fs.promises.readFile(options.diffFile, 'utf-8');
+  ++
+  ++ // Format the content for AI analysis
+  ++ const analysisPrompt = `Please analyze the following code changes and generate a human-readable report that:
+++1. Summarizes the main changes and new features
+++2. Explains the impact of these changes
+++3. Highlights any breaking changes or important updates
+++4. Provides a technical overview of the changes
+++
+++Here are the code changes to analyze:
+++
+++${diffContent}`;
+  ++
+  ++ // Generate the analysis report
+  ++ let reportContent = `# Change Analysis Report\n\n`;
+  ++ reportContent += `## Overview\n`;
+  ++ reportContent += `This report provides an analysis of the code changes between versions.\n\n`;
+  ++
+  ++ // Add the AI analysis
+  ++ reportContent += `## AI Analysis\n`;
+  ++ reportContent += `\`\`\`\n`;
+++    reportContent += `[AI Analysis will be inserted here]\n`;
+++    reportContent += `\`\`\`\n\n`;
+++
+++    // Add the original changes for reference
+++    reportContent += `## Original Changes\n`;
+++    reportContent += `For reference, here are the original code changes:\n\n`;
+++    reportContent += diffContent;
+++
+++    // Write the analysis report
+++    await fs.promises.writeFile(options.outputFile, reportContent);
+++    console.log(`Analysis report generated at ${options.outputFile}`);
+  ++
+  ++ // Print instructions for AI analysis
+  ++ console.log('\nTo analyze these changes with AI:');
+  ++ console.log('1. Copy the contents of the analysis report');
+  ++ console.log(
+  ++ '2. Paste it into your preferred AI tool (e.g., ChatGPT, Claude)'
+  ++ );
+  ++ console.log(
+  ++ '3. Ask the AI to analyze the changes and generate a human-readable report'
+  ++ );
+  ++ console.log(
+  ++ '4. The AI will provide insights about new features, breaking changes, and technical details'
+  ++ );
+  ++ } catch (error) {
+  ++ const err = error as Error;
+  ++ console.error('Error:', err.message);
+  ++ throw err;
+  ++ }
+  ++}
+- ***
+- File: packages/cli/src/utils/git-hooks.ts
+- Status: modified
+- Additions: 2
+- Deletions: 2
+- Changes: 4
+- +Patch:
+  +@@ -1,5 +1,5 @@
+  +-import fs from 'fs';
+  +-import path from 'path';
+  ++import _ as fs from 'fs';
+  ++import _ as path from 'path';
+- import { execSync } from 'child_process';
+-
+- const HOOK_CONTENT = `#!/bin/sh
+- ***
+- File: packages/cli/src/utils/git-utils.ts
+- Status: added
+- Additions: 64
+- Deletions: 0
+- Changes: 64
+- +Patch:
+  +@@ -0,0 +1,64 @@
+  ++import { execSync } from 'child*process';
+  ++import { Octokit } from '@octokit/rest';
+  ++
+  ++/\*\*
+  ++ * Gets the current git repository information from the remote origin
+  ++ _ @returns Object containing owner and repo name
+  ++ _ @throws Error if not in a git repository or no remote origin found
+  ++ _/
+  ++export function getCurrentRepo(): { owner: string; repo: string } {
+  ++ try {
+  ++ const remoteUrl = execSync('git config --get remote.origin.url')
+  ++ .toString()
+  ++ .trim();
+  ++ // Handle both HTTPS and SSH URLs
+  ++ const match = remoteUrl.match(
+  ++ /github\.com[:/]([^/]+)\/([^/]+?)(?:\.git)?$/
+  ++ );
+  ++ if (!match) {
+  ++ throw new Error('Could not parse GitHub repository URL');
+  ++ }
+  ++ return {
+  ++ owner: match[1],
+  ++ repo: match[2],
+  ++ };
+  ++ } catch (error) {
+  ++ throw new Error('Not in a git repository or no remote origin found');
+  ++ }
+  ++}
+  ++
+  ++/\*\*
+  ++ _ Gets the name of the current git branch
+  ++ _ @returns Current branch name
+  ++ _ @throws Error if could not determine current branch
+  ++ _/
+  ++export function getCurrentBranch(): string {
+  ++ try {
+  ++ return execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+  ++ } catch (error) {
+  ++ throw new Error('Could not determine current branch');
+  ++ }
+  ++}
+  ++
+  ++/\*_
+  ++ _ Gets the default stable branch for a repository using GitHub API
+  ++ _ @param octokit - Octokit instance for GitHub API calls
+  ++ _ @param owner - Repository owner
+  ++ _ @param repo - Repository name
+  ++ \_ @returns Default branch name, falls back to 'main' if API call fails
+  ++ \*/
+  ++export async function getDefaultStableBranch(
+  ++ octokit: Octokit,
+  ++ owner: string,
+  ++ repo: string
+  ++): Promise<string> {
+  ++ try {
+  ++ const { data } = await octokit.repos.get({ owner, repo });
+  ++ return data.default_branch;
+  ++ } catch (error) {
+  ++ console.warn(
+  ++ 'Could not determine default branch, using "main" as fallback'
+  ++ );
+  ++ return 'main';
+  ++ }
+  ++}
+- ***
+- File: packages/cli/src/utils/markdown.ts
+- Status: modified
+- Additions: 49
+- Deletions: 3
+- Changes: 52
+- +Patch:
+  +@@ -1,4 +1,15 @@
+  +-import { Commit } from '@octokit/rest';
+  ++interface Commit {
+  ++ commit: {
+  ++ message: string;
+  ++ author: {
+  ++ name?: string;
+  ++ email?: string;
+  ++ date?: string;
+  ++ } | null;
+  ++ };
+  ++ sha: string;
+  ++ html_url: string;
+  ++}
+-
+- interface CategorizedCommits {
+- features: Commit[];
+  +@@ -7,16 +18,30 @@ interface CategorizedCommits {
+- other: Commit[];
+- }
+- ++interface MarkdownOptions {
+  ++ stableBranch: string;
+  ++ currentBranch: string;
+  ++ lastMergedCommit: string;
+  ++ currentCommit: string;
+  ++ lastMergedPR: number;
+  ++}
+  ++
+- export function generateMarkdown(
+- commits: Commit[],
+  +- latestRelease: any
+  ++ latestRelease: any,
+  ++ options: MarkdownOptions
+- ): string {
+- const categorized = categorizeCommits(commits);
+-
+- let markdown = `# Changelog\n\n`;
+- ++ // Add comparison information
+  ++ markdown += `## Changes since last merged PR (#${options.lastMergedPR})\n\n`;
+  ++ markdown += `- Last Merged PR: #${options.lastMergedPR} (${options.lastMergedCommit.substring(0, 7)})\n`;
+  ++ markdown += `- Current Branch: ${options.currentBranch} (${options.currentCommit.substring(0, 7)})\n\n`;
+  ++
+- if (latestRelease) {
+  +- markdown += `## Changes since ${latestRelease.tag_name}\n\n`;
+  ++ markdown += `### Latest Release: ${latestRelease.tag_name}\n\n`;
+- }
+-
+- if (categorized.breaking.length > 0) {
+  +@@ -51,6 +76,15 @@ export function generateMarkdown(
+-     markdown += '\n';
+- }
+- ++ // Add commit details section
+  ++ markdown += `## Detailed Commit List\n\n`;
+  ++ commits.forEach((commit) => {
+  ++ markdown += `### ${commit.commit.message.split('\n')[0]}\n\n`;
+  ++ markdown += `- **Author:** ${commit.commit.author?.name}\n`;
+  ++ markdown += `- **Date:** ${new Date(commit.commit.author?.date || '').toLocaleString()}\n`;
+  ++ markdown += `- **Commit:** [${commit.sha.substring(0, 7)}](${commit.html_url})\n\n`;
+  ++ });
+  ++
+- return markdown;
+- }
+- +@@ -88,3 +122,15 @@ function formatCommit(commit: Commit): string {
+- const hash = commit.sha.substring(0, 7);
+- return `${message} (${hash})`;
+- }
+  ++
+  ++// Add this function to format the file differences
+  ++export function formatFileDiff(file: any): string {
+  ++ return `++  File: ${file.filename}
+++  Status: ${file.status}
+++  Additions: ${file.additions}
+++  Deletions: ${file.deletions}
+++  Changes: ${file.changes}
+++  ${file.patch ?`\nPatch:\n${file.patch}` : ''}
+++  ---`;
+  ++}
+- ***
+- File: packages/cli/tsconfig.json
+- Status: added
+- Additions: 8
+- Deletions: 0
+- Changes: 8
+- +Patch:
+  +@@ -0,0 +1,8 @@
+  ++{
+  ++ "extends": "../../tsconfig.base.json",
+  ++ "compilerOptions": {
+  ++ "outDir": "./dist",
+  ++ "rootDir": "./src"
+  ++ },
+  ++ "include": ["src/**/*"]
+  ++}
+- ***
+- File: tsconfig.base.json
+- Status: added
+- Additions: 13
+- Deletions: 0
+- Changes: 13
+- +Patch:
+  +@@ -0,0 +1,13 @@
+  ++{
+  ++ "compilerOptions": {
+  ++ "target": "ES2020",
+  ++ "module": "CommonJS",
+  ++ "moduleResolution": "Node",
+  ++ "esModuleInterop": true,
+  ++ "forceConsistentCasingInFileNames": true,
+  ++ "strict": true,
+  ++ "skipLibCheck": true,
+  ++ "resolveJsonModule": true,
+  ++ "baseUrl": "."
+  ++ }
+  ++}
+- ***
+  \ No newline at end of file
+  ***
+  File: README.md
+  Status: modified
+  Additions: 104
+  Deletions: 0
+  Changes: 104
+
+Patch:
+@@ -170,3 +170,107 @@ This project uses:
+
+## License
+
+[Your chosen license]
+
+- +# Change Logger CLI
+- +A CLI tool for generating changelogs by comparing commits between branches in your GitHub repository.
+- +## Installation
+- +`bash
++npm install -g change-logger
++`
+- +## Configuration
+- +1. Set up your GitHub token:
+- +`bash
++export GITHUB_TOKEN=your_github_token
++`
+- +2. (Optional) Create a config file at `~/.change-logger.json`:
+- +```json
+  +{
+- "defaultRepo": "owner/repo",
+- "githubToken": "your_github_token",
+- "outputPath": "CHANGELOG.md"
+  +}
+  +```
+- +## Usage
+- +### Generate Changelog
+- +`bash
++change-logger generateChangeLog [options]
++`
+- +Options:
+- +- `-r, --repo <repo>`: GitHub repository (owner/repo)
+  +- `-b, --base <branch>`: Base branch to compare against (default: 'main')
+  +- `-o, --output <file>`: Output file path (default: 'CHANGELOG.md')
+  +- `-s, --stable <branch>`: Stable branch to compare against (default: 'main')
+- +Example:
+- +`bash
++change-logger generateChangeLog -r octocat/Hello-World -b feature-branch -s main
++`
+- +### Set Up Git Hooks
+- +To automatically generate changelogs on commit:
+- +`bash
++change-logger setup-hooks
++`
+- +## Output Format
+- +The generated changelog includes:
+- +- Comparison between stable and current branches
+  +- Categorized changes (breaking, features, fixes, other)
+  +- Detailed commit information
+  +- Links to GitHub commits
+- +Example output:
+- +```markdown
+  +# Changelog
+- +## Changes between main and feature-branch
+- +- Stable Branch: main (a1b2c3d)
+  +- Current Branch: feature-branch (e4f5g6h)
+- +### New Features
+- +- Added new authentication system (a1b2c3d)
+- +### Bug Fixes
+- +- Fixed login page crash (e4f5g6h)
+- +## Detailed Commit List
+- +...
+  +```
+- +## Requirements
+- +- Node.js 14+
+  +- GitHub repository
+  +- GitHub personal access token
+- +## License
+- +MIT
+  +TESTING SOME CHANGES
+- +steps:
+  +npm install change-logger
+  +npm run changelog generateChangeLog -r enigmawun/change-logger
+  ***
+  File: apps/web/app/globals.css
   Status: modified
   Additions: 2
-  Deletions: 2
-  Changes: 4
-  
-Patch:
-@@ -1,10 +1,10 @@
--<!doctype html>
-+<!DOCTYPE html>
- <html lang="en">
-   <head>
-     <meta charset="UTF-8" />
-     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
--    <title>Vite + React + TS</title>
-+    <title>Change Log Generator</title>
-   </head>
-   <body>
-     <div id="root"></div>
-  ---
-  File: package-lock.json
-  Status: added
-  Additions: 6521
   Deletions: 0
-  Changes: 6521
-  
-  ---
-  File: package.json
-  Status: modified
-  Additions: 48
-  Deletions: 3
-  Changes: 51
-  
+  Changes: 2
+
 Patch:
-@@ -7,21 +7,66 @@
-     "dev": "vite",
-     "build": "tsc -b && vite build",
-     "lint": "eslint .",
--    "preview": "vite preview"
-+    "preview": "vite preview",
-+    "serve": "ts-node server/index.ts",
-+    "change-logger": "node -r dotenv/config ./node_modules/change-logger-api/dist/index.js dotenv_config_path=.env",
-+    "generate-changelog": "node -r dotenv/config ./node_modules/.bin/change-logger-cli generateChangeLog dotenv_config_path=.env"
-   },
-   "dependencies": {
-+    "@hookform/resolvers": "^5.0.1",
-+    "@radix-ui/react-alert-dialog": "^1.1.14",
-+    "@radix-ui/react-checkbox": "^1.3.2",
-+    "@radix-ui/react-collapsible": "^1.1.11",
-+    "@radix-ui/react-dialog": "^1.1.14",
-+    "@radix-ui/react-dropdown-menu": "^2.1.15",
-+    "@radix-ui/react-icons": "^1.3.2",
-+    "@radix-ui/react-label": "^2.1.7",
-+    "@radix-ui/react-popover": "^1.1.14",
-+    "@radix-ui/react-scroll-area": "^1.2.9",
-+    "@radix-ui/react-select": "^2.2.5",
-+    "@radix-ui/react-separator": "^1.1.7",
-+    "@radix-ui/react-slot": "^1.2.3",
-+    "@radix-ui/react-switch": "^1.2.5",
-+    "@radix-ui/react-tabs": "^1.1.12",
-+    "@radix-ui/react-tooltip": "^1.2.7",
-+    "@tabler/icons-react": "^3.33.0",
-+    "@tailwindcss/vite": "^4.1.7",
-+    "@tanstack/react-table": "^8.21.3",
-+    "axios": "^1.9.0",
-+    "change-logger-api": "^1.0.1",
-+    "change-logger-cli": "^1.0.4",
-+    "class-variance-authority": "^0.7.1",
-+    "clsx": "^2.1.1",
-+    "cmdk": "^1.1.1",
-+    "cors": "^2.8.5",
-+    "express": "^5.1.0",
-+    "lucide-react": "^0.511.0",
-+    "nodemon": "^3.1.10",
-+    "openai": "^4.103.0",
-     "react": "^18.3.1",
--    "react-dom": "^18.3.1"
-+    "react-dom": "^18.3.1",
-+    "react-hook-form": "^7.56.4",
-+    "tailwind-merge": "^3.3.0",
-+    "tailwindcss": "^4.1.7",
-+    "ts-node": "^10.9.2",
-+    "zod": "^3.25.28"
-   },
-   "devDependencies": {
-     "@eslint/js": "^9.9.0",
--    "@types/react": "^18.3.3",
-+    "@types/axios": "^0.9.36",
-+    "@types/express": "^5.0.2",
-+    "@types/node": "^22.15.21",
-+    "@types/react": "^18.3.22",
-     "@types/react-dom": "^18.3.0",
-+    "@typescript-eslint/eslint-plugin": "^8.32.1",
-+    "@typescript-eslint/parser": "^8.32.1",
-     "@vitejs/plugin-react": "^4.3.1",
-+    "dotenv": "^16.5.0",
-     "eslint": "^9.9.0",
-     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-     "eslint-plugin-react-refresh": "^0.4.9",
-     "globals": "^15.9.0",
-+    "tw-animate-css": "^1.3.0",
-     "typescript": "^5.5.3",
-     "typescript-eslint": "^8.0.1",
-     "vite": "^5.4.1"
-  ---
-  File: src/.env
-  Status: added
-  Additions: 4
-  Deletions: 0
-  Changes: 4
-  
-Patch:
-@@ -0,0 +1,4 @@
-+PORT=3000
-+OPENAI_API_KEY=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
-+OPENAI_ASSISTANT_ID=asst_EhGWSCLJFLa8J5rZoiiYl3Zv
-+GITHUB_TOKEN=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
-  ---
-  File: src/App.css
-  Status: modified
-  Additions: 0
-  Deletions: 13
-  Changes: 13
-  
-Patch:
-@@ -5,19 +5,6 @@
-   text-align: center;
- }
- 
--.logo {
--  height: 6em;
--  padding: 1.5em;
--  will-change: filter;
--  transition: filter 300ms;
--}
--.logo:hover {
--  filter: drop-shadow(0 0 2em #646cffaa);
--}
--.logo.react:hover {
--  filter: drop-shadow(0 0 2em #61dafbaa);
--}
--
- @keyframes logo-spin {
-   from {
-     transform: rotate(0deg);
-  ---
-  File: src/App.tsx
-  Status: modified
-  Additions: 97
-  Deletions: 28
-  Changes: 125
-  
-Patch:
-@@ -1,35 +1,104 @@
--import { useState } from 'react'
--import reactLogo from './assets/react.svg'
--import viteLogo from '/vite.svg'
--import './App.css'
-+import { useState, useEffect } from 'react';
-+import React from 'react';
-+
-+import './App.css';
-+import { SearchProvider, useSearch } from './features/search/search-context';
-+import { SearchChanges } from './features/search/search';
-+import { Header } from '@/components/layout/header';
-+import { Breadcrumb } from '@/components/ui/breadcrumb';
-+import Changes from './features/changes';
-+import Summary from './features/summary';
-+import type { VersionLog } from '@/types/changelog';
-+import mockdata from '../CHANGE_ANALYSIS.md?raw';
-+
-+// Transform the mock data into the expected Changelog format
-+const transformMockData = (): VersionLog[] => {
-+  try {
-+    // Extract JSON from markdown content
-+    const jsonMatch = mockdata.match(/```json\n([\s\S]*?)\n```/);
-+    if (!jsonMatch) {
-+      console.error('No JSON found in markdown file');
-+      return [];
-+    }
-+
-+    const jsonData = JSON.parse(jsonMatch[1].trim());
-+    console.log('Parsed JSON data:', jsonData); // Debug log
-+
-+    // Validate the data structure
-+    if (!Array.isArray(jsonData) && !jsonData.changelog) {
-+      console.error('Invalid data structure:', jsonData);
-+      return [];
-+    }
-+
-+    // If it's a single object, wrap it in an array
-+    const data = Array.isArray(jsonData) ? jsonData : [jsonData];
-+    return data;
-+  } catch (error) {
-+    console.error('Error transforming mock data:', error);
-+    return [];
-+  }
-+};
- 
- function App() {
--  const [count, setCount] = useState(0)
-+  const [data, setData] = useState<VersionLog[]>([]);
-+
-+  useEffect(() => {
-+    const fetchData = () => {
-+      console.log('Raw mockdata:', mockdata); // Debug raw data
-+      const result = transformMockData();
-+      console.log('Transformed data:', result); // Debug transformed data
-+      setData(result);
-+    };
-+    fetchData();
-+  }, []);
-+
-+  // Don't render until we have data
-+  if (data.length === 0) {
-+    return <div>Loading...</div>;
-+  }
-+
-+  console.log('Rendering with data:', data); // Debug render data
- 
-   return (
--    <>
--      <div>
--        <a href="https://vitejs.dev" target="_blank">
--          <img src={viteLogo} className="logo" alt="Vite logo" />
--        </a>
--        <a href="https://react.dev" target="_blank">
--          <img src={reactLogo} className="logo react" alt="React logo" />
--        </a>
-+    <SearchProvider initialData={data}>
-+      <div className='container mx-auto p-4'>
-+        <Breadcrumb />
-+        <Header />
-+        <div className='my-4'>
-+          <SearchChanges />
-+        </div>
-+        <ChangelogList />
-       </div>
--      <h1>Vite + React</h1>
--      <div className="card">
--        <button onClick={() => setCount((count) => count + 1)}>
--          count is {count}
--        </button>
--        <p>
--          Edit <code>src/App.tsx</code> and save to test HMR
--        </p>
--      </div>
--      <p className="read-the-docs">
--        Click on the Vite and React logos to learn more
--      </p>
--    </>
--  )
-+    </SearchProvider>
-+  );
-+}
-+
-+function ChangelogList() {
-+  const { data, filteredData, isFiltered } = useSearch();
-+  const displayData = isFiltered ? filteredData : data;
-+
-+  console.log('ChangelogList data:', {
-+    data,
-+    filteredData,
-+    isFiltered,
-+    displayData,
-+  }); // Debug list data
-+
-+  if (!displayData || displayData.length === 0) {
-+    return <div>No changes found</div>;
-+  }
-+
-+  return (
-+    <div className='space-y-6'>
-+      {displayData.map((version: VersionLog) => (
-+        <React.Fragment key={version.version}>
-+          <Changes changelog={version.changelog} date={version.date}>
-+            <Summary summary={version.summary} version={version.version} />
-+          </Changes>
-+        </React.Fragment>
-+      ))}
-+    </div>
-+  );
- }
- 
--export default App
-+export default App;
-  ---
-  File: src/components/layout/data/searchdata.ts
-  Status: added
-  Additions: 184
-  Deletions: 0
-  Changes: 184
-  
-Patch:
-@@ -0,0 +1,184 @@
-+import {
-+  IconBarrierBlock,
-+  IconBrowserCheck,
-+  IconBug,
-+  IconChecklist,
-+  IconError404,
-+  IconHelp,
-+  IconLayoutDashboard,
-+  IconLock,
-+  IconLockAccess,
-+  IconMessages,
-+  IconNotification,
-+  IconPackages,
-+  IconPalette,
-+  IconServerOff,
-+  IconSettings,
-+  IconTool,
-+  IconUserCog,
-+  IconUserOff,
-+  IconUsers,
-+} from '@tabler/icons-react';
-+import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react';
-+import { type SidebarData } from '../types';
-+
-+export const sidebarData: SidebarData = {
-+  user: {
-+    name: 'satnaing',
-+    email: 'satnaingdev@gmail.com',
-+    avatar: '/avatars/shadcn.jpg',
-+  },
-+  teams: [
-+    {
-+      name: 'Shadcn Admin',
-+      logo: Command,
-+      plan: 'Vite + ShadcnUI',
-+    },
-+    {
-+      name: 'Acme Inc',
-+      logo: GalleryVerticalEnd,
-+      plan: 'Enterprise',
-+    },
-+    {
-+      name: 'Acme Corp.',
-+      logo: AudioWaveform,
-+      plan: 'Startup',
-+    },
-+  ],
-+  navGroups: [
-+    {
-+      title: 'General',
-+      items: [
-+        {
-+          title: 'Dashboard',
-+          url: '/',
-+          icon: IconLayoutDashboard,
-+        },
-+        {
-+          title: 'Tasks',
-+          url: '/tasks',
-+          icon: IconChecklist,
-+        },
-+        {
-+          title: 'Apps',
-+          url: '/apps',
-+          icon: IconPackages,
-+        },
-+        {
-+          title: 'Chats',
-+          url: '/chats',
-+          badge: '3',
-+          icon: IconMessages,
-+        },
-+        {
-+          title: 'Users',
-+          url: '/users',
-+          icon: IconUsers,
-+        },
-+      ],
-+    },
-+    {
-+      title: 'Pages',
-+      items: [
-+        {
-+          title: 'Auth',
-+          icon: IconLockAccess,
-+          items: [
-+            {
-+              title: 'Sign In',
-+              url: '/sign-in',
-+            },
-+            {
-+              title: 'Sign In (2 Col)',
-+              url: '/sign-in-2',
-+            },
-+            {
-+              title: 'Sign Up',
-+              url: '/sign-up',
-+            },
-+            {
-+              title: 'Forgot Password',
-+              url: '/forgot-password',
-+            },
-+            {
-+              title: 'OTP',
-+              url: '/otp',
-+            },
-+          ],
-+        },
-+        {
-+          title: 'Errors',
-+          icon: IconBug,
-+          items: [
-+            {
-+              title: 'Unauthorized',
-+              url: '/401',
-+              icon: IconLock,
-+            },
-+            {
-+              title: 'Forbidden',
-+              url: '/403',
-+              icon: IconUserOff,
-+            },
-+            {
-+              title: 'Not Found',
-+              url: '/404',
-+              icon: IconError404,
-+            },
-+            {
-+              title: 'Internal Server Error',
-+              url: '/500',
-+              icon: IconServerOff,
-+            },
-+            {
-+              title: 'Maintenance Error',
-+              url: '/503',
-+              icon: IconBarrierBlock,
-+            },
-+          ],
-+        },
-+      ],
-+    },
-+    {
-+      title: 'Other',
-+      items: [
-+        {
-+          title: 'Settings',
-+          icon: IconSettings,
-+          items: [
-+            {
-+              title: 'Profile',
-+              url: '/settings',
-+              icon: IconUserCog,
-+            },
-+            {
-+              title: 'Account',
-+              url: '/settings/account',
-+              icon: IconTool,
-+            },
-+            {
-+              title: 'Appearance',
-+              url: '/settings/appearance',
-+              icon: IconPalette,
-+            },
-+            {
-+              title: 'Notifications',
-+              url: '/settings/notifications',
-+              icon: IconNotification,
-+            },
-+            {
-+              title: 'Display',
-+              url: '/settings/display',
-+              icon: IconBrowserCheck,
-+            },
-+          ],
-+        },
-+        {
-+          title: 'Help Center',
-+          url: '/help-center',
-+          icon: IconHelp,
-+        },
-+      ],
-+    },
-+  ],
-+};
-  ---
-  File: src/components/layout/header.tsx
-  Status: added
-  Additions: 75
-  Deletions: 0
-  Changes: 75
-  
-Patch:
-@@ -0,0 +1,75 @@
-+import React from 'react';
-+import { cn } from '@/lib/utils';
-+import { Separator } from '@/components/ui/separator';
-+import {
-+  Breadcrumb,
-+  BreadcrumbItem,
-+  BreadcrumbLink,
-+  BreadcrumbList,
-+  BreadcrumbPage,
-+  BreadcrumbSeparator,
-+} from '@/components/ui/breadcrumb';
-+interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
-+  fixed?: boolean;
-+  ref?: React.Ref<HTMLElement>;
-+}
-+
-+export const Header = ({
-+  className,
-+  fixed,
-+  children,
-+  ...props
-+}: HeaderProps) => {
-+  const [offset, setOffset] = React.useState(0);
-+
-+  React.useEffect(() => {
-+    const onScroll = () => {
-+      setOffset(document.body.scrollTop || document.documentElement.scrollTop);
-+    };
-+
-+    // Add scroll listener to the body
-+    document.addEventListener('scroll', onScroll, { passive: true });
-+
-+    // Clean up the event listener on unmount
-+    return () => document.removeEventListener('scroll', onScroll);
-+  }, []);
-+
-+  return (
-+    <div className='flex flex-col gap-2'>
-+      <Breadcrumb>
-+        <BreadcrumbList>
-+          <BreadcrumbItem>
-+            <BreadcrumbLink href='/'>Home</BreadcrumbLink>
-+          </BreadcrumbItem>
-+          <BreadcrumbSeparator />
-+          <BreadcrumbItem>
-+            <BreadcrumbLink href='/'>Documentation</BreadcrumbLink>
-+          </BreadcrumbItem>
-+          <BreadcrumbSeparator />
-+          <BreadcrumbItem>
-+            <BreadcrumbPage>What's New</BreadcrumbPage>
-+          </BreadcrumbItem>
-+        </BreadcrumbList>
-+      </Breadcrumb>
-+
-+      <header
-+        className={cn(
-+          'bg-background flex h-16 items-center gap-3 m-4 p-4 sm:gap-4',
-+          fixed && 'peer/header w-[inherit] rounded-md',
-+          offset > 10 && fixed ? 'shadow-sm' : 'shadow-none',
-+          className
-+        )}
-+        {...props}
-+      >
-+        <h3 className='text-4xl font-bold'>Change Log</h3>
-+        <Separator orientation='vertical' className='h-6' />
-+        <span className='text-muted-foreground hidden sm:block'>
-+          Read about our latest updates and features.
-+        </span>
-+      </header>
-+      {children}
-+    </div>
-+  );
-+};
-+
-+Header.displayName = 'Header';
-  ---
-  File: src/components/layout/latest.tsx
-  Status: added
-  Additions: 0
-  Deletions: 0
-  Changes: 0
-  
-  ---
-  File: src/components/layout/main.tsx
-  Status: added
-  Additions: 22
-  Deletions: 0
-  Changes: 22
-  
-Patch:
-@@ -0,0 +1,22 @@
-+import React from 'react';
-+import { cn } from '@/lib/utils';
-+
-+interface MainProps extends React.HTMLAttributes<HTMLElement> {
-+  fixed?: boolean;
-+  ref?: React.Ref<HTMLElement>;
-+}
-+
-+export const Main = ({ fixed, ...props }: MainProps) => {
-+  return (
-+    <main
-+      className={cn(
-+        'peer-[.header-fixed]/header:mt-16',
-+        'px-4 py-6',
-+        fixed && 'fixed-main flex grow flex-col overflow-hidden'
-+      )}
-+      {...props}
-+    />
-+  );
-+};
-+
-+Main.displayName = 'Main';
-  ---
-  File: src/components/layout/top-nav.tsx
-  Status: added
-  Additions: 0
-  Deletions: 0
-  Changes: 0
-  
-  ---
-  File: src/components/layout/types.ts
-  Status: added
-  Additions: 42
-  Deletions: 0
-  Changes: 42
-  
-Patch:
-@@ -0,0 +1,42 @@
-+interface User {
-+  name: string;
-+  email: string;
-+  avatar: string;
-+}
-+
-+interface Team {
-+  name: string;
-+  logo: React.ElementType;
-+  plan: string;
-+}
-+
-+interface BaseNavItem {
-+  title: string;
-+  badge?: string;
-+  icon?: React.ElementType;
-+}
-+
-+type NavLink = BaseNavItem & {
-+  url: string;
-+  items?: never;
-+};
-+
-+type NavCollapsible = BaseNavItem & {
-+  items: (BaseNavItem & { url: string })[];
-+  url?: never;
-+};
-+
-+type NavItem = NavCollapsible | NavLink;
-+
-+interface NavGroup {
-+  title: string;
-+  items: NavItem[];
-+}
-+
-+interface SidebarData {
-+  user: User;
-+  teams: Team[];
-+  navGroups: NavGroup[];
-+}
-+
-+export type { SidebarData, NavGroup, NavItem, NavCollapsible, NavLink };
-  ---
-  File: src/components/search.tsx
-  Status: added
-  Additions: 31
-  Deletions: 0
-  Changes: 31
-  
-Patch:
-@@ -0,0 +1,31 @@
-+import { IconSearch } from '@tabler/icons-react';
-+import { cn } from '@/lib/utils';
-+
-+import { Button } from '@/components/ui/button';
-+
-+interface Props {
-+  className?: string;
-+  type?: React.HTMLInputTypeAttribute;
-+  placeholder?: string;
-+}
-+
-+export function Search({ className = '', placeholder = 'Search' }: Props) {
-+  return (
-+    <Button
-+      variant='ghost'
-+      className={cn(
-+        'bg-muted/25 text-muted-foreground hover:bg-muted/50 relative h-8 w-full flex-1 justify-start rounded-md text-sm font-normal shadow-none sm:pr-12 md:w-40 md:flex-none lg:w-56 xl:w-64',
-+        className
-+      )}
-+    >
-+      <IconSearch
-+        aria-hidden='true'
-+        className='absolute top-1/2 left-1.5 -translate-y-1/2'
-+      />
-+      <span className='ml-3'>{placeholder}</span>
-+      <kbd className='bg-muted pointer-events-none absolute top-[0.3rem] right-[0.3rem] hidden h-5 items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 select-none sm:flex'>
-+        <span className='text-xs'>⌘</span>K
-+      </kbd>
-+    </Button>
-+  );
-+}
-  ---
-  File: src/components/select-dropdown.tsx
-  Status: added
-  Additions: 23
-  Deletions: 0
-  Changes: 23
-  
-Patch:
-@@ -0,0 +1,23 @@
-+import {
-+  Select,
-+  SelectContent,
-+  SelectItem,
-+  SelectTrigger,
-+  SelectValue,
-+} from '@/components/ui/select';
-+
-+export function SelectDropdown() {
-+  return (
-+    <Select>
-+      <SelectTrigger className='outline-dotted'>
-+        <SelectValue placeholder='Product' />
-+      </SelectTrigger>
-+      <SelectContent>
-+        <SelectItem value='product'>Product</SelectItem>
-+        <SelectItem value='product'>Product</SelectItem>
-+        <SelectItem value='product'>Product</SelectItem>
-+        <SelectItem value='product'>Product</SelectItem>
-+      </SelectContent>
-+    </Select>
-+  );
-+}
-  ---
-  File: src/components/ui/alert-dialog.tsx
-  Status: added
-  Additions: 155
-  Deletions: 0
-  Changes: 155
-  
-Patch:
-@@ -0,0 +1,155 @@
-+import * as React from "react"
-+import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
-+
-+import { cn } from "@/lib/utils"
-+import { buttonVariants } from "@/components/ui/button"
-+
-+function AlertDialog({
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
-+  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
-+}
-+
-+function AlertDialogTrigger({
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
-+  return (
-+    <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-+  )
-+}
-+
-+function AlertDialogPortal({
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {
-+  return (
-+    <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-+  )
-+}
-+
-+function AlertDialogOverlay({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) {
-+  return (
-+    <AlertDialogPrimitive.Overlay
-+      data-slot="alert-dialog-overlay"
-+      className={cn(
-+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function AlertDialogContent({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Content>) {
-+  return (
-+    <AlertDialogPortal>
-+      <AlertDialogOverlay />
-+      <AlertDialogPrimitive.Content
-+        data-slot="alert-dialog-content"
-+        className={cn(
-+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-+          className
-+        )}
-+        {...props}
-+      />
-+    </AlertDialogPortal>
-+  )
-+}
-+
-+function AlertDialogHeader({
-+  className,
-+  ...props
-+}: React.ComponentProps<"div">) {
-+  return (
-+    <div
-+      data-slot="alert-dialog-header"
-+      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function AlertDialogFooter({
-+  className,
-+  ...props
-+}: React.ComponentProps<"div">) {
-+  return (
-+    <div
-+      data-slot="alert-dialog-footer"
-+      className={cn(
-+        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function AlertDialogTitle({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
-+  return (
-+    <AlertDialogPrimitive.Title
-+      data-slot="alert-dialog-title"
-+      className={cn("text-lg font-semibold", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function AlertDialogDescription({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
-+  return (
-+    <AlertDialogPrimitive.Description
-+      data-slot="alert-dialog-description"
-+      className={cn("text-muted-foreground text-sm", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function AlertDialogAction({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Action>) {
-+  return (
-+    <AlertDialogPrimitive.Action
-+      className={cn(buttonVariants(), className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function AlertDialogCancel({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
-+  return (
-+    <AlertDialogPrimitive.Cancel
-+      className={cn(buttonVariants({ variant: "outline" }), className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export {
-+  AlertDialog,
-+  AlertDialogPortal,
-+  AlertDialogOverlay,
-+  AlertDialogTrigger,
-+  AlertDialogContent,
-+  AlertDialogHeader,
-+  AlertDialogFooter,
-+  AlertDialogTitle,
-+  AlertDialogDescription,
-+  AlertDialogAction,
-+  AlertDialogCancel,
-+}
-  ---
-  File: src/components/ui/badge.tsx
-  Status: added
-  Additions: 46
-  Deletions: 0
-  Changes: 46
-  
-Patch:
-@@ -0,0 +1,46 @@
-+import * as React from "react"
-+import { Slot } from "@radix-ui/react-slot"
-+import { cva, type VariantProps } from "class-variance-authority"
-+
-+import { cn } from "@/lib/utils"
-+
-+const badgeVariants = cva(
-+  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
-+  {
-+    variants: {
-+      variant: {
-+        default:
-+          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-+        secondary:
-+          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-+        destructive:
-+          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-+        outline:
-+          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-+      },
-+    },
-+    defaultVariants: {
-+      variant: "default",
-+    },
-+  }
-+)
-+
-+function Badge({
-+  className,
-+  variant,
-+  asChild = false,
-+  ...props
-+}: React.ComponentProps<"span"> &
-+  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-+  const Comp = asChild ? Slot : "span"
-+
-+  return (
-+    <Comp
-+      data-slot="badge"
-+      className={cn(badgeVariants({ variant }), className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export { Badge, badgeVariants }
-  ---
-  File: src/components/ui/breadcrumb.tsx
-  Status: added
-  Additions: 109
-  Deletions: 0
-  Changes: 109
-  
-Patch:
-@@ -0,0 +1,109 @@
-+import * as React from "react"
-+import { Slot } from "@radix-ui/react-slot"
-+import { ChevronRight, MoreHorizontal } from "lucide-react"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Breadcrumb({ ...props }: React.ComponentProps<"nav">) {
-+  return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />
-+}
-+
-+function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
-+  return (
-+    <ol
-+      data-slot="breadcrumb-list"
-+      className={cn(
-+        "text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
-+  return (
-+    <li
-+      data-slot="breadcrumb-item"
-+      className={cn("inline-flex items-center gap-1.5", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function BreadcrumbLink({
-+  asChild,
-+  className,
-+  ...props
-+}: React.ComponentProps<"a"> & {
-+  asChild?: boolean
-+}) {
-+  const Comp = asChild ? Slot : "a"
-+
-+  return (
-+    <Comp
-+      data-slot="breadcrumb-link"
-+      className={cn("hover:text-foreground transition-colors", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
-+  return (
-+    <span
-+      data-slot="breadcrumb-page"
-+      role="link"
-+      aria-disabled="true"
-+      aria-current="page"
-+      className={cn("text-foreground font-normal", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function BreadcrumbSeparator({
-+  children,
-+  className,
-+  ...props
-+}: React.ComponentProps<"li">) {
-+  return (
-+    <li
-+      data-slot="breadcrumb-separator"
-+      role="presentation"
-+      aria-hidden="true"
-+      className={cn("[&>svg]:size-3.5", className)}
-+      {...props}
-+    >
-+      {children ?? <ChevronRight />}
-+    </li>
-+  )
-+}
-+
-+function BreadcrumbEllipsis({
-+  className,
-+  ...props
-+}: React.ComponentProps<"span">) {
-+  return (
-+    <span
-+      data-slot="breadcrumb-ellipsis"
-+      role="presentation"
-+      aria-hidden="true"
-+      className={cn("flex size-9 items-center justify-center", className)}
-+      {...props}
-+    >
-+      <MoreHorizontal className="size-4" />
-+      <span className="sr-only">More</span>
-+    </span>
-+  )
-+}
-+
-+export {
-+  Breadcrumb,
-+  BreadcrumbList,
-+  BreadcrumbItem,
-+  BreadcrumbLink,
-+  BreadcrumbPage,
-+  BreadcrumbSeparator,
-+  BreadcrumbEllipsis,
-+}
-  ---
-  File: src/components/ui/button.tsx
-  Status: added
-  Additions: 59
-  Deletions: 0
-  Changes: 59
-  
-Patch:
-@@ -0,0 +1,59 @@
-+import * as React from "react"
-+import { Slot } from "@radix-ui/react-slot"
-+import { cva, type VariantProps } from "class-variance-authority"
-+
-+import { cn } from "@/lib/utils"
-+
-+const buttonVariants = cva(
-+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-+  {
-+    variants: {
-+      variant: {
-+        default:
-+          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-+        destructive:
-+          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-+        outline:
-+          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-+        secondary:
-+          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-+        ghost:
-+          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-+        link: "text-primary underline-offset-4 hover:underline",
-+      },
-+      size: {
-+        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-+        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-+        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-+        icon: "size-9",
-+      },
-+    },
-+    defaultVariants: {
-+      variant: "default",
-+      size: "default",
-+    },
-+  }
-+)
-+
-+function Button({
-+  className,
-+  variant,
-+  size,
-+  asChild = false,
-+  ...props
-+}: React.ComponentProps<"button"> &
-+  VariantProps<typeof buttonVariants> & {
-+    asChild?: boolean
-+  }) {
-+  const Comp = asChild ? Slot : "button"
-+
-+  return (
-+    <Comp
-+      data-slot="button"
-+      className={cn(buttonVariants({ variant, size, className }))}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export { Button, buttonVariants }
-  ---
-  File: src/components/ui/card.tsx
-  Status: added
-  Additions: 92
-  Deletions: 0
-  Changes: 92
-  
-Patch:
-@@ -0,0 +1,92 @@
-+import * as React from 'react';
-+
-+import { cn } from '@/lib/utils';
-+
-+function Card({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card'
-+      className={cn(
-+        'bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card-header'
-+      className={cn(
-+        '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card-title'
-+      className={cn('leading-none font-semibold', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card-description'
-+      className={cn('text-muted-foreground text-sm', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card-action'
-+      className={cn(
-+        'col-start-2 row-span-2 row-start-1 self-start justify-self-end',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card-content'
-+      className={cn('px-6', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
-+  return (
-+    <div
-+      data-slot='card-footer'
-+      className={cn('flex items-center px-6 [.border-t]:pt-6', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+export {
-+  Card,
-+  CardHeader,
-+  CardFooter,
-+  CardTitle,
-+  CardAction,
-+  CardDescription,
-+  CardContent,
-+};
-  ---
-  File: src/components/ui/checkbox.tsx
-  Status: added
-  Additions: 30
-  Deletions: 0
-  Changes: 30
-  
-Patch:
-@@ -0,0 +1,30 @@
-+import * as React from "react"
-+import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-+import { CheckIcon } from "lucide-react"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Checkbox({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
-+  return (
-+    <CheckboxPrimitive.Root
-+      data-slot="checkbox"
-+      className={cn(
-+        "peer border-input dark:bg-input/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <CheckboxPrimitive.Indicator
-+        data-slot="checkbox-indicator"
-+        className="flex items-center justify-center text-current transition-none"
-+      >
-+        <CheckIcon className="size-3.5" />
-+      </CheckboxPrimitive.Indicator>
-+    </CheckboxPrimitive.Root>
-+  )
-+}
-+
-+export { Checkbox }
-  ---
-  File: src/components/ui/collapsible.tsx
-  Status: added
-  Additions: 44
-  Deletions: 0
-  Changes: 44
-  
-Patch:
-@@ -0,0 +1,44 @@
-+import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
-+import { cn } from '@/lib/utils';
-+
-+function Collapsible({
-+  ...props
-+}: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
-+  return (
-+    <CollapsiblePrimitive.Root
-+      data-slot='collapsible'
-+      className={cn(
-+        'flex flex-col items-start hover:cursor-pointer active:cursor-move '
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CollapsibleTrigger({
-+  ...props
-+}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleTrigger>) {
-+  return (
-+    <CollapsiblePrimitive.CollapsibleTrigger
-+      data-slot='collapsible-trigger'
-+      className={cn(
-+        'text-left self-start hover:cursor-pointer active:cursor-pointer'
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function CollapsibleContent({
-+  ...props
-+}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) {
-+  return (
-+    <CollapsiblePrimitive.CollapsibleContent
-+      data-slot='collapsible-content'
-+      className={cn('text-left')}
-+      {...props}
-+    />
-+  );
-+}
-+
-+export { Collapsible, CollapsibleTrigger, CollapsibleContent };
-  ---
-  File: src/components/ui/command.tsx
-  Status: added
-  Additions: 175
-  Deletions: 0
-  Changes: 175
-  
-Patch:
-@@ -0,0 +1,175 @@
-+import * as React from "react"
-+import { Command as CommandPrimitive } from "cmdk"
-+import { SearchIcon } from "lucide-react"
-+
-+import { cn } from "@/lib/utils"
-+import {
-+  Dialog,
-+  DialogContent,
-+  DialogDescription,
-+  DialogHeader,
-+  DialogTitle,
-+} from "@/components/ui/dialog"
-+
-+function Command({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive>) {
-+  return (
-+    <CommandPrimitive
-+      data-slot="command"
-+      className={cn(
-+        "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function CommandDialog({
-+  title = "Command Palette",
-+  description = "Search for a command to run...",
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof Dialog> & {
-+  title?: string
-+  description?: string
-+}) {
-+  return (
-+    <Dialog {...props}>
-+      <DialogHeader className="sr-only">
-+        <DialogTitle>{title}</DialogTitle>
-+        <DialogDescription>{description}</DialogDescription>
-+      </DialogHeader>
-+      <DialogContent className="overflow-hidden p-0">
-+        <Command className="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-+          {children}
-+        </Command>
-+      </DialogContent>
-+    </Dialog>
-+  )
-+}
-+
-+function CommandInput({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive.Input>) {
-+  return (
-+    <div
-+      data-slot="command-input-wrapper"
-+      className="flex h-9 items-center gap-2 border-b px-3"
-+    >
-+      <SearchIcon className="size-4 shrink-0 opacity-50" />
-+      <CommandPrimitive.Input
-+        data-slot="command-input"
-+        className={cn(
-+          "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
-+          className
-+        )}
-+        {...props}
-+      />
-+    </div>
-+  )
-+}
-+
-+function CommandList({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive.List>) {
-+  return (
-+    <CommandPrimitive.List
-+      data-slot="command-list"
-+      className={cn(
-+        "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function CommandEmpty({
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
-+  return (
-+    <CommandPrimitive.Empty
-+      data-slot="command-empty"
-+      className="py-6 text-center text-sm"
-+      {...props}
-+    />
-+  )
-+}
-+
-+function CommandGroup({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive.Group>) {
-+  return (
-+    <CommandPrimitive.Group
-+      data-slot="command-group"
-+      className={cn(
-+        "text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function CommandSeparator({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive.Separator>) {
-+  return (
-+    <CommandPrimitive.Separator
-+      data-slot="command-separator"
-+      className={cn("bg-border -mx-1 h-px", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function CommandItem({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof CommandPrimitive.Item>) {
-+  return (
-+    <CommandPrimitive.Item
-+      data-slot="command-item"
-+      className={cn(
-+        "data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function CommandShortcut({
-+  className,
-+  ...props
-+}: React.ComponentProps<"span">) {
-+  return (
-+    <span
-+      data-slot="command-shortcut"
-+      className={cn(
-+        "text-muted-foreground ml-auto text-xs tracking-widest",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export {
-+  Command,
-+  CommandDialog,
-+  CommandInput,
-+  CommandList,
-+  CommandEmpty,
-+  CommandGroup,
-+  CommandItem,
-+  CommandShortcut,
-+  CommandSeparator,
-+}
-  ---
-  File: src/components/ui/dialog.tsx
-  Status: added
-  Additions: 133
-  Deletions: 0
-  Changes: 133
-  
-Patch:
-@@ -0,0 +1,133 @@
-+import * as React from "react"
-+import * as DialogPrimitive from "@radix-ui/react-dialog"
-+import { XIcon } from "lucide-react"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Dialog({
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Root>) {
-+  return <DialogPrimitive.Root data-slot="dialog" {...props} />
-+}
-+
-+function DialogTrigger({
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
-+  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
-+}
-+
-+function DialogPortal({
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Portal>) {
-+  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
-+}
-+
-+function DialogClose({
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Close>) {
-+  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
-+}
-+
-+function DialogOverlay({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
-+  return (
-+    <DialogPrimitive.Overlay
-+      data-slot="dialog-overlay"
-+      className={cn(
-+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DialogContent({
-+  className,
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Content>) {
-+  return (
-+    <DialogPortal data-slot="dialog-portal">
-+      <DialogOverlay />
-+      <DialogPrimitive.Content
-+        data-slot="dialog-content"
-+        className={cn(
-+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-+          className
-+        )}
-+        {...props}
-+      >
-+        {children}
-+        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
-+          <XIcon />
-+          <span className="sr-only">Close</span>
-+        </DialogPrimitive.Close>
-+      </DialogPrimitive.Content>
-+    </DialogPortal>
-+  )
-+}
-+
-+function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
-+  return (
-+    <div
-+      data-slot="dialog-header"
-+      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
-+  return (
-+    <div
-+      data-slot="dialog-footer"
-+      className={cn(
-+        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DialogTitle({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Title>) {
-+  return (
-+    <DialogPrimitive.Title
-+      data-slot="dialog-title"
-+      className={cn("text-lg leading-none font-semibold", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DialogDescription({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof DialogPrimitive.Description>) {
-+  return (
-+    <DialogPrimitive.Description
-+      data-slot="dialog-description"
-+      className={cn("text-muted-foreground text-sm", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export {
-+  Dialog,
-+  DialogClose,
-+  DialogContent,
-+  DialogDescription,
-+  DialogFooter,
-+  DialogHeader,
-+  DialogOverlay,
-+  DialogPortal,
-+  DialogTitle,
-+  DialogTrigger,
-+}
-  ---
-  File: src/components/ui/dropdown-menu.tsx
-  Status: added
-  Additions: 255
-  Deletions: 0
-  Changes: 255
-  
-Patch:
-@@ -0,0 +1,255 @@
-+import * as React from "react"
-+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
-+import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react"
-+
-+import { cn } from "@/lib/utils"
-+
-+function DropdownMenu({
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
-+  return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />
-+}
-+
-+function DropdownMenuPortal({
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>) {
-+  return (
-+    <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
-+  )
-+}
-+
-+function DropdownMenuTrigger({
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
-+  return (
-+    <DropdownMenuPrimitive.Trigger
-+      data-slot="dropdown-menu-trigger"
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DropdownMenuContent({
-+  className,
-+  sideOffset = 4,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
-+  return (
-+    <DropdownMenuPrimitive.Portal>
-+      <DropdownMenuPrimitive.Content
-+        data-slot="dropdown-menu-content"
-+        sideOffset={sideOffset}
-+        className={cn(
-+          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-(--radix-dropdown-menu-content-available-height) min-w-[8rem] origin-(--radix-dropdown-menu-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md",
-+          className
-+        )}
-+        {...props}
-+      />
-+    </DropdownMenuPrimitive.Portal>
-+  )
-+}
-+
-+function DropdownMenuGroup({
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) {
-+  return (
-+    <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
-+  )
-+}
-+
-+function DropdownMenuItem({
-+  className,
-+  inset,
-+  variant = "default",
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & {
-+  inset?: boolean
-+  variant?: "default" | "destructive"
-+}) {
-+  return (
-+    <DropdownMenuPrimitive.Item
-+      data-slot="dropdown-menu-item"
-+      data-inset={inset}
-+      data-variant={variant}
-+      className={cn(
-+        "focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DropdownMenuCheckboxItem({
-+  className,
-+  children,
-+  checked,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>) {
-+  return (
-+    <DropdownMenuPrimitive.CheckboxItem
-+      data-slot="dropdown-menu-checkbox-item"
-+      className={cn(
-+        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-+        className
-+      )}
-+      checked={checked}
-+      {...props}
-+    >
-+      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
-+        <DropdownMenuPrimitive.ItemIndicator>
-+          <CheckIcon className="size-4" />
-+        </DropdownMenuPrimitive.ItemIndicator>
-+      </span>
-+      {children}
-+    </DropdownMenuPrimitive.CheckboxItem>
-+  )
-+}
-+
-+function DropdownMenuRadioGroup({
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>) {
-+  return (
-+    <DropdownMenuPrimitive.RadioGroup
-+      data-slot="dropdown-menu-radio-group"
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DropdownMenuRadioItem({
-+  className,
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
-+  return (
-+    <DropdownMenuPrimitive.RadioItem
-+      data-slot="dropdown-menu-radio-item"
-+      className={cn(
-+        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
-+        <DropdownMenuPrimitive.ItemIndicator>
-+          <CircleIcon className="size-2 fill-current" />
-+        </DropdownMenuPrimitive.ItemIndicator>
-+      </span>
-+      {children}
-+    </DropdownMenuPrimitive.RadioItem>
-+  )
-+}
-+
-+function DropdownMenuLabel({
-+  className,
-+  inset,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
-+  inset?: boolean
-+}) {
-+  return (
-+    <DropdownMenuPrimitive.Label
-+      data-slot="dropdown-menu-label"
-+      data-inset={inset}
-+      className={cn(
-+        "px-2 py-1.5 text-sm font-medium data-[inset]:pl-8",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DropdownMenuSeparator({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
-+  return (
-+    <DropdownMenuPrimitive.Separator
-+      data-slot="dropdown-menu-separator"
-+      className={cn("bg-border -mx-1 my-1 h-px", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DropdownMenuShortcut({
-+  className,
-+  ...props
-+}: React.ComponentProps<"span">) {
-+  return (
-+    <span
-+      data-slot="dropdown-menu-shortcut"
-+      className={cn(
-+        "text-muted-foreground ml-auto text-xs tracking-widest",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function DropdownMenuSub({
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>) {
-+  return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />
-+}
-+
-+function DropdownMenuSubTrigger({
-+  className,
-+  inset,
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
-+  inset?: boolean
-+}) {
-+  return (
-+    <DropdownMenuPrimitive.SubTrigger
-+      data-slot="dropdown-menu-sub-trigger"
-+      data-inset={inset}
-+      className={cn(
-+        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8",
-+        className
-+      )}
-+      {...props}
-+    >
-+      {children}
-+      <ChevronRightIcon className="ml-auto size-4" />
-+    </DropdownMenuPrimitive.SubTrigger>
-+  )
-+}
-+
-+function DropdownMenuSubContent({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
-+  return (
-+    <DropdownMenuPrimitive.SubContent
-+      data-slot="dropdown-menu-sub-content"
-+      className={cn(
-+        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] origin-(--radix-dropdown-menu-content-transform-origin) overflow-hidden rounded-md border p-1 shadow-lg",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export {
-+  DropdownMenu,
-+  DropdownMenuPortal,
-+  DropdownMenuTrigger,
-+  DropdownMenuContent,
-+  DropdownMenuGroup,
-+  DropdownMenuLabel,
-+  DropdownMenuItem,
-+  DropdownMenuCheckboxItem,
-+  DropdownMenuRadioGroup,
-+  DropdownMenuRadioItem,
-+  DropdownMenuSeparator,
-+  DropdownMenuShortcut,
-+  DropdownMenuSub,
-+  DropdownMenuSubTrigger,
-+  DropdownMenuSubContent,
-+}
-  ---
-  File: src/components/ui/form.tsx
-  Status: added
-  Additions: 165
-  Deletions: 0
-  Changes: 165
-  
-Patch:
-@@ -0,0 +1,165 @@
-+import * as React from "react"
-+import * as LabelPrimitive from "@radix-ui/react-label"
-+import { Slot } from "@radix-ui/react-slot"
-+import {
-+  Controller,
-+  FormProvider,
-+  useFormContext,
-+  useFormState,
-+  type ControllerProps,
-+  type FieldPath,
-+  type FieldValues,
-+} from "react-hook-form"
-+
-+import { cn } from "@/lib/utils"
-+import { Label } from "@/components/ui/label"
-+
-+const Form = FormProvider
-+
-+type FormFieldContextValue<
-+  TFieldValues extends FieldValues = FieldValues,
-+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-+> = {
-+  name: TName
-+}
-+
-+const FormFieldContext = React.createContext<FormFieldContextValue>(
-+  {} as FormFieldContextValue
-+)
-+
-+const FormField = <
-+  TFieldValues extends FieldValues = FieldValues,
-+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-+>({
-+  ...props
-+}: ControllerProps<TFieldValues, TName>) => {
-+  return (
-+    <FormFieldContext.Provider value={{ name: props.name }}>
-+      <Controller {...props} />
-+    </FormFieldContext.Provider>
-+  )
-+}
-+
-+const useFormField = () => {
-+  const fieldContext = React.useContext(FormFieldContext)
-+  const itemContext = React.useContext(FormItemContext)
-+  const { getFieldState } = useFormContext()
-+  const formState = useFormState({ name: fieldContext.name })
-+  const fieldState = getFieldState(fieldContext.name, formState)
-+
-+  if (!fieldContext) {
-+    throw new Error("useFormField should be used within <FormField>")
-+  }
-+
-+  const { id } = itemContext
-+
-+  return {
-+    id,
-+    name: fieldContext.name,
-+    formItemId: `${id}-form-item`,
-+    formDescriptionId: `${id}-form-item-description`,
-+    formMessageId: `${id}-form-item-message`,
-+    ...fieldState,
-+  }
-+}
-+
-+type FormItemContextValue = {
-+  id: string
-+}
-+
-+const FormItemContext = React.createContext<FormItemContextValue>(
-+  {} as FormItemContextValue
-+)
-+
-+function FormItem({ className, ...props }: React.ComponentProps<"div">) {
-+  const id = React.useId()
-+
-+  return (
-+    <FormItemContext.Provider value={{ id }}>
-+      <div
-+        data-slot="form-item"
-+        className={cn("grid gap-2", className)}
-+        {...props}
-+      />
-+    </FormItemContext.Provider>
-+  )
-+}
-+
-+function FormLabel({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof LabelPrimitive.Root>) {
-+  const { error, formItemId } = useFormField()
-+
-+  return (
-+    <Label
-+      data-slot="form-label"
-+      data-error={!!error}
-+      className={cn("data-[error=true]:text-destructive", className)}
-+      htmlFor={formItemId}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
-+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
-+
-+  return (
-+    <Slot
-+      data-slot="form-control"
-+      id={formItemId}
-+      aria-describedby={
-+        !error
-+          ? `${formDescriptionId}`
-+          : `${formDescriptionId} ${formMessageId}`
-+      }
-+      aria-invalid={!!error}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
-+  const { formDescriptionId } = useFormField()
-+
-+  return (
-+    <p
-+      data-slot="form-description"
-+      id={formDescriptionId}
-+      className={cn("text-muted-foreground text-sm", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
-+  const { error, formMessageId } = useFormField()
-+  const body = error ? String(error?.message ?? "") : props.children
-+
-+  if (!body) {
-+    return null
-+  }
-+
-+  return (
-+    <p
-+      data-slot="form-message"
-+      id={formMessageId}
-+      className={cn("text-destructive text-sm", className)}
-+      {...props}
-+    >
-+      {body}
-+    </p>
-+  )
-+}
-+
-+export {
-+  useFormField,
-+  Form,
-+  FormItem,
-+  FormLabel,
-+  FormControl,
-+  FormDescription,
-+  FormMessage,
-+  FormField,
-+}
-  ---
-  File: src/components/ui/input.tsx
-  Status: added
-  Additions: 25
-  Deletions: 0
-  Changes: 25
-  
-Patch:
-@@ -0,0 +1,25 @@
-+import * as React from 'react';
-+
-+import { cn } from '@/lib/utils';
-+
-+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
-+  ({ className, type, ...props }, ref) => {
-+    return (
-+      <input
-+        ref={ref}
-+        type={type}
-+        data-slot='input'
-+        className={cn(
-+          'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-+          'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-+          'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
-+          className
-+        )}
-+        {...props}
-+      />
-+    );
-+  }
-+);
-+Input.displayName = 'Input';
-+
-+export { Input };
-  ---
-  File: src/components/ui/label.tsx
-  Status: added
-  Additions: 24
-  Deletions: 0
-  Changes: 24
-  
-Patch:
-@@ -0,0 +1,24 @@
-+"use client"
-+
-+import * as React from "react"
-+import * as LabelPrimitive from "@radix-ui/react-label"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Label({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof LabelPrimitive.Root>) {
-+  return (
-+    <LabelPrimitive.Root
-+      data-slot="label"
-+      className={cn(
-+        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export { Label }
-  ---
-  File: src/components/ui/popover.tsx
-  Status: added
-  Additions: 46
-  Deletions: 0
-  Changes: 46
-  
-Patch:
-@@ -0,0 +1,46 @@
-+import * as React from "react"
-+import * as PopoverPrimitive from "@radix-ui/react-popover"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Popover({
-+  ...props
-+}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
-+  return <PopoverPrimitive.Root data-slot="popover" {...props} />
-+}
-+
-+function PopoverTrigger({
-+  ...props
-+}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
-+  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
-+}
-+
-+function PopoverContent({
-+  className,
-+  align = "center",
-+  sideOffset = 4,
-+  ...props
-+}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
-+  return (
-+    <PopoverPrimitive.Portal>
-+      <PopoverPrimitive.Content
-+        data-slot="popover-content"
-+        align={align}
-+        sideOffset={sideOffset}
-+        className={cn(
-+          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
-+          className
-+        )}
-+        {...props}
-+      />
-+    </PopoverPrimitive.Portal>
-+  )
-+}
-+
-+function PopoverAnchor({
-+  ...props
-+}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
-+  return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />
-+}
-+
-+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor }
-  ---
-  File: src/components/ui/scroll-area.tsx
-  Status: added
-  Additions: 56
-  Deletions: 0
-  Changes: 56
-  
-Patch:
-@@ -0,0 +1,56 @@
-+import * as React from "react"
-+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
-+
-+import { cn } from "@/lib/utils"
-+
-+function ScrollArea({
-+  className,
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
-+  return (
-+    <ScrollAreaPrimitive.Root
-+      data-slot="scroll-area"
-+      className={cn("relative", className)}
-+      {...props}
-+    >
-+      <ScrollAreaPrimitive.Viewport
-+        data-slot="scroll-area-viewport"
-+        className="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1"
-+      >
-+        {children}
-+      </ScrollAreaPrimitive.Viewport>
-+      <ScrollBar />
-+      <ScrollAreaPrimitive.Corner />
-+    </ScrollAreaPrimitive.Root>
-+  )
-+}
-+
-+function ScrollBar({
-+  className,
-+  orientation = "vertical",
-+  ...props
-+}: React.ComponentProps<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>) {
-+  return (
-+    <ScrollAreaPrimitive.ScrollAreaScrollbar
-+      data-slot="scroll-area-scrollbar"
-+      orientation={orientation}
-+      className={cn(
-+        "flex touch-none p-px transition-colors select-none",
-+        orientation === "vertical" &&
-+          "h-full w-2.5 border-l border-l-transparent",
-+        orientation === "horizontal" &&
-+          "h-2.5 flex-col border-t border-t-transparent",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <ScrollAreaPrimitive.ScrollAreaThumb
-+        data-slot="scroll-area-thumb"
-+        className="bg-border relative flex-1 rounded-full"
-+      />
-+    </ScrollAreaPrimitive.ScrollAreaScrollbar>
-+  )
-+}
-+
-+export { ScrollArea, ScrollBar }
-  ---
-  File: src/components/ui/select.tsx
-  Status: added
-  Additions: 183
-  Deletions: 0
-  Changes: 183
-  
-Patch:
-@@ -0,0 +1,183 @@
-+import * as React from "react"
-+import * as SelectPrimitive from "@radix-ui/react-select"
-+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Select({
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Root>) {
-+  return <SelectPrimitive.Root data-slot="select" {...props} />
-+}
-+
-+function SelectGroup({
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Group>) {
-+  return <SelectPrimitive.Group data-slot="select-group" {...props} />
-+}
-+
-+function SelectValue({
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Value>) {
-+  return <SelectPrimitive.Value data-slot="select-value" {...props} />
-+}
-+
-+function SelectTrigger({
-+  className,
-+  size = "default",
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-+  size?: "sm" | "default"
-+}) {
-+  return (
-+    <SelectPrimitive.Trigger
-+      data-slot="select-trigger"
-+      data-size={size}
-+      className={cn(
-+        "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-+        className
-+      )}
-+      {...props}
-+    >
-+      {children}
-+      <SelectPrimitive.Icon asChild>
-+        <ChevronDownIcon className="size-4 opacity-50" />
-+      </SelectPrimitive.Icon>
-+    </SelectPrimitive.Trigger>
-+  )
-+}
-+
-+function SelectContent({
-+  className,
-+  children,
-+  position = "popper",
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Content>) {
-+  return (
-+    <SelectPrimitive.Portal>
-+      <SelectPrimitive.Content
-+        data-slot="select-content"
-+        className={cn(
-+          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
-+          position === "popper" &&
-+            "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-+          className
-+        )}
-+        position={position}
-+        {...props}
-+      >
-+        <SelectScrollUpButton />
-+        <SelectPrimitive.Viewport
-+          className={cn(
-+            "p-1",
-+            position === "popper" &&
-+              "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
-+          )}
-+        >
-+          {children}
-+        </SelectPrimitive.Viewport>
-+        <SelectScrollDownButton />
-+      </SelectPrimitive.Content>
-+    </SelectPrimitive.Portal>
-+  )
-+}
-+
-+function SelectLabel({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Label>) {
-+  return (
-+    <SelectPrimitive.Label
-+      data-slot="select-label"
-+      className={cn("text-muted-foreground px-2 py-1.5 text-xs", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function SelectItem({
-+  className,
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Item>) {
-+  return (
-+    <SelectPrimitive.Item
-+      data-slot="select-item"
-+      className={cn(
-+        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <span className="absolute right-2 flex size-3.5 items-center justify-center">
-+        <SelectPrimitive.ItemIndicator>
-+          <CheckIcon className="size-4" />
-+        </SelectPrimitive.ItemIndicator>
-+      </span>
-+      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-+    </SelectPrimitive.Item>
-+  )
-+}
-+
-+function SelectSeparator({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.Separator>) {
-+  return (
-+    <SelectPrimitive.Separator
-+      data-slot="select-separator"
-+      className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function SelectScrollUpButton({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
-+  return (
-+    <SelectPrimitive.ScrollUpButton
-+      data-slot="select-scroll-up-button"
-+      className={cn(
-+        "flex cursor-default items-center justify-center py-1",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <ChevronUpIcon className="size-4" />
-+    </SelectPrimitive.ScrollUpButton>
-+  )
-+}
-+
-+function SelectScrollDownButton({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {
-+  return (
-+    <SelectPrimitive.ScrollDownButton
-+      data-slot="select-scroll-down-button"
-+      className={cn(
-+        "flex cursor-default items-center justify-center py-1",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <ChevronDownIcon className="size-4" />
-+    </SelectPrimitive.ScrollDownButton>
-+  )
-+}
-+
-+export {
-+  Select,
-+  SelectContent,
-+  SelectGroup,
-+  SelectItem,
-+  SelectLabel,
-+  SelectScrollDownButton,
-+  SelectScrollUpButton,
-+  SelectSeparator,
-+  SelectTrigger,
-+  SelectValue,
-+}
-  ---
-  File: src/components/ui/separator.tsx
-  Status: added
-  Additions: 26
-  Deletions: 0
-  Changes: 26
-  
-Patch:
-@@ -0,0 +1,26 @@
-+import * as React from "react"
-+import * as SeparatorPrimitive from "@radix-ui/react-separator"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Separator({
-+  className,
-+  orientation = "horizontal",
-+  decorative = true,
-+  ...props
-+}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
-+  return (
-+    <SeparatorPrimitive.Root
-+      data-slot="separator-root"
-+      decorative={decorative}
-+      orientation={orientation}
-+      className={cn(
-+        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export { Separator }
-  ---
-  File: src/components/ui/switch.tsx
-  Status: added
-  Additions: 29
-  Deletions: 0
-  Changes: 29
-  
-Patch:
-@@ -0,0 +1,29 @@
-+import * as React from "react"
-+import * as SwitchPrimitive from "@radix-ui/react-switch"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Switch({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-+  return (
-+    <SwitchPrimitive.Root
-+      data-slot="switch"
-+      className={cn(
-+        "peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
-+        className
-+      )}
-+      {...props}
-+    >
-+      <SwitchPrimitive.Thumb
-+        data-slot="switch-thumb"
-+        className={cn(
-+          "bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0"
-+        )}
-+      />
-+    </SwitchPrimitive.Root>
-+  )
-+}
-+
-+export { Switch }
-  ---
-  File: src/components/ui/table.tsx
-  Status: added
-  Additions: 111
-  Deletions: 0
-  Changes: 111
-  
-Patch:
-@@ -0,0 +1,111 @@
-+import * as React from 'react';
-+
-+import { cn } from '@/lib/utils';
-+
-+function Table({ className, ...props }: React.ComponentProps<'table'>) {
-+  return (
-+    <div data-slot='table-container' className='relative w-full'>
-+      <table
-+        data-slot='table'
-+        className={cn('w-full caption-bottom text-sm', className)}
-+        {...props}
-+      />
-+    </div>
-+  );
-+}
-+
-+function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
-+  return (
-+    <thead
-+      data-slot='table-header'
-+      className={cn('[&_tr]:border-b', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
-+  return (
-+    <tbody
-+      data-slot='table-body'
-+      className={cn('[&_tr:last-child]:border-0', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
-+  return (
-+    <tfoot
-+      data-slot='table-footer'
-+      className={cn(
-+        'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
-+  return (
-+    <tr
-+      data-slot='table-row'
-+      className={cn(
-+        'hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
-+  return (
-+    <th
-+      data-slot='table-head'
-+      className={cn(
-+        'text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
-+  return (
-+    <td
-+      data-slot='table-cell'
-+      className={cn(
-+        'p-2 align-middle whitespace-wrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-+        className
-+      )}
-+      {...props}
-+    />
-+  );
-+}
-+
-+function TableCaption({
-+  className,
-+  ...props
-+}: React.ComponentProps<'caption'>) {
-+  return (
-+    <caption
-+      data-slot='table-caption'
-+      className={cn('text-muted-foreground mt-4 text-sm', className)}
-+      {...props}
-+    />
-+  );
-+}
-+
-+export {
-+  Table,
-+  TableHeader,
-+  TableBody,
-+  TableFooter,
-+  TableHead,
-+  TableRow,
-+  TableCell,
-+  TableCaption,
-+};
-  ---
-  File: src/components/ui/tabs.tsx
-  Status: added
-  Additions: 64
-  Deletions: 0
-  Changes: 64
-  
-Patch:
-@@ -0,0 +1,64 @@
-+import * as React from "react"
-+import * as TabsPrimitive from "@radix-ui/react-tabs"
-+
-+import { cn } from "@/lib/utils"
-+
-+function Tabs({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof TabsPrimitive.Root>) {
-+  return (
-+    <TabsPrimitive.Root
-+      data-slot="tabs"
-+      className={cn("flex flex-col gap-2", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function TabsList({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof TabsPrimitive.List>) {
-+  return (
-+    <TabsPrimitive.List
-+      data-slot="tabs-list"
-+      className={cn(
-+        "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function TabsTrigger({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
-+  return (
-+    <TabsPrimitive.Trigger
-+      data-slot="tabs-trigger"
-+      className={cn(
-+        "data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-+        className
-+      )}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function TabsContent({
-+  className,
-+  ...props
-+}: React.ComponentProps<typeof TabsPrimitive.Content>) {
-+  return (
-+    <TabsPrimitive.Content
-+      data-slot="tabs-content"
-+      className={cn("flex-1 outline-none", className)}
-+      {...props}
-+    />
-+  )
-+}
-+
-+export { Tabs, TabsList, TabsTrigger, TabsContent }
-  ---
-  File: src/components/ui/tooltip.tsx
-  Status: added
-  Additions: 59
-  Deletions: 0
-  Changes: 59
-  
-Patch:
-@@ -0,0 +1,59 @@
-+import * as React from "react"
-+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-+
-+import { cn } from "@/lib/utils"
-+
-+function TooltipProvider({
-+  delayDuration = 0,
-+  ...props
-+}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
-+  return (
-+    <TooltipPrimitive.Provider
-+      data-slot="tooltip-provider"
-+      delayDuration={delayDuration}
-+      {...props}
-+    />
-+  )
-+}
-+
-+function Tooltip({
-+  ...props
-+}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-+  return (
-+    <TooltipProvider>
-+      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-+    </TooltipProvider>
-+  )
-+}
-+
-+function TooltipTrigger({
-+  ...props
-+}: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-+  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
-+}
-+
-+function TooltipContent({
-+  className,
-+  sideOffset = 0,
-+  children,
-+  ...props
-+}: React.ComponentProps<typeof TooltipPrimitive.Content>) {
-+  return (
-+    <TooltipPrimitive.Portal>
-+      <TooltipPrimitive.Content
-+        data-slot="tooltip-content"
-+        sideOffset={sideOffset}
-+        className={cn(
-+          "bg-primary text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md px-3 py-1.5 text-xs text-balance",
-+          className
-+        )}
-+        {...props}
-+      >
-+        {children}
-+        <TooltipPrimitive.Arrow className="bg-primary fill-primary z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]" />
-+      </TooltipPrimitive.Content>
-+    </TooltipPrimitive.Portal>
-+  )
-+}
-+
-+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
-  ---
-  File: src/features/changes/components/change-desc.tsx
-  Status: added
-  Additions: 32
-  Deletions: 0
-  Changes: 32
-  
-Patch:
-@@ -0,0 +1,32 @@
-+import { Card } from '@/components/ui/card';
-+import { Change } from '../types';
-+import { Badge } from '@/components/ui/badge';
-+
-+interface ChangeTableProps extends React.ComponentProps<typeof Card> {
-+  details: Change['detailed_changes'];
-+  motivation: Change['impact'];
-+  type: Change['type'];
-+  public_explanation: Change['public_explanation'];
-+}
-+export const ChangeSummary = ({
-+  details,
-+  motivation,
-+  type,
-+  public_explanation,
-+}: ChangeTableProps) => {
-+  return (
-+    <div className='flex flex-col gap-y-2'>
-+      <Badge variant='outline'>{type.toUpperCase()}</Badge>
-+      <h3 className='text-lg font-semibold text-gray-900'>What Changed</h3>
-+      <ul className='list-disc list-inside text-sm text-gray-500'>
-+        {details.map((detail) => (
-+          <li key={detail}>{detail}</li>
-+        ))}
-+      </ul>
-+      <h3 className='text-lg text-gray-900 font-semibold'>Why We Did It</h3>
-+      <p className='text-sm text-gray-500'>{public_explanation}</p>
-+      <h3 className='text-lg font-semibold text-gray-900'>Impact</h3>
-+      <p className='text-sm text-gray-500'>{motivation}</p>
-+    </div>
-+  );
-+};
-  ---
-  File: src/features/changes/data/data.tsx
-  Status: added
-  Additions: 42
-  Deletions: 0
-  Changes: 42
-  
-Patch:
-@@ -0,0 +1,42 @@
-+import {
-+  IconArrowDown,
-+  IconArrowRight,
-+  IconArrowUp,
-+} from '@tabler/icons-react';
-+
-+export const changeTypes = [
-+  {
-+    label: 'Feature',
-+    value: 'feature',
-+  },
-+  {
-+    label: 'Bug Fix',
-+    value: 'bug fix',
-+  },
-+  {
-+    label: 'Configuration',
-+    value: 'configuration',
-+  },
-+  {
-+    label: 'Deprecation',
-+    value: 'deprecation',
-+  },
-+];
-+
-+export const statuses = [
-+  {
-+    label: 'Complete',
-+    value: 'complete',
-+    icon: IconArrowDown,
-+  },
-+  {
-+    label: 'In Progress',
-+    value: 'in progress',
-+    icon: IconArrowRight,
-+  },
-+  {
-+    label: 'Planned',
-+    value: 'planned',
-+    icon: IconArrowUp,
-+  },
-+];
-  ---
-  File: src/features/changes/data/schema.ts
-  Status: added
-  Additions: 44
-  Deletions: 0
-  Changes: 44
-  
-Patch:
-@@ -0,0 +1,44 @@
-+import { z } from 'zod';
-+
-+const changeTypeSchema = z.union([
-+  z.literal('configuration'),
-+  z.literal('dependency'),
-+  z.literal('tooling'),
-+  z.literal('breaking'),
-+  z.literal('feature'),
-+  z.literal('bug fix'),
-+  z.literal('deprecation'),
-+]);
-+export type ChangeType = z.infer<typeof changeTypeSchema>;
-+
-+const changeStatusSchema = z.union([
-+  z.literal('complete'),
-+  z.literal('in progress'),
-+  z.literal('planned'),
-+]);
-+export type ChangeStatus = z.infer<typeof changeStatusSchema>;
-+
-+const changeSchema = z.object({
-+  id: z.string(),
-+  type: changeTypeSchema,
-+  title: z.string(),
-+  status: changeStatusSchema,
-+  detailed_changes: z.array(z.string()),
-+  files: z.array(z.string()),
-+  repos: z.array(z.string()),
-+  impact: z.string(),
-+  public_explanation: z.string(),
-+  developer_explanation: z.string(),
-+  contributors: z.array(z.string()),
-+});
-+export type Change = z.infer<typeof changeSchema>;
-+
-+const changelogSchema = z.object({
-+  date: z.string(),
-+  summary: z.string(),
-+  version: z.string(),
-+  changelog: z.array(changeSchema),
-+});
-+export type Changelog = z.infer<typeof changelogSchema>;
-+
-+export const changeListSchema = z.array(changeSchema);
-  ---
-  File: src/features/changes/index.tsx
-  Status: added
-  Additions: 46
-  Deletions: 0
-  Changes: 46
-  
-Patch:
-@@ -0,0 +1,46 @@
-+import { PropsWithChildren } from 'react';
-+import {
-+  Card,
-+  CardHeader,
-+  CardTitle,
-+  CardDescription,
-+} from '@/components/ui/card';
-+import { ChangeSummary } from './components/change-desc';
-+import { Change } from './data/schema';
-+
-+interface ChangesProps extends PropsWithChildren {
-+  changelog: Change[];
-+  date: string;
-+}
-+
-+export default function Changes({ children, changelog, date }: ChangesProps) {
-+  return (
-+    <>
-+      <div className='flex flex-col flex-start gap-y-4 p-4 outline-1 outline-gray-200 rounded-md'>
-+        <h2 className='text-2xl font-bold tracking-tight text-left'>
-+          Changes as of {new Date(date).toLocaleDateString()}
-+        </h2>
-+        {children}
-+      </div>
-+      <div className='flex flex-col flex-start gap-y-2 p-2 md:gap-y-4 md:p-4 outline-none text-left rounded-md'>
-+        {changelog.map((change) => (
-+          <Card key={change.id}>
-+            <CardHeader>
-+              <CardTitle className='text-xl font-semibold'>
-+                {change.title}
-+              </CardTitle>
-+              <CardDescription>
-+                <ChangeSummary
-+                  details={change.detailed_changes}
-+                  type={change.type}
-+                  motivation={change.impact}
-+                  public_explanation={change.public_explanation}
-+                />
-+              </CardDescription>
-+            </CardHeader>
-+          </Card>
-+        ))}
-+      </div>
-+    </>
-+  );
-+}
-  ---
-  File: src/features/changes/types.ts
-  Status: added
-  Additions: 31
-  Deletions: 0
-  Changes: 31
-  
-Patch:
-@@ -0,0 +1,31 @@
-+export type ChangeType =
-+  | 'configuration'
-+  | 'dependency'
-+  | 'tooling'
-+  | 'breaking'
-+  | 'feature'
-+  | 'bug fix'
-+  | 'deprecation';
-+
-+export type ChangeStatus = 'complete' | 'in progress' | 'planned';
-+
-+export interface Change {
-+  id: string;
-+  type: ChangeType;
-+  title: string;
-+  status: ChangeStatus;
-+  detailed_changes: string[];
-+  files: string[];
-+  repos: string[];
-+  impact: string;
-+  public_explanation: string;
-+  developer_explanation: string;
-+  contributors: string[];
-+}
-+
-+export interface Changelog {
-+  date: string;
-+  changelog: Change[];
-+  summary: string;
-+  version: string;
-+}
-  ---
-  File: src/features/search/search-context.tsx
-  Status: added
-  Additions: 84
-  Deletions: 0
-  Changes: 84
-  
-Patch:
-@@ -0,0 +1,84 @@
-+import React, { createContext, useContext, useState, useEffect } from 'react';
-+import type { VersionLog } from '@/types/changelog';
-+
-+interface SearchContextType {
-+  data: VersionLog[];
-+  filteredData: VersionLog[] | undefined;
-+  isFiltered: boolean;
-+  handleFilterChange: (value: string, type?: string) => void;
-+}
-+
-+const SearchContext = createContext<SearchContextType | null>(null);
-+
-+interface SearchProviderProps {
-+  children: React.ReactNode;
-+  initialData: VersionLog[];
-+}
-+
-+export function SearchProvider({ children, initialData }: SearchProviderProps) {
-+  const [data, setData] = useState<VersionLog[]>(initialData);
-+  const [filteredData, setFilteredData] = useState<VersionLog[]>();
-+  const [isFiltered, setIsFiltered] = useState(false);
-+
-+  // Update data when initialData changes
-+  useEffect(() => {
-+    setData(initialData);
-+  }, [initialData]);
-+
-+  const handleFilterChange = (value: string, type?: string) => {
-+    if (value.length > 2 || type) {
-+      setIsFiltered(true);
-+      const newArray: VersionLog[] = data.map((version) => {
-+        const newChangelog = version.changelog.filter((item) => {
-+          // Filter by type if specified
-+          if (type && type !== 'all' && item.type !== type) {
-+            return false;
-+          }
-+          // Filter by search text if specified
-+          if (value.length > 0) {
-+            const searchableText = [
-+              item.title,
-+              item.type,
-+              ...item.detailed_changes,
-+              item.impact,
-+              item.public_explanation,
-+              item.developer_explanation,
-+              ...item.contributors,
-+            ]
-+              .join(' ')
-+              .toLowerCase();
-+
-+            return searchableText.includes(value.toLowerCase());
-+          }
-+          return true;
-+        });
-+        return { ...version, changelog: newChangelog };
-+      });
-+      setFilteredData(newArray);
-+    } else {
-+      setIsFiltered(false);
-+      setFilteredData(undefined);
-+    }
-+  };
-+
-+  return (
-+    <SearchContext.Provider
-+      value={{
-+        data,
-+        filteredData,
-+        isFiltered,
-+        handleFilterChange,
-+      }}
-+    >
-+      {children}
-+    </SearchContext.Provider>
-+  );
-+}
-+
-+export const useSearch = () => {
-+  const context = useContext(SearchContext);
-+  if (!context) {
-+    throw new Error('useSearch must be used within a SearchProvider');
-+  }
-+  return context;
-+};
-  ---
-  File: src/features/search/search.tsx
-  Status: added
-  Additions: 9
-  Deletions: 0
-  Changes: 9
-  
-Patch:
-@@ -0,0 +1,9 @@
-+import { SearchForm } from './searchform';
-+import { useSearch } from './search-context';
-+
-+export function SearchChanges() {
-+  const { handleFilterChange } = useSearch();
-+  return <SearchForm handleFilterChange={handleFilterChange} />;
-+}
-+
-+export default SearchChanges;
-  ---
-  File: src/features/search/searchform.tsx
-  Status: added
-  Additions: 109
-  Deletions: 0
-  Changes: 109
-  
-Patch:
-@@ -0,0 +1,109 @@
-+import { useForm } from 'react-hook-form';
-+import { z } from 'zod';
-+import { zodResolver } from '@hookform/resolvers/zod';
-+import {
-+  Form,
-+  FormControl,
-+  FormField,
-+  FormItem,
-+  FormMessage,
-+} from '@/components/ui/form';
-+import {
-+  Select,
-+  SelectContent,
-+  SelectItem,
-+  SelectTrigger,
-+  SelectValue,
-+} from '@/components/ui/select';
-+import { Input } from '@/components/ui/input';
-+
-+const formSchema = z.object({
-+  search: z.string().optional(),
-+  filter: z.string().optional(),
-+});
-+
-+type SearchForm = z.infer<typeof formSchema>;
-+
-+interface SearchFormProps {
-+  handleFilterChange: (value: string, type?: string) => void;
-+}
-+
-+export function SearchForm({ handleFilterChange }: SearchFormProps) {
-+  const form = useForm<SearchForm>({
-+    resolver: zodResolver(formSchema),
-+    defaultValues: {
-+      search: '',
-+      filter: 'all',
-+    },
-+  });
-+
-+  const onSubmit = (values: SearchForm) => {
-+    handleFilterChange(values.search || '', values.filter);
-+  };
-+
-+  return (
-+    <Form {...form}>
-+      <form
-+        onSubmit={form.handleSubmit(onSubmit)}
-+        className='space-y-2 md:space-y-4'
-+      >
-+        <div className='flex gap-2 sm:gap-4'>
-+          <FormField
-+            control={form.control}
-+            name='search'
-+            render={({ field }) => (
-+              <FormItem className='flex-1'>
-+                <FormControl>
-+                  <Input
-+                    placeholder='Search...'
-+                    className='w-full min-w-20'
-+                    {...field}
-+                    onChange={(e) => {
-+                      field.onChange(e);
-+                      form.handleSubmit(onSubmit)();
-+                    }}
-+                    value={field.value}
-+                  />
-+                </FormControl>
-+                <FormMessage />
-+              </FormItem>
-+            )}
-+          />
-+
-+          <FormField
-+            control={form.control}
-+            name='filter'
-+            render={({ field }) => (
-+              <FormItem className='w-[200px]'>
-+                <Select
-+                  onValueChange={(value) => {
-+                    field.onChange(value);
-+                    form.handleSubmit(onSubmit)();
-+                  }}
-+                  value={field.value}
-+                >
-+                  <FormControl>
-+                    <SelectTrigger>
-+                      <SelectValue placeholder='Filter by type' />
-+                    </SelectTrigger>
-+                  </FormControl>
-+                  <SelectContent>
-+                    <SelectItem value='all'>All Types</SelectItem>
-+                    <SelectItem value='feature'>Features</SelectItem>
-+                    <SelectItem value='bug fix'>Bug Fixes</SelectItem>
-+                    <SelectItem value='deprecation'>Deprecations</SelectItem>
-+                    <SelectItem value='configuration'>Configuration</SelectItem>
-+                    <SelectItem value='dependency'>Dependencies</SelectItem>
-+                    <SelectItem value='tooling'>Tooling</SelectItem>
-+                    <SelectItem value='breaking'>Breaking Changes</SelectItem>
-+                  </SelectContent>
-+                </Select>
-+                <FormMessage />
-+              </FormItem>
-+            )}
-+          />
-+        </div>
-+      </form>
-+    </Form>
-+  );
-+}
-  ---
-  File: src/features/summary/index.tsx
-  Status: added
-  Additions: 23
-  Deletions: 0
-  Changes: 23
-  
-Patch:
-@@ -0,0 +1,23 @@
-+import {
-+  Collapsible,
-+  CollapsibleContent,
-+  CollapsibleTrigger,
-+} from '@/components/ui/collapsible';
-+
-+export default function Summary({
-+  summary,
-+  version,
-+}: {
-+  summary: string;
-+  version: string;
-+}) {
-+  return (
-+    <Collapsible className='flex flex-col self-start'>
-+      <CollapsibleTrigger className='text-muted-foreground text-left'>
-+        <span className='font-bold text-blue'>Read more</span> about version{' '}
-+        {version}.
-+      </CollapsibleTrigger>
-+      <CollapsibleContent>{summary}</CollapsibleContent>
-+    </Collapsible>
-+  );
-+}
-  ---
-  File: src/index.css
-  Status: modified
-  Additions: 139
-  Deletions: 29
-  Changes: 168
-  
-Patch:
-@@ -1,3 +1,8 @@
+@@ -1,3 +1,5 @@
 +@import 'tailwindcss';
-+@import 'tw-animate-css';
-+
-+@custom-variant dark (&:is(.dark *));
-+
- :root {
-   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-   line-height: 1.5;
-@@ -11,21 +16,52 @@
-   text-rendering: optimizeLegibility;
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-+  --radius: 0.625rem;
-+  --background: oklch(1 0 0);
-+  --foreground: oklch(0.141 0.005 285.823);
-+  --card: oklch(1 0 0);
-+  --card-foreground: oklch(0.141 0.005 285.823);
-+  --popover: oklch(1 0 0);
-+  --popover-foreground: oklch(0.141 0.005 285.823);
-+  --primary: oklch(0.21 0.006 285.885);
-+  --primary-foreground: oklch(0.985 0 0);
-+  --secondary: oklch(0.967 0.001 286.375);
-+  --secondary-foreground: oklch(0.21 0.006 285.885);
-+  --muted: oklch(0.967 0.001 286.375);
-+  --muted-foreground: oklch(0.552 0.016 285.938);
-+  --accent: oklch(0.967 0.001 286.375);
-+  --accent-foreground: oklch(0.21 0.006 285.885);
-+  --destructive: oklch(0.577 0.245 27.325);
-+  --border: oklch(0.92 0.004 286.32);
-+  --input: oklch(0.92 0.004 286.32);
-+  --ring: oklch(0.705 0.015 286.067);
-+  --chart-1: oklch(0.646 0.222 41.116);
-+  --chart-2: oklch(0.6 0.118 184.704);
-+  --chart-3: oklch(0.398 0.07 227.392);
-+  --chart-4: oklch(0.828 0.189 84.429);
-+  --chart-5: oklch(0.769 0.188 70.08);
-+  --sidebar: oklch(0.985 0 0);
-+  --sidebar-foreground: oklch(0.141 0.005 285.823);
-+  --sidebar-primary: oklch(0.21 0.006 285.885);
-+  --sidebar-primary-foreground: oklch(0.985 0 0);
-+  --sidebar-accent: oklch(0.967 0.001 286.375);
-+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-+  --sidebar-border: oklch(0.92 0.004 286.32);
-+  --sidebar-ring: oklch(0.705 0.015 286.067);
- }
- 
- a {
-   font-weight: 500;
--  color: #646cff;
-   text-decoration: inherit;
--}
--a:hover {
--  color: #535bf2;
-+  cursor: pointer;
- }
- 
-+button {
-+  cursor: pointer;
-+}
- body {
-   margin: 0;
-   display: flex;
--  place-items: center;
-   min-width: 320px;
-   min-height: 100vh;
- }
-@@ -35,34 +71,108 @@ h1 {
-   line-height: 1.1;
- }
- 
--button {
--  border-radius: 8px;
--  border: 1px solid transparent;
--  padding: 0.6em 1.2em;
--  font-size: 1em;
--  font-weight: 500;
--  font-family: inherit;
--  background-color: #1a1a1a;
--  cursor: pointer;
--  transition: border-color 0.25s;
-+/* Add media query for small viewports */
-+@media (max-width: 400px) {
-+  :root {
-+    font-size: 14px;
-+  }
-+
-+  h1 {
-+    font-size: 2.4em;
-+  }
-+
-+  h2 {
-+    font-size: 1.8em;
-+  }
-+
-+  h3 {
-+    font-size: 1.4em;
-+  }
-+
-+  p,
-+  span,
-+  a {
-+    font-size: 0.9em;
-+  }
- }
--button:hover {
--  border-color: #646cff;
-+
-+@theme inline {
-+  --radius-sm: calc(var(--radius) - 4px);
-+  --radius-md: calc(var(--radius) - 2px);
-+  --radius-lg: var(--radius);
-+  --radius-xl: calc(var(--radius) + 4px);
-+  --color-background: var(--background);
-+  --color-foreground: var(--foreground);
-+  --color-card: var(--card);
-+  --color-card-foreground: var(--card-foreground);
-+  --color-popover: var(--popover);
-+  --color-popover-foreground: var(--popover-foreground);
-+  --color-primary: var(--primary);
-+  --color-primary-foreground: var(--primary-foreground);
-+  --color-secondary: var(--secondary);
-+  --color-secondary-foreground: var(--secondary-foreground);
-+  --color-muted: var(--muted);
-+  --color-muted-foreground: var(--muted-foreground);
-+  --color-accent: var(--accent);
-+  --color-accent-foreground: var(--accent-foreground);
-+  --color-destructive: var(--destructive);
-+  --color-border: var(--border);
-+  --color-input: var(--input);
-+  --color-ring: var(--ring);
-+  --color-chart-1: var(--chart-1);
-+  --color-chart-2: var(--chart-2);
-+  --color-chart-3: var(--chart-3);
-+  --color-chart-4: var(--chart-4);
-+  --color-chart-5: var(--chart-5);
-+  --color-sidebar: var(--sidebar);
-+  --color-sidebar-foreground: var(--sidebar-foreground);
-+  --color-sidebar-primary: var(--sidebar-primary);
-+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-+  --color-sidebar-accent: var(--sidebar-accent);
-+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-+  --color-sidebar-border: var(--sidebar-border);
-+  --color-sidebar-ring: var(--sidebar-ring);
- }
--button:focus,
--button:focus-visible {
--  outline: 4px auto -webkit-focus-ring-color;
-+
-+.dark {
-+  --background: oklch(0.141 0.005 285.823);
-+  --foreground: oklch(0.985 0 0);
-+  --card: oklch(0.21 0.006 285.885);
-+  --card-foreground: oklch(0.985 0 0);
-+  --popover: oklch(0.21 0.006 285.885);
-+  --popover-foreground: oklch(0.985 0 0);
-+  --primary: oklch(0.92 0.004 286.32);
-+  --primary-foreground: oklch(0.21 0.006 285.885);
-+  --secondary: oklch(0.274 0.006 286.033);
-+  --secondary-foreground: oklch(0.985 0 0);
-+  --muted: oklch(0.274 0.006 286.033);
-+  --muted-foreground: oklch(0.705 0.015 286.067);
-+  --accent: oklch(0.274 0.006 286.033);
-+  --accent-foreground: oklch(0.985 0 0);
-+  --destructive: oklch(0.704 0.191 22.216);
-+  --border: oklch(1 0 0 / 10%);
-+  --input: oklch(1 0 0 / 15%);
-+  --ring: oklch(0.552 0.016 285.938);
-+  --chart-1: oklch(0.488 0.243 264.376);
-+  --chart-2: oklch(0.696 0.17 162.48);
-+  --chart-3: oklch(0.769 0.188 70.08);
-+  --chart-4: oklch(0.627 0.265 303.9);
-+  --chart-5: oklch(0.645 0.246 16.439);
-+  --sidebar: oklch(0.21 0.006 285.885);
-+  --sidebar-foreground: oklch(0.985 0 0);
-+  --sidebar-primary: oklch(0.488 0.243 264.376);
-+  --sidebar-primary-foreground: oklch(0.985 0 0);
-+  --sidebar-accent: oklch(0.274 0.006 286.033);
-+  --sidebar-accent-foreground: oklch(0.985 0 0);
-+  --sidebar-border: oklch(1 0 0 / 10%);
-+  --sidebar-ring: oklch(0.552 0.016 285.938);
- }
- 
--@media (prefers-color-scheme: light) {
--  :root {
--    color: #213547;
--    background-color: #ffffff;
--  }
--  a:hover {
--    color: #747bff;
-+@layer base {
-+  * {
-+    @apply border-border outline-ring/50;
-   }
--  button {
--    background-color: #f9f9f9;
-+  body {
-+    @apply bg-background text-foreground;
-   }
- }
-  ---
-  File: src/lib/utils.ts
-  Status: added
-  Additions: 6
-  Deletions: 0
-  Changes: 6
-  
+
+- :root {
+  --background: #ffffff;
+  --foreground: #171717;
+  ***
+  File: apps/web/package.json
+  Status: modified
+  Additions: 4
+  Deletions: 1
+  Changes: 5
+
+Patch:
+@@ -12,9 +12,12 @@
+},
+"dependencies": {
+"@repo/ui": "\*",
+
+- "@tailwindcss/postcss": "^4.1.7",
+  "next": "^15.3.0",
+- "postcss": "^8.5.3",
+  "react": "^19.1.0",
+
+* "react-dom": "^19.1.0"
+
+- "react-dom": "^19.1.0",
+- "tailwindcss": "^4.1.7"
+  },
+  "devDependencies": {
+  "@repo/eslint-config": "\*",
+
+---
+
+File: apps/web/postcss.config.mjs
+Status: added
+Additions: 6
+Deletions: 0
+Changes: 6
+
 Patch:
 @@ -0,0 +1,6 @@
-+import { clsx, type ClassValue } from "clsx"
-+import { twMerge } from "tailwind-merge"
-+
-+export function cn(...inputs: ClassValue[]) {
-+  return twMerge(clsx(inputs))
-+}
-  ---
-  File: src/types/changelog.ts
-  Status: added
-  Additions: 38
-  Deletions: 0
-  Changes: 38
-  
++const config = {
+
+- plugins: {
+- '@tailwindcss/postcss': {},
+- },
+  +};
+  +export default config;
+  ***
+  File: package-lock.json
+  Status: modified
+  Additions: 1292
+  Deletions: 51
+  Changes: 1343
+
 Patch:
-@@ -0,0 +1,38 @@
-+export type ChangeType =
-+  | 'configuration'
-+  | 'dependency'
-+  | 'tooling'
-+  | 'breaking'
-+  | 'feature'
-+  | 'bug fix'
-+  | 'deprecation';
-+
-+export type ChangeStatus = 'complete' | 'in progress' | 'planned';
-+
-+export interface Change {
-+  id: string;
-+  type: ChangeType;
-+  title: string;
-+  status: ChangeStatus;
-+  detailed_changes: string[];
-+  files: string[];
-+  repos: string[];
-+  impact: string;
-+  public_explanation: string;
-+  developer_explanation: string;
-+  contributors: string[];
-+}
-+
-+export interface VersionLog {
-+  date: string;
-+  summary: string;
-+  version: string;
-+  changelog: Change[];
-+}
-+
-+export type ChangelogResponse = {
-+  date: string;
-+  summary: string;
-+  version: string;
-+  changelog: Change[];
-+};
-  ---
-  File: src/types/markdown.d.ts
-  Status: added
+@@ -10,6 +10,7 @@
+"packages/\*"
+],
+"devDependencies": {
+
+-        "@change-logger/cli": "workspace:*",
+           "@types/node": "^22.15.18",
+           "prettier": "^3.5.3",
+           "turbo": "^2.5.3",
+  @@ -68,6 +69,14 @@
+  "node": ">=6.9.0"
+  }
+  },
+- "node_modules/@change-logger/api": {
+-      "resolved": "packages/api",
+-      "link": true
+- },
+- "node_modules/@change-logger/cli": {
+-      "resolved": "packages/cli",
+-      "link": true
+- },
+  "node_modules/@cspotcode/source-map-support": {
+  "version": "0.8.1",
+  "resolved": "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz",
+  @@ -946,6 +955,177 @@
+  "node": ">= 8"
+  }
+  },
+- "node_modules/@octokit/auth-token": {
+-      "version": "3.0.4",
+-      "resolved": "https://registry.npmjs.org/@octokit/auth-token/-/auth-token-3.0.4.tgz",
+-      "integrity": "sha512-TWFX7cZF2LXoCvdmJWY7XVPi74aSY0+FfBZNSXEXFkMpjcqsQwDSYVv5FhRFaI0V1ECnwbz4j59T/G+rXNWaIQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/core": {
+-      "version": "4.2.4",
+-      "resolved": "https://registry.npmjs.org/@octokit/core/-/core-4.2.4.tgz",
+-      "integrity": "sha512-rYKilwgzQ7/imScn3M9/pFfUf4I1AZEH3KhyJmtPdE2zfaXAn2mFfUy4FbKewzc2We5y/LlKLj36fWJLKC2SIQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/auth-token": "^3.0.0",
+-        "@octokit/graphql": "^5.0.0",
+-        "@octokit/request": "^6.0.0",
+-        "@octokit/request-error": "^3.0.0",
+-        "@octokit/types": "^9.0.0",
+-        "before-after-hook": "^2.2.0",
+-        "universal-user-agent": "^6.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/endpoint": {
+-      "version": "7.0.6",
+-      "resolved": "https://registry.npmjs.org/@octokit/endpoint/-/endpoint-7.0.6.tgz",
+-      "integrity": "sha512-5L4fseVRUsDFGR00tMWD/Trdeeihn999rTMGRMC1G/Ldi1uWlWJzI98H4Iak5DB/RVvQuyMYKqSK/R6mbSOQyg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/types": "^9.0.0",
+-        "is-plain-object": "^5.0.0",
+-        "universal-user-agent": "^6.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/graphql": {
+-      "version": "5.0.6",
+-      "resolved": "https://registry.npmjs.org/@octokit/graphql/-/graphql-5.0.6.tgz",
+-      "integrity": "sha512-Fxyxdy/JH0MnIB5h+UQ3yCoh1FG4kWXfFKkpWqjZHw/p+Kc8Y44Hu/kCgNBT6nU1shNumEchmW/sUO1JuQnPcw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/request": "^6.0.0",
+-        "@octokit/types": "^9.0.0",
+-        "universal-user-agent": "^6.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/openapi-types": {
+-      "version": "18.1.1",
+-      "resolved": "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-18.1.1.tgz",
+-      "integrity": "sha512-VRaeH8nCDtF5aXWnjPuEMIYf1itK/s3JYyJcWFJT8X9pSNnBtriDf7wlEWsGuhPLl4QIH4xM8fqTXDwJ3Mu6sw==",
+-      "license": "MIT"
+- },
+- "node_modules/@octokit/plugin-paginate-rest": {
+-      "version": "6.1.2",
+-      "resolved": "https://registry.npmjs.org/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-6.1.2.tgz",
+-      "integrity": "sha512-qhrmtQeHU/IivxucOV1bbI/xZyC/iOBhclokv7Sut5vnejAIAEXVcGQeRpQlU39E0WwK9lNvJHphHri/DB6lbQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/tsconfig": "^1.0.2",
+-        "@octokit/types": "^9.2.3"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      },
+-      "peerDependencies": {
+-        "@octokit/core": ">=4"
+-      }
+- },
+- "node_modules/@octokit/plugin-request-log": {
+-      "version": "1.0.4",
+-      "resolved": "https://registry.npmjs.org/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz",
+-      "integrity": "sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==",
+-      "license": "MIT",
+-      "peerDependencies": {
+-        "@octokit/core": ">=3"
+-      }
+- },
+- "node_modules/@octokit/plugin-rest-endpoint-methods": {
+-      "version": "7.2.3",
+-      "resolved": "https://registry.npmjs.org/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-7.2.3.tgz",
+-      "integrity": "sha512-I5Gml6kTAkzVlN7KCtjOM+Ruwe/rQppp0QU372K1GP7kNOYEKe8Xn5BW4sE62JAHdwpq95OQK/qGNyKQMUzVgA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/types": "^10.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      },
+-      "peerDependencies": {
+-        "@octokit/core": ">=3"
+-      }
+- },
+- "node_modules/@octokit/plugin-rest-endpoint-methods/node_modules/@octokit/types": {
+-      "version": "10.0.0",
+-      "resolved": "https://registry.npmjs.org/@octokit/types/-/types-10.0.0.tgz",
+-      "integrity": "sha512-Vm8IddVmhCgU1fxC1eyinpwqzXPEYu0NrYzD3YZjlGjyftdLBTeqNblRC0jmJmgxbJIsQlyogVeGnrNaaMVzIg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/openapi-types": "^18.0.0"
+-      }
+- },
+- "node_modules/@octokit/request": {
+-      "version": "6.2.8",
+-      "resolved": "https://registry.npmjs.org/@octokit/request/-/request-6.2.8.tgz",
+-      "integrity": "sha512-ow4+pkVQ+6XVVsekSYBzJC0VTVvh/FCTUUgTsboGq+DTeWdyIFV8WSCdo0RIxk6wSkBTHqIK1mYuY7nOBXOchw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/endpoint": "^7.0.0",
+-        "@octokit/request-error": "^3.0.0",
+-        "@octokit/types": "^9.0.0",
+-        "is-plain-object": "^5.0.0",
+-        "node-fetch": "^2.6.7",
+-        "universal-user-agent": "^6.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/request-error": {
+-      "version": "3.0.3",
+-      "resolved": "https://registry.npmjs.org/@octokit/request-error/-/request-error-3.0.3.tgz",
+-      "integrity": "sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/types": "^9.0.0",
+-        "deprecation": "^2.0.0",
+-        "once": "^1.4.0"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/rest": {
+-      "version": "19.0.13",
+-      "resolved": "https://registry.npmjs.org/@octokit/rest/-/rest-19.0.13.tgz",
+-      "integrity": "sha512-/EzVox5V9gYGdbAI+ovYj3nXQT1TtTHRT+0eZPcuC05UFSWO3mdO9UY1C0i2eLF9Un1ONJkAk+IEtYGAC+TahA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/core": "^4.2.1",
+-        "@octokit/plugin-paginate-rest": "^6.1.2",
+-        "@octokit/plugin-request-log": "^1.0.4",
+-        "@octokit/plugin-rest-endpoint-methods": "^7.1.2"
+-      },
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/@octokit/tsconfig": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmjs.org/@octokit/tsconfig/-/tsconfig-1.0.2.tgz",
+-      "integrity": "sha512-I0vDR0rdtP8p2lGMzvsJzbhdOWy405HcGovrspJ8RRibHnyRgggUSNO5AIox5LmqiwmatHKYsvj6VGFHkqS7lA==",
+-      "license": "MIT"
+- },
+- "node_modules/@octokit/types": {
+-      "version": "9.3.2",
+-      "resolved": "https://registry.npmjs.org/@octokit/types/-/types-9.3.2.tgz",
+-      "integrity": "sha512-D4iHGTdAnEEVsB8fl95m1hiz7D5YiRdQ9b/OEb3BYRVwbLsGHcRVPz+u+BgRLNk0Q0/4iZCBqDN96j2XNxfXrA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/openapi-types": "^18.0.0"
+-      }
+- },
+  "node_modules/@repo/eslint-config": {
+  "resolved": "packages/eslint-config",
+  "link": true
+  @@ -1054,13 +1234,77 @@
+  "workspaces": "dist/cli.js"
+  }
+  },
+- "node_modules/@types/axios": {
+-      "version": "0.9.36",
+-      "resolved": "https://registry.npmjs.org/@types/axios/-/axios-0.9.36.tgz",
+-      "integrity": "sha512-NLOpedx9o+rxo/X5ChbdiX6mS1atE4WHmEEIcR9NLenRVa5HoVjAvjafwU3FPTqnZEstpoqCaW7fagqSoTDNeg==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+- "node_modules/@types/body-parser": {
+-      "version": "1.19.5",
+-      "resolved": "https://registry.npmjs.org/@types/body-parser/-/body-parser-1.19.5.tgz",
+-      "integrity": "sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/connect": "*",
+-        "@types/node": "*"
+-      }
+- },
+- "node_modules/@types/connect": {
+-      "version": "3.4.38",
+-      "resolved": "https://registry.npmjs.org/@types/connect/-/connect-3.4.38.tgz",
+-      "integrity": "sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/node": "*"
+-      }
+- },
+- "node_modules/@types/cors": {
+-      "version": "2.8.18",
+-      "resolved": "https://registry.npmjs.org/@types/cors/-/cors-2.8.18.tgz",
+-      "integrity": "sha512-nX3d0sxJW41CqQvfOzVG1NCTXfFDrDWIghCZncpHeWlVFd81zxB/DLhg7avFg6eHLCRX7ckBmoIIcqa++upvJA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/node": "*"
+-      }
+- },
+  "node_modules/@types/estree": {
+  "version": "1.0.7",
+  "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.7.tgz",
+  "integrity": "sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==",
+  "dev": true,
+  "license": "MIT"
+  },
+- "node_modules/@types/express": {
+-      "version": "4.17.22",
+-      "resolved": "https://registry.npmjs.org/@types/express/-/express-4.17.22.tgz",
+-      "integrity": "sha512-eZUmSnhRX9YRSkplpz0N+k6NljUUn5l3EWZIKZvYzhvMphEuNiyyy1viH/ejgt66JWgALwC/gtSUAeQKtSwW/w==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/body-parser": "*",
+-        "@types/express-serve-static-core": "^4.17.33",
+-        "@types/qs": "*",
+-        "@types/serve-static": "*"
+-      }
+- },
+- "node_modules/@types/express-serve-static-core": {
+-      "version": "4.19.6",
+-      "resolved": "https://registry.npmjs.org/@types/express-serve-static-core/-/express-serve-static-core-4.19.6.tgz",
+-      "integrity": "sha512-N4LZ2xG7DatVqhCZzOGb1Yi5lMbXSZcmdLDe9EzSndPV2HpWYWzRbaerl2n27irrm94EPpprqa8KpskPT085+A==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/node": "*",
+-        "@types/qs": "*",
+-        "@types/range-parser": "*",
+-        "@types/send": "*"
+-      }
+- },
+  "node_modules/@types/glob": {
+  "version": "7.2.0",
+  "resolved": "https://registry.npmjs.org/@types/glob/-/glob-7.2.0.tgz",
+  @@ -1072,6 +1316,13 @@
+  "@types/node": "\*"
+  }
+  },
+- "node_modules/@types/http-errors": {
+-      "version": "2.0.4",
+-      "resolved": "https://registry.npmjs.org/@types/http-errors/-/http-errors-2.0.4.tgz",
+-      "integrity": "sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+  "node_modules/@types/inquirer": {
+  "version": "6.5.0",
+  "resolved": "https://registry.npmjs.org/@types/inquirer/-/inquirer-6.5.0.tgz",
+  @@ -1110,6 +1361,13 @@
+  "dev": true,
+  "license": "MIT"
+  },
+- "node_modules/@types/mime": {
+-      "version": "1.3.5",
+-      "resolved": "https://registry.npmjs.org/@types/mime/-/mime-1.3.5.tgz",
+-      "integrity": "sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+  "node_modules/@types/minimatch": {
+  "version": "5.1.2",
+  "resolved": "https://registry.npmjs.org/@types/minimatch/-/minimatch-5.1.2.tgz",
+  @@ -1121,12 +1379,35 @@
+  "version": "22.15.18",
+  "resolved": "https://registry.npmjs.org/@types/node/-/node-22.15.18.tgz",
+  "integrity": "sha512-v1DKRfUdyW+jJhZNEI1PYy29S2YRxMV5AOO/x/SjKmW0acCIOqmbj6Haf9eHAhsPmrhlHSxEhv/1WszcLWV4cg==",
+
+*      "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "undici-types": "~6.21.0"
+       }
+  },
+
+- "node_modules/@types/node-fetch": {
+-      "version": "2.6.12",
+-      "resolved": "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.12.tgz",
+-      "integrity": "sha512-8nneRWKCg3rMtF69nLQJnOYUcbafYeFSjqkw3jCRLsqkWFlHaoQrr5mXmofFGOx3DKn7UfmBMyov8ySvLRVldA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/node": "*",
+-        "form-data": "^4.0.0"
+-      }
+- },
+- "node_modules/@types/qs": {
+-      "version": "6.14.0",
+-      "resolved": "https://registry.npmjs.org/@types/qs/-/qs-6.14.0.tgz",
+-      "integrity": "sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+- "node_modules/@types/range-parser": {
+-      "version": "1.2.7",
+-      "resolved": "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.7.tgz",
+-      "integrity": "sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+  "node_modules/@types/react": {
+  "version": "19.1.0",
+  "resolved": "https://registry.npmjs.org/@types/react/-/react-19.1.0.tgz",
+  @@ -1147,6 +1428,29 @@
+  "@types/react": "^19.0.0"
+  }
+  },
+- "node_modules/@types/send": {
+-      "version": "0.17.4",
+-      "resolved": "https://registry.npmjs.org/@types/send/-/send-0.17.4.tgz",
+-      "integrity": "sha512-x2EM6TJOybec7c52BX0ZspPodMsQUd5L6PRwOunVyVUhXiBSKf3AezDL8Dgvgt5o0UfKNfuA0eMLr2wLT4AiBA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/mime": "^1",
+-        "@types/node": "*"
+-      }
+- },
+- "node_modules/@types/serve-static": {
+-      "version": "1.15.7",
+-      "resolved": "https://registry.npmjs.org/@types/serve-static/-/serve-static-1.15.7.tgz",
+-      "integrity": "sha512-W8Ym+h8nhuRwaKPaDw34QUkwsGi6Rc4yYqvKFo5rm2FUEhCFbzVWrxXUxuKK8TASjWsysJY0nsmNCGhCOIsrOw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@types/http-errors": "*",
+-        "@types/node": "*",
+-        "@types/send": "*"
+-      }
+- },
+  "node_modules/@types/through": {
+  "version": "0.0.33",
+  "resolved": "https://registry.npmjs.org/@types/through/-/through-0.0.33.tgz",
+  @@ -1384,6 +1688,31 @@
+  "url": "https://opencollective.com/typescript-eslint"
+  }
+  },
+- "node_modules/abort-controller": {
+-      "version": "3.0.0",
+-      "resolved": "https://registry.npmjs.org/abort-controller/-/abort-controller-3.0.0.tgz",
+-      "integrity": "sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "event-target-shim": "^5.0.0"
+-      },
+-      "engines": {
+-        "node": ">=6.5"
+-      }
+- },
+- "node_modules/accepts": {
+-      "version": "1.3.8",
+-      "resolved": "https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz",
+-      "integrity": "sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "mime-types": "~2.1.34",
+-        "negotiator": "0.6.3"
+-      },
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+  "node_modules/acorn": {
+  "version": "8.14.1",
+  "resolved": "https://registry.npmjs.org/acorn/-/acorn-8.14.1.tgz",
+  @@ -1430,6 +1759,18 @@
+  "node": ">= 14"
+  }
+  },
+- "node_modules/agentkeepalive": {
+-      "version": "4.6.0",
+-      "resolved": "https://registry.npmjs.org/agentkeepalive/-/agentkeepalive-4.6.0.tgz",
+-      "integrity": "sha512-kja8j7PjmncONqaTsB8fQ+wE2mSU2DJ9D4XKoJ5PFWIdRMa6SLSN1ff4mOr4jCbfRSsxR4keIiySJU0N9T5hIQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "humanize-ms": "^1.2.1"
+-      },
+-      "engines": {
+-        "node": ">= 8.0.0"
+-      }
+- },
+  "node_modules/aggregate-error": {
+  "version": "3.1.0",
+  "resolved": "https://registry.npmjs.org/aggregate-error/-/aggregate-error-3.1.0.tgz",
+  @@ -1534,6 +1875,12 @@
+  "url": "https://github.com/sponsors/ljharb"
+  }
+  },
+- "node_modules/array-flatten": {
+-      "version": "1.1.1",
+-      "resolved": "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz",
+-      "integrity": "sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==",
+-      "license": "MIT"
+- },
+  "node_modules/array-includes": {
+  "version": "3.1.8",
+  "resolved": "https://registry.npmjs.org/array-includes/-/array-includes-3.1.8.tgz",
+  @@ -1686,6 +2033,12 @@
+  "node": ">= 0.4"
+  }
+  },
+- "node_modules/asynckit": {
+-      "version": "0.4.0",
+-      "resolved": "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz",
+-      "integrity": "sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==",
+-      "license": "MIT"
+- },
+  "node_modules/available-typed-arrays": {
+  "version": "1.0.7",
+  "resolved": "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.7.tgz",
+  @@ -1702,6 +2055,17 @@
+  "url": "https://github.com/sponsors/ljharb"
+  }
+  },
+- "node_modules/axios": {
+-      "version": "1.9.0",
+-      "resolved": "https://registry.npmjs.org/axios/-/axios-1.9.0.tgz",
+-      "integrity": "sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "follow-redirects": "^1.15.6",
+-        "form-data": "^4.0.0",
+-        "proxy-from-env": "^1.1.0"
+-      }
+- },
+  "node_modules/balanced-match": {
+  "version": "1.0.2",
+  "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+  @@ -1740,6 +2104,12 @@
+  "node": ">=10.0.0"
+  }
+  },
+- "node_modules/before-after-hook": {
+-      "version": "2.2.3",
+-      "resolved": "https://registry.npmjs.org/before-after-hook/-/before-after-hook-2.2.3.tgz",
+-      "integrity": "sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==",
+-      "license": "Apache-2.0"
+- },
+  "node_modules/bl": {
+  "version": "4.1.0",
+  "resolved": "https://registry.npmjs.org/bl/-/bl-4.1.0.tgz",
+  @@ -1752,6 +2122,45 @@
+  "readable-stream": "^3.4.0"
+  }
+  },
+- "node_modules/body-parser": {
+-      "version": "1.20.3",
+-      "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.20.3.tgz",
+-      "integrity": "sha512-7rAxByjUMqQ3/bHJy7D6OGXvx/MMc4IqBn/X0fcM1QUcAItpZrBEYhWGem+tzXH90c+G01ypMcYJBO9Y30203g==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "bytes": "3.1.2",
+-        "content-type": "~1.0.5",
+-        "debug": "2.6.9",
+-        "depd": "2.0.0",
+-        "destroy": "1.2.0",
+-        "http-errors": "2.0.0",
+-        "iconv-lite": "0.4.24",
+-        "on-finished": "2.4.1",
+-        "qs": "6.13.0",
+-        "raw-body": "2.5.2",
+-        "type-is": "~1.6.18",
+-        "unpipe": "1.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 0.8",
+-        "npm": "1.2.8000 || >= 1.4.16"
+-      }
+- },
+- "node_modules/body-parser/node_modules/debug": {
+-      "version": "2.6.9",
+-      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+-      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "2.0.0"
+-      }
+- },
+- "node_modules/body-parser/node_modules/ms": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+-      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==",
+-      "license": "MIT"
+- },
+  "node_modules/brace-expansion": {
+  "version": "2.0.1",
+  "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.1.tgz",
+  @@ -1811,6 +2220,15 @@
+  "node": ">=10.16.0"
+  }
+  },
+- "node_modules/bytes": {
+-      "version": "3.1.2",
+-      "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz",
+-      "integrity": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/call-bind": {
+  "version": "1.0.8",
+  "resolved": "https://registry.npmjs.org/call-bind/-/call-bind-1.0.8.tgz",
+  @@ -1834,7 +2252,6 @@
+  "version": "1.0.2",
+  "resolved": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
+  "integrity": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==",
+
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "es-errors": "^1.3.0",
+  @@ -1848,7 +2265,6 @@
+  "version": "1.0.4",
+  "resolved": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
+  "integrity": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "call-bind-apply-helpers": "^1.0.2",
+  @@ -1963,10 +2379,6 @@
+  "node": ">=6"
+  }
+  },
+* "node_modules/cli": {
+*      "resolved": "packages/cli",
+*      "link": true
+* },
+  "node_modules/cli-cursor": {
+  "version": "3.1.0",
+  "resolved": "https://registry.npmjs.org/cli-cursor/-/cli-cursor-3.1.0.tgz",
+  @@ -2064,6 +2476,18 @@
+  "simple-swizzle": "^0.2.2"
+  }
+  },
+
+- "node_modules/combined-stream": {
+-      "version": "1.0.8",
+-      "resolved": "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz",
+-      "integrity": "sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "delayed-stream": "~1.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/commander": {
+  "version": "10.0.1",
+  "resolved": "https://registry.npmjs.org/commander/-/commander-10.0.1.tgz",
+  @@ -2092,6 +2516,42 @@
+  "upper-case": "^1.1.1"
+  }
+  },
+- "node_modules/content-disposition": {
+-      "version": "0.5.4",
+-      "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-0.5.4.tgz",
+-      "integrity": "sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "safe-buffer": "5.2.1"
+-      },
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/content-type": {
+-      "version": "1.0.5",
+-      "resolved": "https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz",
+-      "integrity": "sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/cookie": {
+-      "version": "0.7.1",
+-      "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.7.1.tgz",
+-      "integrity": "sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/cookie-signature": {
+-      "version": "1.0.6",
+-      "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz",
+-      "integrity": "sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==",
+-      "license": "MIT"
+- },
+  "node_modules/core-js-pure": {
+  "version": "3.42.0",
+  "resolved": "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.42.0.tgz",
+  @@ -2104,6 +2564,19 @@
+  "url": "https://opencollective.com/core-js"
+  }
+  },
+- "node_modules/cors": {
+-      "version": "2.8.5",
+-      "resolved": "https://registry.npmjs.org/cors/-/cors-2.8.5.tgz",
+-      "integrity": "sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "object-assign": "^4",
+-        "vary": "^1"
+-      },
+-      "engines": {
+-        "node": ">= 0.10"
+-      }
+- },
+  "node_modules/create-require": {
+  "version": "1.1.1",
+  "resolved": "https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz",
+  @@ -2316,6 +2789,40 @@
+  "node": ">=8"
+  }
+  },
+- "node_modules/delayed-stream": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz",
+-      "integrity": "sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.4.0"
+-      }
+- },
+- "node_modules/depd": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
+-      "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+- "node_modules/deprecation": {
+-      "version": "2.3.1",
+-      "resolved": "https://registry.npmjs.org/deprecation/-/deprecation-2.3.1.tgz",
+-      "integrity": "sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==",
+-      "license": "ISC"
+- },
+- "node_modules/destroy": {
+-      "version": "1.2.0",
+-      "resolved": "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz",
+-      "integrity": "sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8",
+-        "npm": "1.2.8000 || >= 1.4.16"
+-      }
+- },
+  "node_modules/detect-libc": {
+  "version": "2.0.4",
+  "resolved": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.4.tgz",
+  @@ -2380,7 +2887,6 @@
+  "version": "16.0.3",
+  "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz",
+  "integrity": "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==",
+
+*      "dev": true,
+         "license": "BSD-2-Clause",
+         "engines": {
+           "node": ">=12"
+  @@ -2390,7 +2896,6 @@
+  "version": "1.0.1",
+  "resolved": "https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz",
+  "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "call-bind-apply-helpers": "^1.0.1",
+  @@ -2401,13 +2906,28 @@
+  "node": ">= 0.4"
+  }
+  },
+
+- "node_modules/ee-first": {
+-      "version": "1.1.1",
+-      "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
+-      "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==",
+-      "license": "MIT"
+- },
+  "node_modules/emoji-regex": {
+  "version": "8.0.0",
+  "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+  "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
+  "dev": true,
+  "license": "MIT"
+  },
+- "node_modules/encodeurl": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.0.tgz",
+-      "integrity": "sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/es-abstract": {
+  "version": "1.23.9",
+  "resolved": "https://registry.npmjs.org/es-abstract/-/es-abstract-1.23.9.tgz",
+  @@ -2478,7 +2998,6 @@
+  "version": "1.0.1",
+  "resolved": "https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz",
+  "integrity": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==",
+
+*      "dev": true,
+         "license": "MIT",
+         "engines": {
+           "node": ">= 0.4"
+  @@ -2488,7 +3007,6 @@
+  "version": "1.3.0",
+  "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
+  "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
+*      "dev": true,
+         "license": "MIT",
+         "engines": {
+           "node": ">= 0.4"
+  @@ -2526,7 +3044,6 @@
+  "version": "1.1.1",
+  "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.1.tgz",
+  "integrity": "sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "es-errors": "^1.3.0"
+  @@ -2539,7 +3056,6 @@
+  "version": "2.1.0",
+  "resolved": "https://registry.npmjs.org/es-set-tostringtag/-/es-set-tostringtag-2.1.0.tgz",
+  "integrity": "sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "es-errors": "^1.3.0",
+  @@ -2582,6 +3098,12 @@
+  "url": "https://github.com/sponsors/ljharb"
+  }
+  },
+
+- "node_modules/escape-html": {
+-      "version": "1.0.3",
+-      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
+-      "integrity": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==",
+-      "license": "MIT"
+- },
+  "node_modules/escape-string-regexp": {
+  "version": "4.0.0",
+  "resolved": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz",
+  @@ -2930,6 +3452,24 @@
+  "node": ">=0.10.0"
+  }
+  },
+- "node_modules/etag": {
+-      "version": "1.8.1",
+-      "resolved": "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz",
+-      "integrity": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/event-target-shim": {
+-      "version": "5.0.1",
+-      "resolved": "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz",
+-      "integrity": "sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=6"
+-      }
+- },
+  "node_modules/execa": {
+  "version": "5.1.1",
+  "resolved": "https://registry.npmjs.org/execa/-/execa-5.1.1.tgz",
+  @@ -2954,6 +3494,67 @@
+  "url": "https://github.com/sindresorhus/execa?sponsor=1"
+  }
+  },
+- "node_modules/express": {
+-      "version": "4.21.2",
+-      "resolved": "https://registry.npmjs.org/express/-/express-4.21.2.tgz",
+-      "integrity": "sha512-28HqgMZAmih1Czt9ny7qr6ek2qddF4FclbMzwhCREB6OFfH+rXAnuNCwo1/wFvrtbgsQDb4kSbX9de9lFbrXnA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "accepts": "~1.3.8",
+-        "array-flatten": "1.1.1",
+-        "body-parser": "1.20.3",
+-        "content-disposition": "0.5.4",
+-        "content-type": "~1.0.4",
+-        "cookie": "0.7.1",
+-        "cookie-signature": "1.0.6",
+-        "debug": "2.6.9",
+-        "depd": "2.0.0",
+-        "encodeurl": "~2.0.0",
+-        "escape-html": "~1.0.3",
+-        "etag": "~1.8.1",
+-        "finalhandler": "1.3.1",
+-        "fresh": "0.5.2",
+-        "http-errors": "2.0.0",
+-        "merge-descriptors": "1.0.3",
+-        "methods": "~1.1.2",
+-        "on-finished": "2.4.1",
+-        "parseurl": "~1.3.3",
+-        "path-to-regexp": "0.1.12",
+-        "proxy-addr": "~2.0.7",
+-        "qs": "6.13.0",
+-        "range-parser": "~1.2.1",
+-        "safe-buffer": "5.2.1",
+-        "send": "0.19.0",
+-        "serve-static": "1.16.2",
+-        "setprototypeof": "1.2.0",
+-        "statuses": "2.0.1",
+-        "type-is": "~1.6.18",
+-        "utils-merge": "1.0.1",
+-        "vary": "~1.1.2"
+-      },
+-      "engines": {
+-        "node": ">= 0.10.0"
+-      },
+-      "funding": {
+-        "type": "opencollective",
+-        "url": "https://opencollective.com/express"
+-      }
+- },
+- "node_modules/express/node_modules/debug": {
+-      "version": "2.6.9",
+-      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+-      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "2.0.0"
+-      }
+- },
+- "node_modules/express/node_modules/ms": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+-      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==",
+-      "license": "MIT"
+- },
+  "node_modules/external-editor": {
+  "version": "3.1.0",
+  "resolved": "https://registry.npmjs.org/external-editor/-/external-editor-3.1.0.tgz",
+  @@ -3082,6 +3683,39 @@
+  "node": ">=8"
+  }
+  },
+- "node_modules/finalhandler": {
+-      "version": "1.3.1",
+-      "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-1.3.1.tgz",
+-      "integrity": "sha512-6BN9trH7bp3qvnrRyzsBz+g3lZxTNZTbVO2EV1CS0WIcDbawYVdYvGflME/9QP0h0pYlCDBCTjYa9nZzMDpyxQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "debug": "2.6.9",
+-        "encodeurl": "~2.0.0",
+-        "escape-html": "~1.0.3",
+-        "on-finished": "2.4.1",
+-        "parseurl": "~1.3.3",
+-        "statuses": "2.0.1",
+-        "unpipe": "~1.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+- "node_modules/finalhandler/node_modules/debug": {
+-      "version": "2.6.9",
+-      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+-      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "2.0.0"
+-      }
+- },
+- "node_modules/finalhandler/node_modules/ms": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+-      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==",
+-      "license": "MIT"
+- },
+  "node_modules/find-up": {
+  "version": "5.0.0",
+  "resolved": "https://registry.npmjs.org/find-up/-/find-up-5.0.0.tgz",
+  @@ -3120,6 +3754,26 @@
+  "dev": true,
+  "license": "ISC"
+  },
+- "node_modules/follow-redirects": {
+-      "version": "1.15.9",
+-      "resolved": "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.9.tgz",
+-      "integrity": "sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==",
+-      "funding": [
+-        {
+-          "type": "individual",
+-          "url": "https://github.com/sponsors/RubenVerborgh"
+-        }
+-      ],
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=4.0"
+-      },
+-      "peerDependenciesMeta": {
+-        "debug": {
+-          "optional": true
+-        }
+-      }
+- },
+  "node_modules/for-each": {
+  "version": "0.3.5",
+  "resolved": "https://registry.npmjs.org/for-each/-/for-each-0.3.5.tgz",
+  @@ -3136,6 +3790,58 @@
+  "url": "https://github.com/sponsors/ljharb"
+  }
+  },
+- "node_modules/form-data": {
+-      "version": "4.0.2",
+-      "resolved": "https://registry.npmjs.org/form-data/-/form-data-4.0.2.tgz",
+-      "integrity": "sha512-hGfm/slu0ZabnNt4oaRZ6uREyfCj6P4fT/n6A1rGV+Z0VdGXjfOhVUpkn6qVQONHGIFwmveGXyDs75+nr6FM8w==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "asynckit": "^0.4.0",
+-        "combined-stream": "^1.0.8",
+-        "es-set-tostringtag": "^2.1.0",
+-        "mime-types": "^2.1.12"
+-      },
+-      "engines": {
+-        "node": ">= 6"
+-      }
+- },
+- "node_modules/form-data-encoder": {
+-      "version": "1.7.2",
+-      "resolved": "https://registry.npmjs.org/form-data-encoder/-/form-data-encoder-1.7.2.tgz",
+-      "integrity": "sha512-qfqtYan3rxrnCk1VYaA4H+Ms9xdpPqvLZa6xmMgFvhO32x7/3J/ExcTd6qpxM0vH2GdMI+poehyBZvqfMTto8A==",
+-      "license": "MIT"
+- },
+- "node_modules/formdata-node": {
+-      "version": "4.4.1",
+-      "resolved": "https://registry.npmjs.org/formdata-node/-/formdata-node-4.4.1.tgz",
+-      "integrity": "sha512-0iirZp3uVDjVGt9p49aTaqjk84TrglENEDuqfdlZQ1roC9CWlPk6Avf8EEnZNcAqPonwkG35x4n3ww/1THYAeQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "node-domexception": "1.0.0",
+-        "web-streams-polyfill": "4.0.0-beta.3"
+-      },
+-      "engines": {
+-        "node": ">= 12.20"
+-      }
+- },
+- "node_modules/forwarded": {
+-      "version": "0.2.0",
+-      "resolved": "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz",
+-      "integrity": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/fresh": {
+-      "version": "0.5.2",
+-      "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz",
+-      "integrity": "sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+  "node_modules/fs-extra": {
+  "version": "10.1.0",
+  "resolved": "https://registry.npmjs.org/fs-extra/-/fs-extra-10.1.0.tgz",
+  @@ -3162,7 +3868,6 @@
+  "version": "1.1.2",
+  "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+  "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
+
+*      "dev": true,
+         "license": "MIT",
+         "funding": {
+           "url": "https://github.com/sponsors/ljharb"
+  @@ -3203,7 +3908,6 @@
+  "version": "1.3.0",
+  "resolved": "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz",
+  "integrity": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "call-bind-apply-helpers": "^1.0.2",
+  @@ -3228,7 +3932,6 @@
+  "version": "1.0.1",
+  "resolved": "https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz",
+  "integrity": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "dunder-proto": "^1.0.1",
+  @@ -3397,7 +4100,6 @@
+  "version": "1.2.0",
+  "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
+  "integrity": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==",
+*      "dev": true,
+         "license": "MIT",
+         "engines": {
+           "node": ">= 0.4"
+  @@ -3512,7 +4214,6 @@
+  "version": "1.1.0",
+  "resolved": "https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz",
+  "integrity": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==",
+*      "dev": true,
+         "license": "MIT",
+         "engines": {
+           "node": ">= 0.4"
+  @@ -3525,7 +4226,6 @@
+  "version": "1.0.2",
+  "resolved": "https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz",
+  "integrity": "sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "has-symbols": "^1.0.3"
+  @@ -3541,7 +4241,6 @@
+  "version": "2.0.2",
+  "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz",
+  "integrity": "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "function-bind": "^1.1.2"
+  @@ -3561,6 +4260,22 @@
+  "upper-case": "^1.1.3"
+  }
+  },
+
+- "node_modules/http-errors": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/http-errors/-/http-errors-2.0.0.tgz",
+-      "integrity": "sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "depd": "2.0.0",
+-        "inherits": "2.0.4",
+-        "setprototypeof": "1.2.0",
+-        "statuses": "2.0.1",
+-        "toidentifier": "1.0.1"
+-      },
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/http-proxy-agent": {
+  "version": "7.0.2",
+  "resolved": "https://registry.npmjs.org/http-proxy-agent/-/http-proxy-agent-7.0.2.tgz",
+  @@ -3599,11 +4314,19 @@
+  "node": ">=10.17.0"
+  }
+  },
+- "node_modules/humanize-ms": {
+-      "version": "1.2.1",
+-      "resolved": "https://registry.npmjs.org/humanize-ms/-/humanize-ms-1.2.1.tgz",
+-      "integrity": "sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "^2.0.0"
+-      }
+- },
+  "node_modules/iconv-lite": {
+  "version": "0.4.24",
+  "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz",
+  "integrity": "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==",
+
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "safer-buffer": ">= 2.1.2 < 3"
+  @@ -3696,7 +4419,6 @@
+  "version": "2.0.4",
+  "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+  "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+*      "dev": true,
+         "license": "ISC"
+       },
+       "node_modules/ini": {
+  @@ -3803,6 +4525,15 @@
+  "node": ">= 12"
+  }
+  },
+
+- "node_modules/ipaddr.js": {
+-      "version": "1.9.1",
+-      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz",
+-      "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.10"
+-      }
+- },
+  "node_modules/is-array-buffer": {
+  "version": "3.0.5",
+  "resolved": "https://registry.npmjs.org/is-array-buffer/-/is-array-buffer-3.0.5.tgz",
+  @@ -4093,6 +4824,15 @@
+  "node": ">=8"
+  }
+  },
+- "node_modules/is-plain-object": {
+-      "version": "5.0.0",
+-      "resolved": "https://registry.npmjs.org/is-plain-object/-/is-plain-object-5.0.0.tgz",
+-      "integrity": "sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.10.0"
+-      }
+- },
+  "node_modules/is-regex": {
+  "version": "1.2.1",
+  "resolved": "https://registry.npmjs.org/is-regex/-/is-regex-1.2.1.tgz",
+  @@ -4600,41 +5340,100 @@
+  "version": "1.1.0",
+  "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
+  "integrity": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==",
+
+*      "dev": true,
+       "license": "MIT",
+       "engines": {
+         "node": ">= 0.4"
+       }
+  },
+
+- "node_modules/media-typer": {
+-      "version": "0.3.0",
+-      "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz",
+-      "integrity": "sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/merge-descriptors": {
+-      "version": "1.0.3",
+-      "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.3.tgz",
+-      "integrity": "sha512-gaNvAS7TZ897/rVaZ0nMtAyxNyi/pdbjbAwUpFQpN70GqnVfOiXpeUUMKRBmzXaSQ8DdTX4/0ms62r2K+hE6mQ==",
+-      "license": "MIT",
+-      "funding": {
+-        "url": "https://github.com/sponsors/sindresorhus"
+-      }
+- },
+  "node_modules/merge-stream": {
+  "version": "2.0.0",
+  "resolved": "https://registry.npmjs.org/merge-stream/-/merge-stream-2.0.0.tgz",
+  "integrity": "sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==",
+  "dev": true,
+  "license": "MIT"
+  },
+
+* "node_modules/merge2": {
+*      "version": "1.4.1",
+*      "resolved": "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz",
+*      "integrity": "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==",
+*      "dev": true,
+
+- "node_modules/merge2": {
+-      "version": "1.4.1",
+-      "resolved": "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz",
+-      "integrity": "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 8"
+-      }
+- },
+- "node_modules/methods": {
+-      "version": "1.1.2",
+-      "resolved": "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz",
+-      "integrity": "sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/micromatch": {
+-      "version": "4.0.8",
+-      "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz",
+-      "integrity": "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "braces": "^3.0.3",
+-        "picomatch": "^2.3.1"
+-      },
+-      "engines": {
+-        "node": ">=8.6"
+-      }
+- },
+- "node_modules/mime": {
+-      "version": "1.6.0",
+-      "resolved": "https://registry.npmjs.org/mime/-/mime-1.6.0.tgz",
+-      "integrity": "sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==",
+-      "license": "MIT",
+-      "bin": {
+-        "mime": "cli.js"
+-      },
+-      "engines": {
+-        "node": ">=4"
+-      }
+- },
+- "node_modules/mime-db": {
+-      "version": "1.52.0",
+-      "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz",
+-      "integrity": "sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==",
+       "license": "MIT",
+       "engines": {
+
+*        "node": ">= 8"
+
+-        "node": ">= 0.6"
+       }
+  },
+
+* "node_modules/micromatch": {
+*      "version": "4.0.8",
+*      "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz",
+*      "integrity": "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==",
+*      "dev": true,
+
+- "node_modules/mime-types": {
+-      "version": "2.1.35",
+-      "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz",
+-      "integrity": "sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==",
+       "license": "MIT",
+       "dependencies": {
+
+*        "braces": "^3.0.3",
+*        "picomatch": "^2.3.1"
+
+-        "mime-db": "1.52.0"
+       },
+       "engines": {
+
+*        "node": ">=8.6"
+
+-        "node": ">= 0.6"
+         }
+       },
+       "node_modules/mimic-fn": {
+  @@ -4690,7 +5489,6 @@
+  "version": "2.1.3",
+  "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+  "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+
+*      "dev": true,
+         "license": "MIT"
+       },
+       "node_modules/mute-stream": {
+  @@ -4725,6 +5523,15 @@
+  "dev": true,
+  "license": "MIT"
+  },
+
+- "node_modules/negotiator": {
+-      "version": "0.6.3",
+-      "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz",
+-      "integrity": "sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+  "node_modules/neo-async": {
+  "version": "2.6.2",
+  "resolved": "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz",
+  @@ -4806,6 +5613,46 @@
+  "lower-case": "^1.1.1"
+  }
+  },
+- "node_modules/node-domexception": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/node-domexception/-/node-domexception-1.0.0.tgz",
+-      "integrity": "sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==",
+-      "deprecated": "Use your platform's native DOMException instead",
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/jimmywarting"
+-        },
+-        {
+-          "type": "github",
+-          "url": "https://paypal.me/jimmywarting"
+-        }
+-      ],
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=10.5.0"
+-      }
+- },
+- "node_modules/node-fetch": {
+-      "version": "2.7.0",
+-      "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz",
+-      "integrity": "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "whatwg-url": "^5.0.0"
+-      },
+-      "engines": {
+-        "node": "4.x || >=6.0.0"
+-      },
+-      "peerDependencies": {
+-        "encoding": "^0.1.0"
+-      },
+-      "peerDependenciesMeta": {
+-        "encoding": {
+-          "optional": true
+-        }
+-      }
+- },
+  "node_modules/node-plop": {
+  "version": "0.26.3",
+  "resolved": "https://registry.npmjs.org/node-plop/-/node-plop-0.26.3.tgz",
+  @@ -4912,7 +5759,6 @@
+  "version": "4.1.1",
+  "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+  "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==",
+
+*      "dev": true,
+         "license": "MIT",
+         "engines": {
+           "node": ">=0.10.0"
+  @@ -4922,7 +5768,6 @@
+  "version": "1.13.4",
+  "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
+  "integrity": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==",
+*      "dev": true,
+         "license": "MIT",
+         "engines": {
+           "node": ">= 0.4"
+  @@ -5016,11 +5861,22 @@
+  "url": "https://github.com/sponsors/ljharb"
+  }
+  },
+
+- "node_modules/on-finished": {
+-      "version": "2.4.1",
+-      "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
+-      "integrity": "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ee-first": "1.1.1"
+-      },
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/once": {
+  "version": "1.4.0",
+  "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+  "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+
+*      "dev": true,
+         "license": "ISC",
+         "dependencies": {
+           "wrappy": "1"
+  @@ -5042,6 +5898,51 @@
+  "url": "https://github.com/sponsors/sindresorhus"
+  }
+  },
+
+- "node_modules/openai": {
+-      "version": "4.100.0",
+-      "resolved": "https://registry.npmjs.org/openai/-/openai-4.100.0.tgz",
+-      "integrity": "sha512-9soq/wukv3utxcuD7TWFqKdKp0INWdeyhUCvxwrne5KwnxaCp4eHL4GdT/tMFhYolxgNhxFzg5GFwM331Z5CZg==",
+-      "license": "Apache-2.0",
+-      "dependencies": {
+-        "@types/node": "^18.11.18",
+-        "@types/node-fetch": "^2.6.4",
+-        "abort-controller": "^3.0.0",
+-        "agentkeepalive": "^4.2.1",
+-        "form-data-encoder": "1.7.2",
+-        "formdata-node": "^4.3.2",
+-        "node-fetch": "^2.6.7"
+-      },
+-      "bin": {
+-        "openai": "bin/cli"
+-      },
+-      "peerDependencies": {
+-        "ws": "^8.18.0",
+-        "zod": "^3.23.8"
+-      },
+-      "peerDependenciesMeta": {
+-        "ws": {
+-          "optional": true
+-        },
+-        "zod": {
+-          "optional": true
+-        }
+-      }
+- },
+- "node_modules/openai/node_modules/@types/node": {
+-      "version": "18.19.100",
+-      "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.100.tgz",
+-      "integrity": "sha512-ojmMP8SZBKprc3qGrGk8Ujpo80AXkrP7G2tOT4VWr5jlr5DHjsJF+emXJz+Wm0glmy4Js62oKMdZZ6B9Y+tEcA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "undici-types": "~5.26.4"
+-      }
+- },
+- "node_modules/openai/node_modules/undici-types": {
+-      "version": "5.26.5",
+-      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
+-      "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
+-      "license": "MIT"
+- },
+  "node_modules/optionator": {
+  "version": "0.9.4",
+  "resolved": "https://registry.npmjs.org/optionator/-/optionator-0.9.4.tgz",
+  @@ -5227,6 +6128,15 @@
+  "node": ">=6"
+  }
+  },
+- "node_modules/parseurl": {
+-      "version": "1.3.3",
+-      "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
+-      "integrity": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/pascal-case": {
+  "version": "2.0.1",
+  "resolved": "https://registry.npmjs.org/pascal-case/-/pascal-case-2.0.1.tgz",
+  @@ -5285,6 +6195,12 @@
+  "dev": true,
+  "license": "MIT"
+  },
+- "node_modules/path-to-regexp": {
+-      "version": "0.1.12",
+-      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.12.tgz",
+-      "integrity": "sha512-RA1GjUVMnvYFxuqovrEqZoxxW5NUZqbwKtYz/Tt7nXerk0LbLblQmrsgdeOxV5SFHf0UDggjS/bSeOZwt1pmEQ==",
+-      "license": "MIT"
+- },
+  "node_modules/path-type": {
+  "version": "4.0.0",
+  "resolved": "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz",
+  @@ -5390,6 +6306,19 @@
+  "react-is": "^16.13.1"
+  }
+  },
+- "node_modules/proxy-addr": {
+-      "version": "2.0.7",
+-      "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.7.tgz",
+-      "integrity": "sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "forwarded": "0.2.0",
+-        "ipaddr.js": "1.9.1"
+-      },
+-      "engines": {
+-        "node": ">= 0.10"
+-      }
+- },
+  "node_modules/proxy-agent": {
+  "version": "6.5.0",
+  "resolved": "https://registry.npmjs.org/proxy-agent/-/proxy-agent-6.5.0.tgz",
+  @@ -5414,7 +6343,6 @@
+  "version": "1.1.0",
+  "resolved": "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz",
+  "integrity": "sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==",
+
+*      "dev": true,
+         "license": "MIT"
+       },
+       "node_modules/punycode": {
+  @@ -5427,6 +6355,21 @@
+  "node": ">=6"
+  }
+  },
+
+- "node_modules/qs": {
+-      "version": "6.13.0",
+-      "resolved": "https://registry.npmjs.org/qs/-/qs-6.13.0.tgz",
+-      "integrity": "sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==",
+-      "license": "BSD-3-Clause",
+-      "dependencies": {
+-        "side-channel": "^1.0.6"
+-      },
+-      "engines": {
+-        "node": ">=0.6"
+-      },
+-      "funding": {
+-        "url": "https://github.com/sponsors/ljharb"
+-      }
+- },
+  "node_modules/queue-microtask": {
+  "version": "1.2.3",
+  "resolved": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
+  @@ -5448,6 +6391,30 @@
+  ],
+  "license": "MIT"
+  },
+- "node_modules/range-parser": {
+-      "version": "1.2.1",
+-      "resolved": "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz",
+-      "integrity": "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+- "node_modules/raw-body": {
+-      "version": "2.5.2",
+-      "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-2.5.2.tgz",
+-      "integrity": "sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "bytes": "3.1.2",
+-        "http-errors": "2.0.0",
+-        "iconv-lite": "0.4.24",
+-        "unpipe": "1.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/rc": {
+  "version": "1.2.8",
+  "resolved": "https://registry.npmjs.org/rc/-/rc-1.2.8.tgz",
+  @@ -5723,7 +6690,6 @@
+  "version": "5.2.1",
+  "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+  "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+
+*      "dev": true,
+         "funding": [
+           {
+             "type": "github",
+  @@ -5779,7 +6745,6 @@
+  "version": "2.1.2",
+  "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
+  "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==",
+*      "dev": true,
+         "license": "MIT"
+       },
+       "node_modules/scheduler": {
+  @@ -5801,6 +6766,54 @@
+  "node": ">=10"
+  }
+  },
+
+- "node_modules/send": {
+-      "version": "0.19.0",
+-      "resolved": "https://registry.npmjs.org/send/-/send-0.19.0.tgz",
+-      "integrity": "sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "debug": "2.6.9",
+-        "depd": "2.0.0",
+-        "destroy": "1.2.0",
+-        "encodeurl": "~1.0.2",
+-        "escape-html": "~1.0.3",
+-        "etag": "~1.8.1",
+-        "fresh": "0.5.2",
+-        "http-errors": "2.0.0",
+-        "mime": "1.6.0",
+-        "ms": "2.1.3",
+-        "on-finished": "2.4.1",
+-        "range-parser": "~1.2.1",
+-        "statuses": "2.0.1"
+-      },
+-      "engines": {
+-        "node": ">= 0.8.0"
+-      }
+- },
+- "node_modules/send/node_modules/debug": {
+-      "version": "2.6.9",
+-      "resolved": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+-      "integrity": "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "2.0.0"
+-      }
+- },
+- "node_modules/send/node_modules/debug/node_modules/ms": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+-      "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==",
+-      "license": "MIT"
+- },
+- "node_modules/send/node_modules/encodeurl": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-1.0.2.tgz",
+-      "integrity": "sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/sentence-case": {
+  "version": "2.1.1",
+  "resolved": "https://registry.npmjs.org/sentence-case/-/sentence-case-2.1.1.tgz",
+  @@ -5812,6 +6825,21 @@
+  "upper-case-first": "^1.1.2"
+  }
+  },
+- "node_modules/serve-static": {
+-      "version": "1.16.2",
+-      "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-1.16.2.tgz",
+-      "integrity": "sha512-VqpjJZKadQB/PEbEwvFdO43Ax5dFBZ2UECszz8bQ7pi7wt//PWe1P6MN7eCnjsatYtBT6EuiClbjSWP2WrIoTw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "encodeurl": "~2.0.0",
+-        "escape-html": "~1.0.3",
+-        "parseurl": "~1.3.3",
+-        "send": "0.19.0"
+-      },
+-      "engines": {
+-        "node": ">= 0.8.0"
+-      }
+- },
+  "node_modules/set-function-length": {
+  "version": "1.2.2",
+  "resolved": "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz",
+  @@ -5861,6 +6889,12 @@
+  "node": ">= 0.4"
+  }
+  },
+- "node_modules/setprototypeof": {
+-      "version": "1.2.0",
+-      "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
+-      "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==",
+-      "license": "ISC"
+- },
+  "node_modules/sharp": {
+  "version": "0.34.1",
+  "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.34.1.tgz",
+  @@ -5942,7 +6976,6 @@
+  "version": "1.1.0",
+  "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.0.tgz",
+  "integrity": "sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==",
+
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "es-errors": "^1.3.0",
+  @@ -5962,7 +6995,6 @@
+  "version": "1.0.0",
+  "resolved": "https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.0.tgz",
+  "integrity": "sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "es-errors": "^1.3.0",
+  @@ -5979,7 +7011,6 @@
+  "version": "1.0.1",
+  "resolved": "https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz",
+  "integrity": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "call-bound": "^1.0.2",
+  @@ -5998,7 +7029,6 @@
+  "version": "1.0.2",
+  "resolved": "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz",
+  "integrity": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==",
+*      "dev": true,
+         "license": "MIT",
+         "dependencies": {
+           "call-bound": "^1.0.2",
+  @@ -6118,6 +7148,15 @@
+  "dev": true,
+  "license": "BSD-3-Clause"
+  },
+
+- "node_modules/statuses": {
+-      "version": "2.0.1",
+-      "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz",
+-      "integrity": "sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/streamsearch": {
+  "version": "1.1.0",
+  "resolved": "https://registry.npmjs.org/streamsearch/-/streamsearch-1.1.0.tgz",
+  @@ -6407,6 +7446,21 @@
+  "node": ">=8.0"
+  }
+  },
+- "node_modules/toidentifier": {
+-      "version": "1.0.1",
+-      "resolved": "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz",
+-      "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.6"
+-      }
+- },
+- "node_modules/tr46": {
+-      "version": "0.0.3",
+-      "resolved": "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz",
+-      "integrity": "sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==",
+-      "license": "MIT"
+- },
+  "node_modules/ts-api-utils": {
+  "version": "2.1.0",
+  "resolved": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.1.0.tgz",
+  @@ -6598,6 +7652,19 @@
+  "url": "https://github.com/sponsors/sindresorhus"
+  }
+  },
+- "node_modules/type-is": {
+-      "version": "1.6.18",
+-      "resolved": "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz",
+-      "integrity": "sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "media-typer": "0.3.0",
+-        "mime-types": "~2.1.24"
+-      },
+-      "engines": {
+-        "node": ">= 0.6"
+-      }
+- },
+  "node_modules/typed-array-buffer": {
+  "version": "1.0.3",
+  "resolved": "https://registry.npmjs.org/typed-array-buffer/-/typed-array-buffer-1.0.3.tgz",
+  @@ -6750,9 +7817,14 @@
+  "version": "6.21.0",
+  "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz",
+  "integrity": "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==",
+
+*      "dev": true,
+       "license": "MIT"
+  },
+
+- "node_modules/universal-user-agent": {
+-      "version": "6.0.1",
+-      "resolved": "https://registry.npmjs.org/universal-user-agent/-/universal-user-agent-6.0.1.tgz",
+-      "integrity": "sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==",
+-      "license": "ISC"
+- },
+  "node_modules/universalify": {
+  "version": "2.0.1",
+  "resolved": "https://registry.npmjs.org/universalify/-/universalify-2.0.1.tgz",
+  @@ -6763,6 +7835,15 @@
+  "node": ">= 10.0.0"
+  }
+  },
+- "node_modules/unpipe": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz",
+-      "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/update-check": {
+  "version": "1.5.4",
+  "resolved": "https://registry.npmjs.org/update-check/-/update-check-1.5.4.tgz",
+  @@ -6808,6 +7889,15 @@
+  "dev": true,
+  "license": "MIT"
+  },
+- "node_modules/utils-merge": {
+-      "version": "1.0.1",
+-      "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz",
+-      "integrity": "sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.4.0"
+-      }
+- },
+  "node_modules/v8-compile-cache-lib": {
+  "version": "3.0.1",
+  "resolved": "https://registry.npmjs.org/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz",
+  @@ -6825,6 +7915,15 @@
+  "node": "^14.17.0 || ^16.13.0 || >=18.0.0"
+  }
+  },
+- "node_modules/vary": {
+-      "version": "1.1.2",
+-      "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
+-      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 0.8"
+-      }
+- },
+  "node_modules/wcwidth": {
+  "version": "1.0.1",
+  "resolved": "https://registry.npmjs.org/wcwidth/-/wcwidth-1.0.1.tgz",
+  @@ -6839,6 +7938,31 @@
+  "resolved": "apps/web",
+  "link": true
+  },
+- "node_modules/web-streams-polyfill": {
+-      "version": "4.0.0-beta.3",
+-      "resolved": "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-4.0.0-beta.3.tgz",
+-      "integrity": "sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">= 14"
+-      }
+- },
+- "node_modules/webidl-conversions": {
+-      "version": "3.0.1",
+-      "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz",
+-      "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==",
+-      "license": "BSD-2-Clause"
+- },
+- "node_modules/whatwg-url": {
+-      "version": "5.0.0",
+-      "resolved": "https://registry.npmjs.org/whatwg-url/-/whatwg-url-5.0.0.tgz",
+-      "integrity": "sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "tr46": "~0.0.3",
+-        "webidl-conversions": "^3.0.0"
+-      }
+- },
+  "node_modules/which": {
+  "version": "2.0.2",
+  "resolved": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+  @@ -6980,7 +8104,6 @@
+  "version": "1.0.2",
+  "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+  "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+
+*      "dev": true,
+         "license": "ISC"
+       },
+       "node_modules/yn": {
+  @@ -7006,9 +8129,127 @@
+  "url": "https://github.com/sponsors/sindresorhus"
+  }
+  },
+
+- "packages/api": {
+-      "name": "@change-logger/api",
+-      "version": "1.0.0",
+-      "dependencies": {
+-        "axios": "^1.6.7",
+-        "cors": "^2.8.5",
+-        "dotenv": "^16.0.0",
+-        "express": "^4.18.2",
+-        "openai": "^4.0.0"
+-      },
+-      "devDependencies": {
+-        "@types/axios": "^0.9.36",
+-        "@types/cors": "^2.8.17",
+-        "@types/express": "^4.17.21",
+-        "@types/node": "^18.0.0",
+-        "typescript": "^4.9.0"
+-      }
+- },
+- "packages/api/node_modules/@types/node": {
+-      "version": "18.19.100",
+-      "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.100.tgz",
+-      "integrity": "sha512-ojmMP8SZBKprc3qGrGk8Ujpo80AXkrP7G2tOT4VWr5jlr5DHjsJF+emXJz+Wm0glmy4Js62oKMdZZ6B9Y+tEcA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "undici-types": "~5.26.4"
+-      }
+- },
+- "packages/api/node_modules/typescript": {
+-      "version": "4.9.5",
+-      "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
+-      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+-      "dev": true,
+-      "license": "Apache-2.0",
+-      "bin": {
+-        "tsc": "bin/tsc",
+-        "tsserver": "bin/tsserver"
+-      },
+-      "engines": {
+-        "node": ">=4.2.0"
+-      }
+- },
+- "packages/api/node_modules/undici-types": {
+-      "version": "5.26.5",
+-      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
+-      "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+  "packages/cli": {
+-      "name": "@change-logger/cli",
+       "version": "1.0.0",
+
+*      "license": "ISC"
+
+-      "license": "ISC",
+-      "dependencies": {
+-        "@octokit/rest": "^19.0.0",
+-        "axios": "^1.9.0",
+-        "commander": "^9.0.0",
+-        "dotenv": "^16.0.0"
+-      },
+-      "devDependencies": {
+-        "@octokit/types": "^14.0.0",
+-        "@types/node": "^18.0.0",
+-        "typescript": "^4.9.0"
+-      }
+- },
+- "packages/cli/node_modules/@octokit/openapi-types": {
+-      "version": "25.0.0",
+-      "resolved": "https://registry.npmjs.org/@octokit/openapi-types/-/openapi-types-25.0.0.tgz",
+-      "integrity": "sha512-FZvktFu7HfOIJf2BScLKIEYjDsw6RKc7rBJCdvCTfKsVnx2GEB/Nbzjr29DUdb7vQhlzS/j8qDzdditP0OC6aw==",
+-      "dev": true,
+-      "license": "MIT"
+- },
+- "packages/cli/node_modules/@octokit/types": {
+-      "version": "14.0.0",
+-      "resolved": "https://registry.npmjs.org/@octokit/types/-/types-14.0.0.tgz",
+-      "integrity": "sha512-VVmZP0lEhbo2O1pdq63gZFiGCKkm8PPp8AUOijlwPO6hojEVjspA0MWKP7E4hbvGxzFKNqKr6p0IYtOH/Wf/zA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "@octokit/openapi-types": "^25.0.0"
+-      }
+- },
+- "packages/cli/node_modules/@types/node": {
+-      "version": "18.19.100",
+-      "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.100.tgz",
+-      "integrity": "sha512-ojmMP8SZBKprc3qGrGk8Ujpo80AXkrP7G2tOT4VWr5jlr5DHjsJF+emXJz+Wm0glmy4Js62oKMdZZ6B9Y+tEcA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "undici-types": "~5.26.4"
+-      }
+- },
+- "packages/cli/node_modules/commander": {
+-      "version": "9.5.0",
+-      "resolved": "https://registry.npmjs.org/commander/-/commander-9.5.0.tgz",
+-      "integrity": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": "^12.20.0 || >=14"
+-      }
+- },
+- "packages/cli/node_modules/typescript": {
+-      "version": "4.9.5",
+-      "resolved": "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz",
+-      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+-      "dev": true,
+-      "license": "Apache-2.0",
+-      "bin": {
+-        "tsc": "bin/tsc",
+-        "tsserver": "bin/tsserver"
+-      },
+-      "engines": {
+-        "node": ">=4.2.0"
+-      }
+- },
+- "packages/cli/node_modules/undici-types": {
+-      "version": "5.26.5",
+-      "resolved": "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz",
+-      "integrity": "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==",
+-      "dev": true,
+-      "license": "MIT"
+  },
+  "packages/eslint-config": {
+  "name": "@repo/eslint-config",
+  ***
+  File: package.json
+  Status: modified
   Additions: 4
-  Deletions: 0
-  Changes: 4
-  
-Patch:
-@@ -0,0 +1,4 @@
-+declare module '*.md' {
-+  const content: string;
-+  export default content;
-+}
-  ---
-  File: tsconfig.app.json
-  Status: modified
-  Additions: 7
-  Deletions: 0
-  Changes: 7
-  
-Patch:
-@@ -1,5 +1,6 @@
- {
-   "compilerOptions": {
-+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-     "target": "ES2020",
-     "useDefineForClassFields": true,
-     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-@@ -14,6 +15,12 @@
-     "noEmit": true,
-     "jsx": "react-jsx",
- 
-+    /* Alias */
-+    "baseUrl": ".",
-+    "paths": {
-+      "@/*": ["./src/*"]
-+    },
-+
-     /* Linting */
-     "strict": true,
-     "noUnusedLocals": true,
-  ---
-  File: tsconfig.json
-  Status: modified
-  Additions: 7
   Deletions: 1
-  Changes: 8
-  
+  Changes: 5
+
 Patch:
-@@ -3,5 +3,11 @@
-   "references": [
-     { "path": "./tsconfig.app.json" },
-     { "path": "./tsconfig.node.json" }
--  ]
-+  ],
-+  "compilerOptions": {
-+    "baseUrl": ".",
-+    "paths": {
-+      "@/*": ["./src/*"]
-+    }
-+  }
- }
-  ---
-  File: tsconfig.node.json
-  Status: modified
-  Additions: 1
+@@ -6,9 +6,12 @@
+"dev": "turbo run dev",
+"lint": "turbo run lint",
+"format": "prettier --write \"\*_/_.{ts,tsx,md}\"",
+
+- "check-types": "turbo run check-types"
+
+* "check-types": "turbo run check-types",
+* "changelog": "node packages/cli/dist/index.js",
+* "start:api": "cd packages/api && npm start"
+  },
+  "devDependencies": {
+* "@change-logger/cli": "workspace:\*",
+  "@types/node": "^22.15.18",
+  "prettier": "^3.5.3",
+  "turbo": "^2.5.3",
+
+---
+
+File: packages/api/package.json
+Status: added
+Additions: 26
+Deletions: 0
+Changes: 26
+
+Patch:
+@@ -0,0 +1,26 @@
++{
+
+- "name": "@change-logger/api",
+- "version": "1.0.0",
+- "main": "dist/index.js",
+- "type": "commonjs",
+- "scripts": {
+- "build": "tsc",
+- "dev": "tsc -w",
+- "start": "node dist/index.js",
+- "test": "echo \"Error: no test specified\" && exit 1"
+- },
+- "dependencies": {
+- "axios": "^1.6.7",
+- "cors": "^2.8.5",
+- "dotenv": "^16.0.0",
+- "express": "^4.18.2",
+- "openai": "^4.0.0"
+- },
+- "devDependencies": {
+- "@types/axios": "^0.9.36",
+- "@types/cors": "^2.8.17",
+- "@types/express": "^4.17.21",
+- "@types/node": "^18.0.0",
+- "typescript": "^4.9.0"
+- }
+  +}
+  ***
+  File: packages/api/src/examples/analyze-changes.ts
+  Status: added
+  Additions: 79
   Deletions: 0
-  Changes: 1
-  
+  Changes: 79
+
 Patch:
-@@ -1,5 +1,6 @@
- {
-   "compilerOptions": {
-+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-     "target": "ES2022",
-     "lib": ["ES2023"],
-     "module": "ESNext",
-  ---
-  File: vite.config.ts
+@@ -0,0 +1,79 @@
++import axios from 'axios';
++import _ as fs from 'fs';
++import _ as path from 'path';
+
+- +interface AnalysisRequest {
+- diffContent: string;
+- options?: {
+- format?: 'markdown' | 'json';
+- includeOriginal?: boolean;
+- };
+  +}
+- +interface AnalysisResponse {
+- analysis:
+- | string
+- | Array<{
+-        title: string;
+-        content: string;
+-      }>;
+- originalDiff?: string;
+  +}
+- +async function analyzeChanges(
+- diffFilePath: string,
+- options: AnalysisRequest['options'] = {}
+  +): Promise<AnalysisResponse> {
+- try {
+- // Read the diff file
+- const diffContent = await fs.promises.readFile(diffFilePath, 'utf-8');
+-
+- // Make the API request
+- const response = await axios.post<AnalysisResponse>(
+-      'http://localhost:3000/api/analyze',
+-      {
+-        diffContent,
+-        options,
+-      }
+- );
+-
+- return response.data;
+- } catch (error) {
+- const errorMessage = error instanceof Error ? error.message : String(error);
+- console.error('Error analyzing changes:', errorMessage);
+- throw error;
+- }
+  +}
+- +// Example usage
+  +async function main() {
+- try {
+- // Example 1: Get markdown analysis
+- const markdownAnalysis = await analyzeChanges('path/to/your/CODE_DIFFS.md');
+- console.log('Markdown Analysis:', markdownAnalysis.analysis);
+-
+- // Example 2: Get JSON analysis with original diff
+- const jsonAnalysis = await analyzeChanges('path/to/your/CODE_DIFFS.md', {
+-      format: 'json',
+-      includeOriginal: true,
+- });
+- console.log('JSON Analysis:', JSON.stringify(jsonAnalysis, null, 2));
+-
+- // Save the analysis to a file
+- const outputPath = path.join(process.cwd(), 'CHANGE_ANALYSIS.md');
+- await fs.promises.writeFile(
+-      outputPath,
+-      typeof markdownAnalysis.analysis === 'string'
+-        ? markdownAnalysis.analysis
+-        : JSON.stringify(markdownAnalysis.analysis, null, 2)
+- );
+- console.log(`Analysis saved to: ${outputPath}`);
+- } catch (error) {
+- const errorMessage = error instanceof Error ? error.message : String(error);
+- console.error('Failed to analyze changes:', errorMessage);
+- process.exit(1);
+- }
+  +}
+- +// Run the example
+  +main();
+  ***
+  File: packages/api/src/index.ts
   Status: modified
-  Additions: 15
-  Deletions: 4
-  Changes: 19
-  
+  Additions: 100
+  Deletions: 6
+  Changes: 106
+
 Patch:
-@@ -1,7 +1,18 @@
--import { defineConfig } from 'vite'
--import react from '@vitejs/plugin-react'
-+import { defineConfig } from 'vite';
-+import react from '@vitejs/plugin-react';
-+import tailwindcss from '@tailwindcss/vite';
-+import path from 'path';
- 
- // https://vitejs.dev/config/
- export default defineConfig({
--  plugins: [react()],
--})
-+  plugins: [tailwindcss(), react()],
-+  resolve: {
-+    alias: {
-+      '@': path.resolve(__dirname, './src'),
-+      // fix loading all icon chunks in dev mode
-+      // https://github.com/tabler/tabler-icons/issues/1233
-+      '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
-+    },
-+  },
-+  assetsInclude: ['**/*.md'],
-+});
+@@ -1,16 +1,110 @@
+-import express from 'express';
++import express, { Request, Response } from 'express';
+import cors from 'cors';
++import \* as dotenv from 'dotenv';
++import OpenAI from 'openai';
+
+- +dotenv.config();
+  const app = express();
+  +const port = process.env.PORT || 3000;
+- +// Initialize OpenAI client
+  +const openai = new OpenAI({
+- apiKey: process.env.OPENAI_API_KEY,
+  +});
+
++// Middleware
+app.use(cors());
+app.use(express.json());
+
+-// Routes for changelog management
+-app.get('/api/changelogs', (req, res) => {
+
+- // Implementation here
+  +interface AnalysisRequest {
+
+* diffContent: string;
+* options?: {
+* format?: 'markdown' | 'json';
+* includeOriginal?: boolean;
+* };
+  +}
+* +// Analysis endpoint
+  +app.post('/api/analyze', async (req: Request, res: Response) => {
+* try {
+* const { diffContent, options = {} } = req.body as AnalysisRequest;
+*
+* if (!diffContent) {
+*      return res.status(400).json({
+*        error: 'Missing required field: diffContent',
+*      });
+* }
+*
+* // Create the prompt for OpenAI
+* const prompt = `Please analyze the following code changes and provide a detailed explanation of:
+  +1. What changes were made
+  +2. Why these changes were likely made
+  +3. The impact of these changes
+  +4. Any potential risks or considerations
+* +Here are the code changes to analyze:
+* +${diffContent}`;
+*
+* // Get analysis from OpenAI
+* const completion = await openai.chat.completions.create({
+*      model: 'gpt-4-turbo-preview',
+*      messages: [
+*        {
+*          role: 'system',
+*          content:
+*            'You are an expert software developer who analyzes code changes and explains them in clear, technical terms.',
+*        },
+*        {
+*          role: 'user',
+*          content: prompt,
+*        },
+*      ],
+*      temperature: 0.7,
+*      max_tokens: 2000,
+* });
+*
+* const analysis = completion.choices[0].message.content;
+*
+* // Format the response based on options
+* if (options.format === 'json') {
+*      // Parse the markdown into a structured format
+*      const sections = analysis?.split('##').map((section) => {
+*        const [title, ...content] = section.split('\n');
+*        return {
+*          title: title.trim(),
+*          content: content.join('\n').trim(),
+*        };
+*      });
+*
+*      return res.json({
+*        analysis: sections,
+*        originalDiff: options.includeOriginal ? diffContent : undefined,
+*      });
+* }
+*
+* // Default to markdown format
+* return res.json({
+*      analysis,
+*      originalDiff: options.includeOriginal ? diffContent : undefined,
+* });
+* } catch (error) {
+* console.error('Error analyzing changes:', error);
+* return res.status(500).json({
+*      error: 'error on OpenAI servers',
+*      details:
+*        error instanceof Error ? 'error on OpenAI servers' : 'Unknown error',
+* });
+* }
+  +});
+* +// Health check endpoint
+  +app.get('/health', (\_req: Request, res: Response) => {
+* res.json({ status: 'ok' });
+  });
+
+-app.listen(3000, () => {
+
+- console.log('API running on port 3000');
+  +// Start server
+  +app.listen(port, () => {
+
+* console.log(`API server running on port ${port}`);
+  });
   ---
+  File: packages/api/tsconfig.json
+  Status: added
+  Additions: 8
+  Deletions: 0
+  Changes: 8
+
+Patch:
+@@ -0,0 +1,8 @@
++{
+
+- "extends": "../../tsconfig.base.json",
+- "compilerOptions": {
+- "outDir": "./dist",
+- "rootDir": "./src"
+- },
+- "include": ["src/**/*"]
+  +}
+  ***
+  File: packages/cli/package.json
+  Status: modified
+  Additions: 18
+  Deletions: 3
+  Changes: 21
+
+Patch:
+@@ -1,12 +1,27 @@
+{
+
+- "name": "cli",
+
+* "name": "@change-logger/cli",
+  "version": "1.0.0",
+
+- "main": "index.js",
+
+* "main": "dist/index.js",
+* "type": "commonjs",
+  "scripts": {
+* "build": "tsc && node -e \"require('fs').writeFileSync('dist/index.js', '#!/usr/bin/env node\\n' + require('fs').readFileSync('dist/index.js', 'utf8'))\"",
+* "dev": "tsc -w",
+* "start": "node dist/index.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+
+- "description": ""
+
+* "description": "",
+* "dependencies": {
+* "@octokit/rest": "^19.0.0",
+* "axios": "^1.9.0",
+* "commander": "^9.0.0",
+* "dotenv": "^16.0.0"
+* },
+* "devDependencies": {
+* "@octokit/types": "^14.0.0",
+* "@types/node": "^18.0.0",
+* "typescript": "^4.9.0"
+* }
+  }
+  ---
+  File: packages/cli/src/README.md
+  Status: added
+  Additions: 114
+  Deletions: 0
+  Changes: 114
+
+Patch:
+@@ -0,0 +1,114 @@
++# Change Logger CLI
+
+- +**Change Logger** is a developer-friendly CLI tool that automates the process of generating changelogs and analyzing code changes in your GitHub repositories.  
+  +It helps teams keep track of what’s changed, why, and the impact of those changes—making releases and code reviews easier and more transparent.
+- +- **Generate changelogs** from your commit history and pull requests.
+  +- **Analyze code diffs** using AI for deeper insights and summaries.
+  +- **Integrate with your workflow** using git hooks or run manually as needed.
+- +Whether you’re working solo or as part of a team, Change Logger streamlines your release process and keeps your documentation up to date with minimal effort.
+- +## Installation
+- +Add the CLI to your dev dependencies:
+- +`bash
++npm install --save-dev @change-logger/cli
++`
+- +If you are using a monorepo with npm workspaces, add it to your root `package.json`:
+- +```json
+  +"devDependencies": {
+- "@change-logger/cli": "workspace:\*"
+  +}
+  +```
+- +Then run:
+- +`bash
++npm install
++`
+- +````
+- +---
+- +**Summary:**
+- +- For npm: `npm install --save-dev @change-logger/cli`
+  +- For workspaces: add `"@change-logger/cli": "workspace:*"` to `devDependencies` and run `npm install`.
+- +Let me know if you want this formatted for a specific section of your README!
+- +## Usage
+- +### Generate a Changelog
+- +Generate a changelog comparing your current branch to a stable branch:
+- +```bash
+  +npm run changelog generateChangeLog -r owner/repo -b feature-branch -s main -d code_diffs.md
+  +````
+- +- `-r owner/repo` — GitHub repository (required if not in a git repo)
+  +- `-b feature-branch` — Branch to compare (defaults to current branch)
+  +- `-s main` — Stable branch to compare against (defaults to repo default)
+  +- `-d code_diffs.md` — Output file for code differences (default: `CODE_DIFFS.md`)
+- +### Analyze Code Changes with AI
+- +Analyze code differences using the AI API:
+- +`bash
++npm run changelog analyze-changes -d code_diffs.md -o change_analysis.md
++`
+- +- `-d code_diffs.md` — Diff file to analyze (default: `CODE_DIFFS.md`)
+  +- `-o change_analysis.md` — Output file for analysis (default: `CHANGE_ANALYSIS.md`)
+- +### Set Up Git Hooks
+- +Automatically generate changelogs on commit:
+- +`bash
++npm run changelog setup-hooks
++`
+- +### Test Your GitHub Token
+- +Check if your GitHub token is valid and has the correct permissions:
+- +`bash
++npm run changelog test-token
++`
+- +---
+- +## Notes
+- +- Make sure your `.env` file is present and contains a valid `GITHUB_TOKEN` before running commands.
+  +- For AI analysis, ensure the API server is running and the `OPENAI_API_KEY` is set in its `.env` file.
+  +- You can override the API URL for analysis with the `--api-url` option if needed.
+- +---
+- +## Example Workflow
+- +1. Generate code diffs and a changelog:
+-
+- ```bash
+
+  ```
+
+- npm run changelog generateChangeLog -r owner/repo -b feature-branch -s main -d code_diffs.md
+- ```
+
+  ```
+
+- +2. Analyze the code diffs with AI:
+- ```bash
+
+  ```
+
+- npm run changelog analyze-changes -d code_diffs.md -o change_analysis.md
+- ```
+
+  ```
+
+- +---
+- +## License
+- +MIT
+  ***
+  File: packages/cli/src/commands/analyze-changes.ts
+  Status: added
+  Additions: 27
+  Deletions: 0
+  Changes: 27
+
+Patch:
+@@ -0,0 +1,27 @@
++import { Command } from 'commander';
++import { analyzeChanges } from '../utils/analyze-changes';
+
+- +export function createAnalyzeChangesCommand(): Command {
+- return new Command('analyze-changes')
+- .description('Analyze code changes and generate a human-readable report')
+- .option(
+-      '-d, --diff <file>',
+-      'Input file containing code differences',
+-      'CODE_DIFFS.md'
+- )
+- .option(
+-      '-o, --output <file>',
+-      'Output file for the analysis report',
+-      'CHANGE_ANALYSIS.md'
+- )
+- .action(async (options) => {
+-      try {
+-        await analyzeChanges({
+-          diffFile: options.diff,
+-          outputFile: options.output,
+-        });
+-      } catch (error) {
+-        process.exit(1);
+-      }
+- });
+  +}
+
+---
+
+File: packages/cli/src/commands/generate-changelog.ts
+Status: added
+Additions: 191
+Deletions: 0
+Changes: 191
+
+Patch:
+@@ -0,0 +1,191 @@
++import { Command } from 'commander';
++import { Octokit } from '@octokit/rest';
++import _ as fs from 'fs';
++import _ as path from 'path';
++import { getConfig } from '../config/config';
++import {
+
+- getCurrentRepo,
+- getCurrentBranch,
+- getDefaultStableBranch,
+  +} from '../utils/git-utils';
+  +import { generateMarkdown, formatFileDiff } from '../utils/markdown';
+- +export function createGenerateChangelogCommand() {
+- return new Command('generateChangeLog')
+- .description('Generate changelog from recent commits')
+- .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+- .option(
+-      '-b, --base <branch>',
+-      'Branch to compare (default: current branch)'
+- )
+- .option('-o, --output <file>', 'Output file path', 'CHANGELOG.md')
+- .option('-s, --stable <branch>', 'Stable branch to compare against')
+- .option(
+-      '-d, --diff <file>',
+-      'Output file for code differences',
+-      'CODE_DIFFS.md'
+- )
+- .action(async (options) => {
+-      try {
+-        const config = await getConfig();
+-        const octokit = new Octokit({
+-          auth: process.env.GITHUB_TOKEN,
+-        });
+-
+-        // Get repository information
+-        let owner: string;
+-        let repo: string;
+-        if (options.repo) {
+-          [owner, repo] = options.repo.split('/');
+-        } else {
+-          try {
+-            const repoInfo = getCurrentRepo();
+-            owner = repoInfo.owner;
+-            repo = repoInfo.repo;
+-            console.log(`\n📦 Using repository: ${owner}/${repo}`);
+-          } catch (repoError) {
+-            console.error('\n❌ Error getting repository information:');
+-            console.error('Could not determine current repository.');
+-            console.error('Please either:');
+-            console.error('1. Run this command from a git repository, or');
+-            console.error('2. Specify the repository using -r owner/repo');
+-            process.exit(1);
+-          }
+-        }
+-
+-        // Get branch information
+-        let currentBranch: string;
+-        let stableBranch: string;
+-        try {
+-          currentBranch = options.base || getCurrentBranch();
+-          console.log(`\n🌿 Current branch: ${currentBranch}`);
+-
+-          stableBranch =
+-            options.stable ||
+-            (await getDefaultStableBranch(octokit, owner, repo));
+-          console.log(`🌿 Stable branch: ${stableBranch}`);
+-        } catch (branchError) {
+-          console.error('\n❌ Error getting branch information:');
+-          console.error(
+-            branchError instanceof Error ? branchError.message : 'Unknown error'
+-          );
+-          process.exit(1);
+-        }
+-
+-        console.log(`\n🔄 Generating changelog for ${owner}/${repo}`);
+-        console.log(`📊 Comparing ${currentBranch} against ${stableBranch}`);
+-
+-        // Get the stable branch state
+-        try {
+-          const { data: stableBranchData } = await octokit.repos.getBranch({
+-            owner,
+-            repo,
+-            branch: stableBranch,
+-          });
+-          const stableCommit = stableBranchData.commit.sha;
+-          console.log(`✅ Found stable branch commit: ${stableCommit}`);
+-
+-          // Get the current branch state
+-          const { data: currentBranchData } = await octokit.repos.getBranch({
+-            owner,
+-            repo,
+-            branch: currentBranch,
+-          });
+-          const currentCommit = currentBranchData.commit.sha;
+-          console.log(`✅ Found current branch commit: ${currentCommit}`);
+-
+-          // Get commits between stable branch and current branch
+-          const { data: compareData } = await octokit.repos.compareCommits({
+-            owner,
+-            repo,
+-            base: stableCommit,
+-            head: currentCommit,
+-          });
+-
+-          const commits = compareData.commits || [];
+-          const files = compareData.files || [];
+-
+-          if (commits.length === 0) {
+-            console.warn(
+-              '\n⚠️  Warning: No commits found between stable and current branch.'
+-            );
+-          } else {
+-            console.log(
+-              `\n📝 Found ${commits.length} commits and ${files.length} changed files`
+-            );
+-          }
+-
+-          // Get the latest release for version information
+-          const { data: releases } = await octokit.repos.listReleases({
+-            owner,
+-            repo,
+-          });
+-
+-          // Generate the changelog markdown
+-          const latestRelease = releases[0];
+-          const markdown = generateMarkdown(commits, latestRelease, {
+-            stableBranch,
+-            currentBranch,
+-            lastMergedCommit: stableCommit,
+-            currentCommit,
+-            lastMergedPR: 0,
+-          });
+-
+-          // Generate the code differences file
+-          let diffContent = `# Code Differences between ${stableBranch} and ${currentBranch}\n\n`;
+-          diffContent += `## Summary\n`;
+-          diffContent += `- Total files changed: ${files.length}\n`;
+-          diffContent += `- Total additions: ${files.reduce((sum, file) => sum + file.additions, 0)}\n`;
+-          diffContent += `- Total deletions: ${files.reduce((sum, file) => sum + file.deletions, 0)}\n\n`;
+-
+-          diffContent += `## File Changes\n`;
+-          files.forEach((file) => {
+-            diffContent += formatFileDiff(file);
+-          });
+-
+-          // Write both files
+-          const outputPath = path.resolve(process.cwd(), options.output);
+-          const diffPath = path.resolve(process.cwd(), options.diff);
+-
+-          try {
+-            console.log(`\nSaving files:`);
+-            console.log(`Changelog: ${outputPath}`);
+-            console.log(`Code diffs: ${diffPath}\n`);
+-
+-            await fs.promises.writeFile(outputPath, markdown);
+-            console.log(`✅ Changelog saved successfully: ${outputPath}`);
+-
+-            await fs.promises.writeFile(diffPath, diffContent);
+-            console.log(`✅ Code differences saved successfully: ${diffPath}`);
+-          } catch (writeError) {
+-            console.error('\n❌ Error saving files:');
+-            console.error(
+-              `Failed to save to: ${writeError instanceof Error ? writeError.message : 'Unknown error'}`
+-            );
+-            console.error(`Attempted to save to:`);
+-            console.error(`- Changelog: ${outputPath}`);
+-            console.error(`- Code diffs: ${diffPath}`);
+-            process.exit(1);
+-          }
+-        } catch (error) {
+-          const err = error as Error;
+-          console.error('\n❌ Error generating changelog:');
+-          console.error(err.message);
+-          if (err.stack) {
+-            console.error('\nStack trace:');
+-            console.error(err.stack);
+-          }
+-          process.exit(1);
+-        }
+-      } catch (error) {
+-        const err = error as Error;
+-        console.error('\n❌ Error generating changelog:');
+-        console.error(err.message);
+-        if (err.stack) {
+-          console.error('\nStack trace:');
+-          console.error(err.stack);
+-        }
+-        process.exit(1);
+-      }
+- });
+  +}
+
+---
+
+File: packages/cli/src/commands/setup-hooks.ts
+Status: added
+Additions: 16
+Deletions: 0
+Changes: 16
+
+Patch:
+@@ -0,0 +1,16 @@
++import { Command } from 'commander';
++import { setupGitHooks } from '../utils/git-hooks';
+
+- +export function createSetupHooksCommand() {
+- return new Command('setup-hooks')
+- .description('Set up git hooks for automatic changelog generation')
+- .action(async () => {
+-      try {
+-        await setupGitHooks();
+-        console.log('Git hooks set up successfully');
+-      } catch (error) {
+-        console.error('Error setting up git hooks:', error);
+-        process.exit(1);
+-      }
+- });
+  +}
+
+---
+
+File: packages/cli/src/commands/test-token.ts
+Status: added
+Additions: 115
+Deletions: 0
+Changes: 115
+
+Patch:
+@@ -0,0 +1,115 @@
++import { Command } from 'commander';
++import { Octokit } from '@octokit/rest';
+
+- +export function createTestTokenCommand() {
+- return new Command('test-token')
+- .description('Test GitHub token permissions')
+- .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+- .action(async (options) => {
+-      try {
+-        const octokit = new Octokit({
+-          auth: process.env.GITHUB_TOKEN,
+-        });
+-
+-        if (!process.env.GITHUB_TOKEN) {
+-          throw new Error('GITHUB_TOKEN is not set');
+-        }
+-
+-        console.log('Testing GitHub token...\n');
+-
+-        // Test 1: Check if token is valid
+-        console.log('1. Testing token validity...');
+-        const { data: user } = await octokit.users.getAuthenticated();
+-        console.log('✅ Token is valid');
+-        console.log(`   Authenticated as: ${user.login}\n`);
+-        console.log('   Raw user data:', JSON.stringify(user, null, 2), '\n');
+-        console.log(
+-          '   Octokit object structure:',
+-          {
+-            auth: octokit.auth,
+-            log: octokit.log,
+-            request: octokit.request,
+-            rest: Object.keys(octokit.rest),
+-            graphql: octokit.graphql,
+-            paginate: octokit.paginate,
+-            hook: octokit.hook,
+-          },
+-          '\n'
+-        );
+-
+-        // Test 2: Check organization access
+-        console.log('2. Testing organization access...');
+-        try {
+-          const { data: orgs } = await octokit.orgs.listForUser({
+-            username: user.login,
+-          });
+-          console.log('✅ Organization access successful');
+-          console.log(
+-            '   Raw organizations data:',
+-            JSON.stringify(orgs, null, 2),
+-            '\n'
+-          );
+-
+-          console.log('   Organizations you have access to:');
+-          if (orgs.length === 0) {
+-            console.log('   No organizations found in response');
+-          } else {
+-            orgs.forEach((org) => {
+-              console.log(`   - ${org.login}`);
+-            });
+-          }
+-          console.log();
+-        } catch (error) {
+-          console.error('❌ Failed to list organizations:', error);
+-          console.error('Full error object:', JSON.stringify(error, null, 2));
+-        }
+-
+-        // Test 3: Check repository access
+-        if (options.repo) {
+-          console.log('3. Testing repository access...');
+-          const [owner, repo] = options.repo.split('/');
+-          console.log(`   Attempting to access: ${owner}/${repo}`);
+-
+-          try {
+-            // First try to get organization details
+-            const { data: orgData } = await octokit.orgs.get({
+-              org: owner,
+-            });
+-            console.log(`   Organization found: ${orgData.login}`);
+-
+-            // Check organization membership
+-            const { data: membership } =
+-              await octokit.orgs.getMembershipForUser({
+-                org: owner,
+-                username: user.login,
+-              });
+-            console.log(`   Your role in organization: ${membership.role}`);
+-
+-            // List repositories
+-            console.log('   Listing repositories in organization...');
+-            const { data: repos } = await octokit.repos.listForOrg({
+-              org: owner,
+-              type: 'all',
+-            });
+-
+-            console.log('   Available repositories:');
+-            repos.forEach((repo) => {
+-              console.log(`   - ${repo.name}`);
+-            });
+-          } catch (error) {
+-            console.error('❌ Error accessing repository:', error);
+-            console.error('Full error object:', JSON.stringify(error, null, 2));
+-          }
+-        }
+-
+-        console.log(
+-          'All tests passed! Your token has the correct permissions.'
+-        );
+-      } catch (error) {
+-        const err = error as Error;
+-        console.error('❌ Test failed:', err.message);
+-        console.error('Full error object:', JSON.stringify(error, null, 2));
+-        process.exit(1);
+-      }
+- });
+  +}
+
+---
+
+File: packages/cli/src/config/config.ts
+Status: modified
+Additions: 3
+Deletions: 3
+Changes: 6
+
+Patch:
+@@ -1,6 +1,6 @@
+-import fs from 'fs';
+-import path from 'path';
+-import os from 'os';
++import _ as fs from 'fs';
++import _ as path from 'path';
++import \* as os from 'os';
+
+interface Config {
+defaultRepo: string;
+
+---
+
+File: packages/cli/src/index.ts
+Status: modified
+Additions: 9
+Deletions: 61
+Changes: 70
+
+Patch:
+@@ -1,10 +1,9 @@
+import { Command } from 'commander';
+-import { Octokit } from '@octokit/rest';
+-import dotenv from 'dotenv';
+-import { generateMarkdown } from './utils/markdown';
+-import { getConfig } from './config/config';
+-import { setupGitHooks } from './utils/git-hooks';
+-import fs from 'fs';
++import \* as dotenv from 'dotenv';
++import { createGenerateChangelogCommand } from './commands/generate-changelog';
++import { createSetupHooksCommand } from './commands/setup-hooks';
++import { createTestTokenCommand } from './commands/test-token';
++import { createAnalyzeChangesCommand } from './commands/analyze-changes';
+
+dotenv.config();
+
+@@ -15,60 +14,9 @@ program
+.description('CLI tool for generating changelogs from GitHub commits')
+.version('1.0.0');
+
+-program
+
+- .command('generateChangeLog')
+- .description('Generate changelog from recent commits')
+- .option('-r, --repo <repo>', 'GitHub repository (owner/repo)')
+- .option('-b, --base <branch>', 'Base branch to compare against', 'main')
+- .option('-o, --output <file>', 'Output file path', 'CHANGELOG.md')
+- .action(async (options) => {
+- try {
+-      const config = await getConfig();
+-      const octokit = new Octokit({
+-        auth: process.env.GITHUB_TOKEN,
+-      });
+-
+-      const [owner, repo] = (options.repo || config.defaultRepo).split('/');
+-
+-      // Get the latest release
+-      const { data: releases } = await octokit.repos.listReleases({
+-        owner,
+-        repo,
+-      });
+-
+-      const latestRelease = releases[0];
+-      const baseCommit = latestRelease?.target_commitish || options.base;
+-
+-      // Get commits between latest release and current branch
+-      const { data: commits } = await octokit.repos.compareCommits({
+-        owner,
+-        repo,
+-        base: baseCommit,
+-        head: 'HEAD',
+-      });
+-
+-      const markdown = generateMarkdown(commits, latestRelease);
+-
+-      // Write to file
+-      await fs.promises.writeFile(options.output, markdown);
+-      console.log(`Changelog generated successfully at ${options.output}`);
+- } catch (error) {
+-      console.error('Error generating changelog:', error);
+-      process.exit(1);
+- }
+- });
+- -program
+- .command('setup-hooks')
+- .description('Set up git hooks for automatic changelog generation')
+- .action(async () => {
+- try {
+-      await setupGitHooks();
+-      console.log('Git hooks set up successfully');
+- } catch (error) {
+-      console.error('Error setting up git hooks:', error);
+-      process.exit(1);
+- }
+- });
+  +program.addCommand(createGenerateChangelogCommand());
+  +program.addCommand(createSetupHooksCommand());
+  +program.addCommand(createTestTokenCommand());
+  +program.addCommand(createAnalyzeChangesCommand());
+
+program.parse();
+
+---
+
+File: packages/cli/src/utils/analyze-changes.ts
+Status: added
+Additions: 77
+Deletions: 0
+Changes: 77
+
+Patch:
+@@ -0,0 +1,77 @@
++import axios from 'axios';
++import _ as fs from 'fs';
++import _ as path from 'path';
+
+- +interface AnalysisOptions {
+- diffFile: string;
+- outputFile: string;
+- apiUrl?: string; // Optional: allow overriding the API URL
+  +}
+- +interface AnalysisResponse {
+- analysis:
+- | string
+- | Array<{
+-        title: string;
+-        content: string;
+-      }>;
+- originalDiff?: string;
+  +}
+- +export async function analyzeChanges(options: AnalysisOptions): Promise<void> {
+- try {
+- // Read the code differences file
+- const diffContent = await fs.promises.readFile(options.diffFile, 'utf-8');
+-
+- // Use provided API URL or default to localhost
+- const apiUrl = options.apiUrl || 'http://localhost:3000/api/analyze';
+-
+- // Make the API request
+- const response = await axios.post<AnalysisResponse>(apiUrl, {
+-      diffContent,
+-      options: {
+-        format: 'markdown',
+-        includeOriginal: true,
+-      },
+- });
+-
+- // Generate the analysis report
+- let reportContent = `# Change Analysis Report\n\n`;
+- reportContent += `## Overview\n`;
+- reportContent += `This report provides an analysis of the code changes between versions.\n\n`;
+-
+- // Add the AI analysis
+- reportContent += `## AI Analysis\n\n`;
+- reportContent +=
+-      typeof response.data.analysis === 'string'
+-        ? response.data.analysis
+-        : JSON.stringify(response.data.analysis, null, 2);
+- reportContent += '\n\n';
+-
+- // Add the original changes for reference
+- reportContent += `## Original Changes\n`;
+- reportContent += `For reference, here are the original code changes:\n\n`;
+- reportContent += diffContent;
+-
+- // Write the analysis report
+- await fs.promises.writeFile(options.outputFile, reportContent);
+- console.log(`Analysis report generated at ${options.outputFile}`);
+-
+- // Print instructions for AI analysis
+- console.log('\nTo analyze these changes with AI:');
+- console.log('1. Copy the contents of the analysis report');
+- console.log(
+-      '2. Paste it into your preferred AI tool (e.g., ChatGPT, Claude)'
+- );
+- console.log(
+-      '3. Ask the AI to analyze the changes and generate a human-readable report'
+- );
+- console.log(
+-      '4. The AI will provide insights about new features, breaking changes, and technical details'
+- );
+- } catch (error) {
+- const err = error instanceof Error ? error : new Error(String(error));
+- console.error('Error:', err.message);
+- throw err;
+- }
+  +}
+  ***
+  File: packages/cli/src/utils/git-hooks.ts
+  Status: modified
+  Additions: 3
+  Deletions: 3
+  Changes: 6
+
+Patch:
+@@ -1,10 +1,10 @@
+-import fs from 'fs';
+-import path from 'path';
++import _ as fs from 'fs';
++import _ as path from 'path';
+import { execSync } from 'child_process';
+
+const HOOK_CONTENT = `#!/bin/sh
+
+# Generated by change-logger
+
+-npx change-logger generateChangeLog
++npm run changelog generateChangeLog
+`;
+
+export async function setupGitHooks(): Promise<void> {
+
+---
+
+File: packages/cli/src/utils/git-utils.ts
+Status: added
+Additions: 64
+Deletions: 0
+Changes: 64
+
+Patch:
+@@ -0,0 +1,64 @@
++import { execSync } from 'child_process';
++import { Octokit } from '@octokit/rest';
+
+- +/\*\*
+- - Gets the current git repository information from the remote origin
+- - @returns Object containing owner and repo name
+- - @throws Error if not in a git repository or no remote origin found
+- \*/
+  +export function getCurrentRepo(): { owner: string; repo: string } {
+- try {
+- const remoteUrl = execSync('git config --get remote.origin.url')
+-      .toString()
+-      .trim();
+- // Handle both HTTPS and SSH URLs
+- const match = remoteUrl.match(
+-      /github\.com[:/]([^/]+)\/([^/]+?)(?:\.git)?$/
+- );
+- if (!match) {
+-      throw new Error('Could not parse GitHub repository URL');
+- }
+- return {
+-      owner: match[1],
+-      repo: match[2],
+- };
+- } catch (error) {
+- throw new Error('Not in a git repository or no remote origin found');
+- }
+  +}
+- +/\*\*
+- - Gets the name of the current git branch
+- - @returns Current branch name
+- - @throws Error if could not determine current branch
+- \*/
+  +export function getCurrentBranch(): string {
+- try {
+- return execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+- } catch (error) {
+- throw new Error('Could not determine current branch');
+- }
+  +}
+- +/\*\*
+- - Gets the default stable branch for a repository using GitHub API
+- - @param octokit - Octokit instance for GitHub API calls
+- - @param owner - Repository owner
+- - @param repo - Repository name
+- - @returns Default branch name, falls back to 'main' if API call fails
+- \*/
+  +export async function getDefaultStableBranch(
+- octokit: Octokit,
+- owner: string,
+- repo: string
+  +): Promise<string> {
+- try {
+- const { data } = await octokit.repos.get({ owner, repo });
+- return data.default_branch;
+- } catch (error) {
+- console.warn(
+-      'Could not determine default branch, using "main" as fallback'
+- );
+- return 'main';
+- }
+  +}
+  ***
+  File: packages/cli/src/utils/markdown.ts
+  Status: modified
+  Additions: 49
+  Deletions: 3
+  Changes: 52
+
+Patch:
+@@ -1,4 +1,15 @@
+-import { Commit } from '@octokit/rest';
++interface Commit {
+
+- commit: {
+- message: string;
+- author: {
+-      name?: string;
+-      email?: string;
+-      date?: string;
+- } | null;
+- };
+- sha: string;
+- html_url: string;
+  +}
+
+interface CategorizedCommits {
+features: Commit[];
+@@ -7,16 +18,30 @@ interface CategorizedCommits {
+other: Commit[];
+}
+
++interface MarkdownOptions {
+
+- stableBranch: string;
+- currentBranch: string;
+- lastMergedCommit: string;
+- currentCommit: string;
+- lastMergedPR: number;
+  +}
+- export function generateMarkdown(
+  commits: Commit[],
+
+* latestRelease: any
+
+- latestRelease: any,
+- options: MarkdownOptions
+  ): string {
+  const categorized = categorizeCommits(commits);
+
+  let markdown = `# Changelog\n\n`;
+
+- // Add comparison information
+- markdown += `## Changes since last merged PR (#${options.lastMergedPR})\n\n`;
+- markdown += `- Last Merged PR: #${options.lastMergedPR} (${options.lastMergedCommit.substring(0, 7)})\n`;
+- markdown += `- Current Branch: ${options.currentBranch} (${options.currentCommit.substring(0, 7)})\n\n`;
+- if (latestRelease) {
+
+* markdown += `## Changes since ${latestRelease.tag_name}\n\n`;
+
+- markdown += `### Latest Release: ${latestRelease.tag_name}\n\n`;
+  }
+
+if (categorized.breaking.length > 0) {
+@@ -51,6 +76,15 @@ export function generateMarkdown(
+markdown += '\n';
+}
+
+- // Add commit details section
+- markdown += `## Detailed Commit List\n\n`;
+- commits.forEach((commit) => {
+- markdown += `### ${commit.commit.message.split('\n')[0]}\n\n`;
+- markdown += `- **Author:** ${commit.commit.author?.name}\n`;
+- markdown += `- **Date:** ${new Date(commit.commit.author?.date || '').toLocaleString()}\n`;
+- markdown += `- **Commit:** [${commit.sha.substring(0, 7)}](${commit.html_url})\n\n`;
+- });
+- return markdown;
+  }
+
+@@ -88,3 +122,15 @@ function formatCommit(commit: Commit): string {
+const hash = commit.sha.substring(0, 7);
+return `${message} (${hash})`;
+}
+
+- +// Add this function to format the file differences
+  +export function formatFileDiff(file: any): string {
+- return `
+- File: ${file.filename}
+- Status: ${file.status}
+- Additions: ${file.additions}
+- Deletions: ${file.deletions}
+- Changes: ${file.changes}
+- ${file.patch ? `\nPatch:\n${file.patch}` : ''}
+- ---`;
+  +}
+  ***
+  File: packages/cli/tsconfig.json
+  Status: added
+  Additions: 8
+  Deletions: 0
+  Changes: 8
+
+Patch:
+@@ -0,0 +1,8 @@
++{
+
+- "extends": "../../tsconfig.base.json",
+- "compilerOptions": {
+- "outDir": "./dist",
+- "rootDir": "./src"
+- },
+- "include": ["src/**/*"]
+  +}
+  ***
+  File: tsconfig.base.json
+  Status: added
+  Additions: 13
+  Deletions: 0
+  Changes: 13
+
+Patch:
+@@ -0,0 +1,13 @@
++{
+
+- "compilerOptions": {
+- "target": "ES2020",
+- "module": "CommonJS",
+- "moduleResolution": "Node",
+- "esModuleInterop": true,
+- "forceConsistentCasingInFileNames": true,
+- "strict": true,
+- "skipLibCheck": true,
+- "resolveJsonModule": true,
+- "baseUrl": "."
+- }
+  +}
+  ***

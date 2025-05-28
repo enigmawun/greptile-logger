@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "serve": "ts-node server/index.ts",
     "change-logger": "node -r dotenv/config ./node_modules/change-logger-api/dist/index.js dotenv_config_path=.env",
-    "generate-changelog": "node -r dotenv/config ./node_modules/.bin/change-logger-cli generateChangeLog dotenv_config_path=.env"
+    "generate-changelog": "node -r dotenv/config ./node_modules/change-logger-cli generateChangeLog dotenv_config_path=.env"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
