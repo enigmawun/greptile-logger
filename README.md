@@ -82,8 +82,8 @@ npm install change-logger-cli change-logger-api
 1. Create a `.env` file in your project root:
 
 ```env
-CHANGE_LOGGER_API_KEY=your_api_key
-CHANGE_LOGGER_API_URL=your_api_url
+GITHUB_TOKEN=your_api_key
+OPENAI_API_KEY=your_api_url
 ```
 
 2. Add the following scripts to your `package.json`:
@@ -92,7 +92,7 @@ CHANGE_LOGGER_API_URL=your_api_url
 {
   "scripts": {
     "change-logger": "node -r dotenv/config ./node_modules/change-logger-api/dist/index.js dotenv_config_path=.env",
-    "generate-changelog": "node -r dotenv/config ./node_modules/.bin/change-logger-cli generateChangeLog dotenv_config_path=.env"
+    "generate-changelog": "node -r dotenv/config ./node_modules/change-logger-cli generateChangeLog dotenv_config_path=.env"
   }
 }
 ```
@@ -101,10 +101,24 @@ CHANGE_LOGGER_API_URL=your_api_url
 
 #### Generating Changelogs
 
-To generate a changelog for your project:
+1. Start the server. (Port can be specified in your .env file as PORT. Otherwise server defaults to 3000)
+
+```bash
+npm run change-logger
+```
+
+2. In another terminal, generate a changelog for your project:
 
 ```bash
 npm run generate-changelog
+
+```
+
+3. To generate an analysis of your changes:
+
+```bash
+npx change-logger-cli analyze-changes
+
 ```
 
 This will:
