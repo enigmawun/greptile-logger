@@ -127,28 +127,6 @@ This will:
 2. Generate a structured changelog
 3. Save it in your project
 
-#### Using the API
-
-The `change-logger-api` package provides programmatic access to changelog functionality:
-
-```typescript
-import { ChangeLogger } from 'change-logger-api';
-
-const logger = new ChangeLogger({
-  apiKey: process.env.CHANGE_LOGGER_API_KEY,
-  apiUrl: process.env.CHANGE_LOGGER_API_URL,
-});
-
-// Generate a changelog
-await logger.generateChangelog({
-  repo: 'your-repo',
-  branch: 'main',
-  since: 'v1.0.0',
-});
-```
-
-## Development
-
 ### Building
 
 To build the application:
