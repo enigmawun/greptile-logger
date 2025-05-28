@@ -1,9 +1,9 @@
 # Code Differences between main and backend
 
 ## Summary
-- Total files changed: 60
-- Total additions: 290700
-- Total deletions: 78
+- Total files changed: 57
+- Total additions: 13892
+- Total deletions: 80
 
 ## File Changes
 
@@ -19,6 +19,169 @@ Patch:
 +OPENAI_API_KEY=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
 +GITHUB_TOKEN=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
 \ No newline at end of file
+  ---
+  File: CHANGELOG.md
+  Status: added
+  Additions: 26
+  Deletions: 0
+  Changes: 26
+  
+Patch:
+@@ -0,0 +1,26 @@
++# Changelog
++
++## Changes since last merged PR (#0)
++
++- Last Merged PR: #0 (a6a0603)
++- Current Branch: backend (a43c9d8)
++
++### Other Changes
++
++- deprecating table but save old files (d471e25)
++- added api (a43c9d8)
++
++## Detailed Commit List
++
++### deprecating table but save old files
++
++- **Author:** Avouchment
++- **Date:** 5/25/2025, 5:44:33 PM
++- **Commit:** [d471e25](https://github.com/enigmawun/greptile-logger/commit/d471e253b1b6db89593d8b05203d0439665d346b)
++
++### added api
++
++- **Author:** Avouchment
++- **Date:** 5/27/2025, 12:05:52 PM
++- **Commit:** [a43c9d8](https://github.com/enigmawun/greptile-logger/commit/a43c9d870ef91e196a038462b8c72757355e94a5)
++
+  ---
+  File: CHANGE_ANALYSIS.md
+  Status: added
+  Additions: 112
+  Deletions: 0
+  Changes: 112
+  
+Patch:
+@@ -0,0 +1,112 @@
++Here's the analysis of the code changes you uploaded, organized into a structured change log:
++
++```json
++{
++  "date": "2025-06-15",
++  "summary": "This release brings significant improvements, including a new CLI tool for changelog management, preparation for an upcoming API version, enhanced project visibility, and various stability improvements. With these updates, users can expect a smoother experience while developers gain more powerful tools for managing changes.",
++  "version": "0.1.0",
++  "changelog": [
++    {
++      "id": "cli-1",
++      "type": "feature",
++      "title": "Introduce a new Command-Line Interface (CLI) for changelog generation",
++      "status": "complete",
++      "detailed_changes": [
++        "Implemented `generateChangeLog` and `analyze-changes` commands using Commander.js",
++        "Added utility functions for markdown generation, repo/branch introspection, and AI-prompt formatting",
++        "Configured output of `CHANGELOG.md` and `CODE_DIFFS.md` from GitHub commit diffs"
++      ],
++      "files": [
++        "packages/cli/src/index.ts",
++        "packages/cli/src/commands/analyze-changes.ts",
++        "packages/cli/src/utils/git-utils.ts",
++        "packages/cli/src/utils/markdown.ts",
++        "packages/cli/src/utils/analyze-changes.ts"
++      ],
++      "repos": "@change-logger/cli",
++      "impact": "Developers can now use the new CLI commands to generate changelogs. Users will see more detailed and consistent changelog entries.",
++      "public_explanation": "We're thrilled to introduce our new command-line tool! Now you can automatically generate beautiful changelogs from your GitHub commits. No more manual updates - just run a command and get a professional changelog that keeps everyone in the loop about your project's progress!",
++      "developer_explanation": "The CLI compares the current branch to a stable branch, fetches commit diffs using Octokit, and generates Markdown changelogs and raw diffs. It includes subcommands and file-based prompts for AI change summaries.",
++      "contributors": ["@Avouchment"]
++    },
++    {
++      "id": "api-1",
++      "type": "deprecation",
++      "title": "Prepare for API v2 release",
++      "status": "in progress",
++      "detailed_changes": [
++        "Adding deprecation warnings to old endpoints",
++        "Creating migration guides",
++        "Implementing graceful fallbacks"
++      ],
++      "files": [
++        "packages/api/src/middleware/deprecation.ts",
++        "packages/api/src/legacy.ts"
++      ],
++      "repos": "@change-logger/api",
++      "impact": "Developers using the API need to review the migration guide and plan to update their API calls to v2 endpoints. Users may see deprecation warnings in their applications.",
++      "public_explanation": "We're working on making our API even better! As part of this, we're gradually moving some older features to our new system. Don't worry - we'll make sure you have plenty of time to update your code, and we'll help you every step of the way!",
++      "developer_explanation": "Adding deprecation notices and migration paths for legacy API endpoints to ensure smooth transition to v2.",
++      "contributors": ["@APIMaster", "@LegacyExpert"]
++    },
++    {
++      "id": "config-1",
++      "type": "configuration",
++      "title": "Simplify setup and remove redundant configuration.",
++      "status": "complete",
++      "detailed_changes": [
++        "Removed explicit MODE declarations from environment files",
++        "Implemented Vite's automatic mode detection",
++        "Updated environment variable references to use import.meta.env"
++      ],
++      "files": [".env.development", ".env.production"],
++      "repos": "main",
++      "impact": "Developers need to update any custom build scripts that directly reference process.env.MODE to use import.meta.env.MODE instead. No action needed for users.",
++      "public_explanation": "We've made it easier to run the app in different environments! Now the app automatically knows whether it's running in development or production mode, so you don't have to worry about setting it up manually.",
++      "developer_explanation": "This change removes MODE declarations because Vite now determines the mode automatically. If you're relying on `process.env.MODE` directly in your own builds or scripts, you should replace it with `import.meta.env.MODE` or use Vite's built-in mode support.",
++      "contributors": ["@ViteExpert", "@ConfigMaster"]
++    },
++    {
++      "id": "deps-1",
++      "type": "dependency",
++      "title": "Ensure project stability after regressions in newer versions.",
++      "status": "complete",
++      "detailed_changes": [
++        "Reverted to Excalidraw version 0.17.6 for stability",
++        "Updated package.json and yarn.lock files",
++        "Removed dependencies on newer version features"
++      ],
++      "files": ["dev-docs/package.json", "dev-docs/yarn.lock"],
++      "repos": "main",
++      "impact": "Developers using features from Excalidraw 0.18.0 will need to modify their code to use 0.17.6 compatible features. Users may notice some newer drawing features are temporarily unavailable.",
++      "public_explanation": "We've made a small adjustment to ensure everything runs smoothly! We've temporarily switched back to a more stable version of our drawing tool. While this means you won't see the very latest features right now, it ensures a more reliable experience for everyone.",
++      "developer_explanation": "Projects depending on new features or fixes in `0.18.0` will no longer have access to them. If you were using a newly added prop or behavior from `0.18.0`, you'll need to adjust to what's available in `0.17.6`. This rollback ensures stability.",
++      "contributors": ["@ExcalidrawMaintainer", "@DependencyExpert"]
++    }
++  ],
++  "files": [
++    "packages/cli/src/index.ts",
++    "packages/cli/src/commands/analyze-changes.ts",
++    "packages/cli/src/utils/git-utils.ts",
++    "packages/cli/src/utils/markdown.ts",
++    "packages/api/src/middleware/deprecation.ts",
++    "packages/api/src/legacy.ts",
++    ".env.development",
++    ".env.production",
++    "dev-docs/package.json",
++    "dev-docs/yarn.lock"
++  ]
++}
++```
++
++### Explanation:
++
++1. **New Features**: The introduction of a CLI tool is aimed at enhancing the developer experience by automating changelog generation. A public-facing explanation highlights its user-friendly nature, while the developer note discusses the underlying function and utility of the tool.
++
++2. **Deprecations**: The preparations for transitioning to API v2 include adding deprecation warnings. This change ensures that users are informed well in advance of upcoming breaking changes.
++
++3. **Configuration Changes**: Simplifying the configuration process makes it easier for developers to deploy applications in different environments, reducing the likelihood of errors due to misconfigurations.
++
++4. **Dependency Management**: The rollback to a stable version of a dependency guarantees greater reliability for users, although it may restrict access to newer features temporarily.
++
++Each change is categorized by type for easy reference, detailing its impact both on users and developers to facilitate smoother transitions and updates.
+  ---
+  File: CODE_DIFFS.md
+  Status: added
+  Additions: 4158
+  Deletions: 0
+  Changes: 4158
+  
   ---
   File: components.json
   Status: added
@@ -200,59 +363,80 @@ Patch:
   ---
   File: src/App.tsx
   Status: modified
-  Additions: 52
+  Additions: 97
   Deletions: 28
-  Changes: 80
+  Changes: 125
   
 Patch:
-@@ -1,35 +1,59 @@
+@@ -1,35 +1,104 @@
 -import { useState } from 'react'
 -import reactLogo from './assets/react.svg'
 -import viteLogo from '/vite.svg'
 -import './App.css'
 +import { useState, useEffect } from 'react';
 +import React from 'react';
- 
--function App() {
--  const [count, setCount] = useState(0)
++
 +import './App.css';
-+import { Main } from '@/components/layout/main';
-+import { SearchProvider } from '@/context/search-context';
-+import { SearchChanges } from '@/features/changes/components/search';
++import { SearchProvider, useSearch } from './features/search/search-context';
++import { SearchChanges } from './features/search/search';
 +import { Header } from '@/components/layout/header';
 +import { Breadcrumb } from '@/components/ui/breadcrumb';
-+import { SelectDropdown } from '@/components/select-dropdown';
 +import Changes from './features/changes';
 +import Summary from './features/summary';
 +import type { VersionLog } from '@/types/changelog';
-+import mockdata from '@/assets/changelog_master.json';
-+import mockdata2 from '@/assets/changelog_cli.json';
++import mockdata from '../CHANGE_ANALYSIS.md?raw';
 +
 +// Transform the mock data into the expected Changelog format
 +const transformMockData = (): VersionLog[] => {
-+  // Transform each change to match our schema
++  try {
++    // Extract JSON from markdown content
++    const jsonMatch = mockdata.match(/```json\n([\s\S]*?)\n```/);
++    if (!jsonMatch) {
++      console.error('No JSON found in markdown file');
++      return [];
++    }
 +
-+  const combinedChanges = [JSON.parse(JSON.stringify(mockdata))];
-+  combinedChanges.push(JSON.parse(JSON.stringify(mockdata2)));
-+  console.log(combinedChanges);
-+  return combinedChanges;
++    const jsonData = JSON.parse(jsonMatch[1].trim());
++    console.log('Parsed JSON data:', jsonData); // Debug log
++
++    // Validate the data structure
++    if (!Array.isArray(jsonData) && !jsonData.changelog) {
++      console.error('Invalid data structure:', jsonData);
++      return [];
++    }
++
++    // If it's a single object, wrap it in an array
++    const data = Array.isArray(jsonData) ? jsonData : [jsonData];
++    return data;
++  } catch (error) {
++    console.error('Error transforming mock data:', error);
++    return [];
++  }
 +};
  
-+function App() {
+ function App() {
+-  const [count, setCount] = useState(0)
 +  const [data, setData] = useState<VersionLog[]>([]);
++
 +  useEffect(() => {
-+    // const fetchData = async () => {
-+    //   const response = await fetch('/api/changes');
-+    //   const data = await response.json();
-+    //   setData(data);
-+    // };
 +    const fetchData = () => {
-+      setData(transformMockData());
++      console.log('Raw mockdata:', mockdata); // Debug raw data
++      const result = transformMockData();
++      console.log('Transformed data:', result); // Debug transformed data
++      setData(result);
 +    };
 +    fetchData();
 +  }, []);
++
++  // Don't render until we have data
++  if (data.length === 0) {
++    return <div>Loading...</div>;
++  }
++
++  console.log('Rendering with data:', data); // Debug render data
+ 
    return (
-     <>
+-    <>
 -      <div>
 -        <a href="https://vitejs.dev" target="_blank">
 -          <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -260,7 +444,15 @@ Patch:
 -        <a href="https://react.dev" target="_blank">
 -          <img src={reactLogo} className="logo react" alt="React logo" />
 -        </a>
--      </div>
++    <SearchProvider initialData={data}>
++      <div className='container mx-auto p-4'>
++        <Breadcrumb />
++        <Header />
++        <div className='my-4'>
++          <SearchChanges />
++        </div>
++        <ChangelogList />
+       </div>
 -      <h1>Vite + React</h1>
 -      <div className="card">
 -        <button onClick={() => setCount((count) => count + 1)}>
@@ -273,410 +465,42 @@ Patch:
 -      <p className="read-the-docs">
 -        Click on the Vite and React logos to learn more
 -      </p>
-+      <SearchProvider>
-+        <Breadcrumb />
-+        <Header></Header>
-+        <SearchChanges />
-+
-+        {data.map((version) => (
-+          <React.Fragment key={version.version}>
-+            <Changes changelog={version.changelog} date={version.date}>
-+              <Summary summary={version.summary} version={version.version} />
-+            </Changes>
-+          </React.Fragment>
-+        ))}
-+      </SearchProvider>
-     </>
+-    </>
 -  )
++    </SearchProvider>
++  );
++}
++
++function ChangelogList() {
++  const { data, filteredData, isFiltered } = useSearch();
++  const displayData = isFiltered ? filteredData : data;
++
++  console.log('ChangelogList data:', {
++    data,
++    filteredData,
++    isFiltered,
++    displayData,
++  }); // Debug list data
++
++  if (!displayData || displayData.length === 0) {
++    return <div>No changes found</div>;
++  }
++
++  return (
++    <div className='space-y-6'>
++      {displayData.map((version: VersionLog) => (
++        <React.Fragment key={version.version}>
++          <Changes changelog={version.changelog} date={version.date}>
++            <Summary summary={version.summary} version={version.version} />
++          </Changes>
++        </React.Fragment>
++      ))}
++    </div>
 +  );
  }
  
 -export default App
 +export default App;
-  ---
-  File: src/assets/changelog_cli.json
-  Status: added
-  Additions: 188
-  Deletions: 0
-  Changes: 188
-  
-Patch:
-@@ -0,0 +1,188 @@
-+{
-+  "date": "2025-06-15",
-+  "version": "0.1.0",
-+  "summary": "We're excited to introduce the first version of our new CLI tool! This release brings powerful automation to your changelog management workflow. You can now automatically generate beautiful changelogs from your GitHub commits, with support for AI-powered change descriptions coming soon. We've made it easy to get started with a simple command-line interface, and we're working on Docker support to make deployment even smoother. For teams working across multiple repositories, we're building support for unified changelog generation. We've also added better error handling and rate limit management to ensure a reliable experience. Whether you're a solo developer or part of a large team, this tool will help you maintain clear, consistent changelogs with minimal effort!",
-+  "changelog": [
-+    {
-+      "id": "3ee64f28-4008-43b1-ae52-57d66438c7e2",
-+      "type": "configuration",
-+      "title": "Support build and runtime functionality for new CLI module",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Added dependencies: Octokit, dotenv, commander",
-+        "Setup workspace link in root `package.json` and `package-lock.json`",
-+        "Created `tsconfig.base.json` and per-package `tsconfig.json`"
-+      ],
-+      "files": [
-+        "package.json",
-+        "package-lock.json",
-+        "packages/cli/package.json",
-+        "tsconfig.base.json",
-+        "packages/cli/tsconfig.json"
-+      ],
-+      "repos": ["@change-logger/cli"],
-+      "impact": "Developers need to run 'yarn install' to get the new dependencies. Users will need to install the CLI package to access new features.",
-+      "public_explanation": "We're excited to announce that we've set up the foundation for a new command-line tool! This will make it easier to work with GitHub and manage your changes directly from your terminal. Stay tuned for more features coming soon!",
-+      "developer_explanation": "This configuration includes TypeScript support and sets up the CLI as a workspace package with linked dependencies and build tooling.",
-+      "contributors": ["@Avouchment"]
-+    },
-+    {
-+      "id": "c3d4e5f6-a7b8-6c5d-0e1f-2a3b4c5d6e7f",
-+      "type": "configuration",
-+      "title": "Make the tool more accessible through containerization",
-+      "status": "planned",
-+      "detailed_changes": [
-+        "Planning Dockerfile structure",
-+        "Designing volume mappings",
-+        "Configuring build pipeline"
-+      ],
-+      "files": ["Dockerfile", "docker-compose.yml", "scripts/docker-build.sh"],
-+      "repos": ["@change-logger/docker"],
-+      "impact": "No immediate action required. When released, users will need Docker installed to use the containerized version. Developers will need to update their deployment scripts to use the new Docker configuration.",
-+      "public_explanation": "We're working on something exciting - Docker support! This will make it super easy to run our tools in any environment. No more worrying about dependencies or setup - just pull and run!",
-+      "developer_explanation": "Creating Docker containers to simplify deployment and ensure consistent environments across different systems.",
-+      "contributors": ["@DockerMaster", "@ContainerGuru"]
-+    },
-+    {
-+      "id": "e9aa1b54-e2f1-460e-ba11-44e49bb75ed5",
-+      "type": "deprecation",
-+      "title": "Ensure consistency and support modular publishing",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Removed legacy `cli` package from `node_modules`",
-+        "Replaced with scoped `@change-logger/cli`",
-+        "Updated package references in documentation"
-+      ],
-+      "files": ["package-lock.json"],
-+      "repos": ["@change-logger/cli"],
-+      "impact": "Developers need to update their package.json to use @change-logger/cli instead of the old package name. Users need to reinstall the CLI package.",
-+      "public_explanation": "We've given our CLI tool a new home! It's now under a proper package name that makes it easier to find and use. This change helps us keep everything organized and makes it clearer which version you're using.",
-+      "developer_explanation": "The old linked CLI directory was removed and replaced with a scoped package to support mono-repo publishing and dependency resolution.",
-+      "contributors": ["@Avouchment"]
-+    },
-+    {
-+      "id": "d4e5f6a7-b8c9-7d6e-1f2a-3b4c5d6e7f8a",
-+      "type": "deprecation",
-+      "title": "Prepare for API v2 release",
-+      "status": "in progress",
-+      "detailed_changes": [
-+        "Adding deprecation warnings to old endpoints",
-+        "Creating migration guides",
-+        "Implementing graceful fallbacks"
-+      ],
-+      "files": [
-+        "packages/api/src/legacy.ts",
-+        "docs/migration.md",
-+        "packages/api/src/middleware/deprecation.ts"
-+      ],
-+      "repos": ["@change-logger/api"],
-+      "impact": "Developers using the API need to review the migration guide and plan to update their API calls to v2 endpoints. Users may see deprecation warnings in their applications.",
-+      "public_explanation": "We're working on making our API even better! As part of this, we're gradually moving some older features to our new system. Don't worry - we'll make sure you have plenty of time to update your code, and we'll help you every step of the way!",
-+      "developer_explanation": "Adding deprecation notices and migration paths for legacy API endpoints to ensure smooth transition to v2.",
-+      "contributors": ["@APIMaster", "@LegacyExpert"]
-+    },
-+    {
-+      "id": "e3ffd4fb-50c1-4080-9579-6b7cd49d4e8c",
-+      "type": "feature",
-+      "title": "Automate changelog creation and provide better project visibility",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Implemented `generateChangeLog` and `analyze-changes` commands using Commander.js",
-+        "Added utility functions for markdown generation, repo/branch introspection, and AI-prompt formatting",
-+        "Configured `CHANGELOG.md` and `CODE_DIFFS.md` output from GitHub commit diffs"
-+      ],
-+      "files": [
-+        "packages/cli/src/index.ts",
-+        "packages/cli/src/commands/analyze-changes.ts",
-+        "packages/cli/src/utils/git-utils.ts",
-+        "packages/cli/src/utils/markdown.ts",
-+        "packages/cli/src/utils/analyze-changes.ts"
-+      ],
-+      "repos": ["@change-logger/cli"],
-+      "impact": "Developers can now use the new CLI commands to generate changelogs. Users will see more detailed and consistent changelog entries.",
-+      "public_explanation": "We're thrilled to introduce our new command-line tool! Now you can automatically generate beautiful changelogs from your GitHub commits. No more manual updates - just run a command and get a professional changelog that keeps everyone in the loop about your project's progress!",
-+      "developer_explanation": "The CLI compares the current branch to a stable branch, fetches commit diffs using Octokit, and generates Markdown changelogs and raw diffs. It includes subcommands and file-based prompts for AI change summaries.",
-+      "contributors": ["@Avouchment"]
-+    },
-+    {
-+      "id": "f8a7b6c5-d4e3-4f2a-9b1c-8d7e6f5a4b3c",
-+      "type": "feature",
-+      "title": "Reduce manual effort in writing change descriptions",
-+      "status": "in progress",
-+      "detailed_changes": [
-+        "Integrating OpenAI API for automatic change descriptions",
-+        "Adding context-aware prompt engineering",
-+        "Implementing caching for API responses"
-+      ],
-+      "files": [
-+        "packages/cli/src/utils/ai.ts",
-+        "packages/cli/src/config/prompts.ts",
-+        "packages/cli/src/utils/cache.ts"
-+      ],
-+      "repos": ["@change-logger/ai"],
-+      "impact": "No immediate action required. When released, developers will need to configure their OpenAI API key to use the AI features. Users will see more detailed and consistent change descriptions.",
-+      "public_explanation": "We're working on something exciting - AI-powered changelog summaries! Soon, our tool will automatically write clear, helpful descriptions of your changes. This means less time writing changelogs and more time coding!",
-+      "developer_explanation": "Using OpenAI's API to generate human-like summaries of code changes, with caching to optimize API usage.",
-+      "contributors": ["@SarahDev", "@AIConnoisseur"]
-+    },
-+    {
-+      "id": "b2c3d4e5-f6a7-5b4c-9d8e-0f1a2b3c4d5e",
-+      "type": "feature",
-+      "title": "Support organizations with multiple repositories",
-+      "status": "planned",
-+      "detailed_changes": [
-+        "Designing repository group management",
-+        "Planning cross-repo change tracking",
-+        "Architecting unified changelog generation"
-+      ],
-+      "files": [
-+        "packages/cli/src/commands/group.ts",
-+        "packages/cli/src/utils/repo-group.ts",
-+        "packages/cli/src/config/groups.ts"
-+      ],
-+      "repos": ["@change-logger/core", "@change-logger/cli"],
-+      "impact": "No immediate action required. When released, developers will need to configure repository groups. Users will be able to track changes across multiple repositories.",
-+      "public_explanation": "We're planning something big - support for multiple repositories! Soon you'll be able to track changes across all your projects in one place. Perfect for teams working on multiple related projects!",
-+      "developer_explanation": "Designing a system to track and manage changes across multiple repositories with unified changelog generation.",
-+      "contributors": ["@Architect", "@MultiRepoGuru"]
-+    },
-+    {
-+      "id": "3ecc31d3-0815-44f6-9efa-b2a8fae2268e",
-+      "type": "bug fix",
-+      "title": "Prevent silent errors and guide developers when GitHub access fails",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Added `test-token` command to validate GitHub authentication and access",
-+        "Improved console error messages for repo/branch failures",
-+        "Enhanced error reporting with actionable suggestions"
-+      ],
-+      "files": ["packages/cli/src/index.ts"],
-+      "repos": ["@change-logger/cli"],
-+      "impact": "Developers should run the test-token command to verify their GitHub access. Users will see more helpful error messages when something goes wrong.",
-+      "public_explanation": "We've made our CLI tool more user-friendly! Now it gives clear, helpful messages when something goes wrong, and includes a handy tool to check your GitHub access. No more guessing what went wrong!",
-+      "developer_explanation": "We handle CLI errors with clear logs and exit codes. The new `test-token` command validates token scope and access to repos/orgs using Octokit.",
-+      "contributors": ["@Avouchment"]
-+    },
-+    {
-+      "id": "a1b2c3d4-e5f6-4a3b-8c7d-9e0f1a2b3c4d",
-+      "type": "bug fix",
-+      "title": "Handle GitHub API rate limits more gracefully",
-+      "status": "in progress",
-+      "detailed_changes": [
-+        "Implementing exponential backoff for rate limits",
-+        "Adding rate limit monitoring dashboard",
-+        "Improving error handling for API failures"
-+      ],
-+      "files": [
-+        "packages/cli/src/utils/github.ts",
-+        "packages/cli/src/components/rate-limit.tsx",
-+        "packages/cli/src/utils/retry.ts"
-+      ],
-+      "repos": ["@change-logger/cli", "@change-logger/web"],
-+      "impact": "No immediate action required. When released, developers will have access to a rate limit dashboard. Users will experience fewer interruptions due to rate limits.",
-+      "public_explanation": "We're making our tool more reliable! Soon it will handle GitHub's rate limits much better, so you can keep working without interruptions. We're also adding a dashboard so you can see exactly what's happening with your API usage.",
-+      "developer_explanation": "Adding sophisticated retry logic and monitoring to handle GitHub API rate limits more effectively.",
-+      "contributors": ["@GitHubExpert", "@RateLimitMaster"]
-+    }
-+  ]
-+}
-  ---
-  File: src/assets/changelog_master.json
-  Status: added
-  Additions: 81
-  Deletions: 0
-  Changes: 81
-  
-Patch:
-@@ -0,0 +1,81 @@
-+{
-+  "date": "2025-05-25",
-+  "summary": "We're excited to announce a significant update to Excalidraw that makes it more stable, easier to use, and more developer-friendly! This release focuses on three key areas: improved stability through dependency management, enhanced developer experience with better tooling, and a more intuitive API. Users will enjoy a more reliable drawing experience, while developers will benefit from simplified setup and clearer documentation. These changes lay the groundwork for future improvements while ensuring everyone has a smooth experience with the current version.",
-+  "version": "0.18.0",
-+  "changelog": [
-+    {
-+      "id": "config-1",
-+      "type": "configuration",
-+      "title": "Simplify setup and remove redundant configuration.",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Removed explicit MODE declarations from environment files",
-+        "Implemented Vite's automatic mode detection",
-+        "Updated environment variable references to use import.meta.env"
-+      ],
-+      "files": [".env.development", ".env.production"],
-+      "repos": ["main"],
-+      "impact": "Developers need to update any custom build scripts that directly reference process.env.MODE to use import.meta.env.MODE instead. No action needed for users.",
-+      "public_explanation": "We've made it easier to run the app in different environments! Now the app automatically knows whether it's running in development or production mode, so you don't have to worry about setting it up manually. This means fewer configuration steps and less chance of running into environment-related issues.",
-+      "developer_explanation": "This change removes MODE declarations because Vite now determines the mode automatically. If you're relying on `process.env.MODE` directly in your own builds or scripts, you should replace it with `import.meta.env.MODE` or use Vite's built-in mode support. This may affect custom build logic that expected explicit MODE values in the environment files.",
-+      "contributors": ["@ViteExpert", "@ConfigMaster", "@DevOpsGuru"]
-+    },
-+    {
-+      "id": "deps-1",
-+      "type": "dependency",
-+      "title": "Ensure project stability after regressions in newer versions.",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Reverted to Excalidraw version 0.17.6 for stability",
-+        "Updated package.json and yarn.lock files",
-+        "Removed dependencies on newer version features"
-+      ],
-+      "files": ["dev-docs/package.json", "dev-docs/yarn.lock"],
-+      "repos": ["main"],
-+      "impact": "Developers using features from Excalidraw 0.18.0 will need to modify their code to use 0.17.6 compatible features. Users may notice some newer drawing features are temporarily unavailable.",
-+      "public_explanation": "We've made a small adjustment to ensure everything runs smoothly! We've temporarily switched back to a more stable version of our drawing tool. While this means you won't see the very latest features right now, it ensures a more reliable experience for everyone. We're working with the latest version to make it even better!",
-+      "developer_explanation": "Projects depending on new features or fixes in `0.18.0` will no longer have access to them. If you were using a newly added prop or behavior from `0.18.0`, you'll need to adjust to what's available in `0.17.6`. This rollback ensures stability, but developers should audit their usage of features introduced post-0.17.6 before upgrading again.",
-+      "contributors": [
-+        "@ExcalidrawMaintainer",
-+        "@DependencyExpert",
-+        "@StabilityGuru"
-+      ]
-+    },
-+    {
-+      "id": "deps-2",
-+      "type": "tooling",
-+      "title": "Improve compatibility with existing tooling and editors.",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Configured Yarn to use node_modules instead of PnP",
-+        "Updated .yarnrc.yml with node_modules settings",
-+        "Added compatibility settings for common IDEs"
-+      ],
-+      "files": [".yarnrc.yml"],
-+      "repos": ["main"],
-+      "impact": "Developers need to delete .pnp.* files and run 'yarn install' to switch to node_modules. No action required for users.",
-+      "public_explanation": "Good news for developers! We've updated how we manage dependencies to work better with your favorite tools. Whether you're using VS Code, WebStorm, or any other popular IDE, everything should work smoothly right out of the box. No more extra setup needed!",
-+      "developer_explanation": "Switching to `node-modules` from Plug'n'Play improves compatibility with legacy tools, but may require deleting `.pnp.*` files and reinstalling node_modules. If you use Yarn PnP-specific features, you'll need to adapt your workflow.",
-+      "contributors": ["@YarnExpert", "@IDESpecialist", "@ToolingMaster"]
-+    },
-+    {
-+      "id": "api-1",
-+      "type": "breaking",
-+      "title": "Simplify API and reduce internal coupling.",
-+      "status": "complete",
-+      "detailed_changes": [
-+        "Renamed captureUpdate to commitToStore for clarity",
-+        "Updated API documentation with new method name",
-+        "Added migration examples and best practices"
-+      ],
-+      "files": [
-+        "dev-docs/docs/@excalidraw/excalidraw/api/props/excalidraw-api.mdx"
-+      ],
-+      "repos": ["main"],
-+      "impact": "Developers must update their code to use commitToStore instead of captureUpdate. Users may experience issues if their applications haven't been updated.",
-+      "public_explanation": "We've made our API more intuitive! The way we track changes in the app is now simpler and more straightforward. This means fewer bugs and less time spent figuring out how your changes are saved. We've also added clear examples to help you update your code.",
-+      "developer_explanation": "If your implementation uses the `updateScene` method with the `captureUpdate` option, you must replace it with `commitToStore`. The enum-based approach has been replaced by a simpler boolean flag. Failing to update may result in runtime errors or unintended behavior related to undo/redo tracking.",
-+      "contributors": ["@APIMaster", "@BreakingChangeExpert", "@DocsGuru"]
-+    }
-+  ]
-+}
-  ---
-  File: src/assets/master_diff.txt
-  Status: added
-  Additions: 280738
-  Deletions: 0
-  Changes: 280738
-  
-  ---
-  File: src/components/command-menu.tsx
-  Status: added
-  Additions: 81
-  Deletions: 0
-  Changes: 81
-  
-Patch:
-@@ -0,0 +1,81 @@
-+import React from 'react';
-+
-+import {
-+  IconArrowRightDashed,
-+  IconDeviceLaptop,
-+  IconMoon,
-+  IconSun,
-+} from '@tabler/icons-react';
-+import { useSearch } from '@/context/search-context';
-+import { sidebarData } from '@/components/layout/data/searchdata';
-+import {
-+  CommandDialog,
-+  CommandEmpty,
-+  CommandGroup,
-+  CommandInput,
-+  CommandItem,
-+  CommandList,
-+  CommandSeparator,
-+} from '@/components/ui/command';
-+import type { SidebarData } from '@/components/layout/types';
-+
-+import { ScrollArea } from './ui/scroll-area';
-+
-+export function CommandMenu() {
-+  const { open, setOpen } = useSearch();
-+
-+  const runCommand = React.useCallback(
-+    (command: () => unknown) => {
-+      setOpen(false);
-+      command();
-+    },
-+    [setOpen]
-+  );
-+
-+  return (
-+    <CommandDialog modal open={open} onOpenChange={setOpen}>
-+      <CommandInput placeholder='Type a command or search...' />
-+      <CommandList>
-+        <ScrollArea type='hover' className='h-72 pr-1'>
-+          <CommandEmpty>No results found.</CommandEmpty>
-+          {sidebarData.navGroups.map((group) => (
-+            <CommandGroup key={group.title} heading={group.title}>
-+              {group.items.map((navItem, i) => {
-+                if (navItem.url)
-+                  return (
-+                    <CommandItem
-+                      key={`${navItem.url}-${i}`}
-+                      value={navItem.title}
-+                      onSelect={() => {
-+                        runCommand(() => console.log(navItem.url));
-+                      }}
-+                    >
-+                      <div className='mr-2 flex h-4 w-4 items-center justify-center'>
-+                        <IconArrowRightDashed className='text-muted-foreground/80 size-2' />
-+                      </div>
-+                      {navItem.title}
-+                    </CommandItem>
-+                  );
-+
-+                return navItem.items?.map((subItem, i) => (
-+                  <CommandItem
-+                    key={`${subItem.url}-${i}`}
-+                    value={subItem.title}
-+                    onSelect={() => {
-+                      runCommand(() => console.log(subItem.url));
-+                    }}
-+                  >
-+                    <div className='mr-2 flex h-4 w-4 items-center justify-center'>
-+                      <IconArrowRightDashed className='text-muted-foreground/80 size-2' />
-+                    </div>
-+                    {subItem.title}
-+                  </CommandItem>
-+                ));
-+              })}
-+            </CommandGroup>
-+          ))}
-+        </ScrollArea>
-+      </CommandList>
-+    </CommandDialog>
-+  );
-+}
   ---
   File: src/components/layout/data/searchdata.ts
   Status: added
@@ -873,18 +697,17 @@ Patch:
   ---
   File: src/components/layout/header.tsx
   Status: added
-  Additions: 76
+  Additions: 75
   Deletions: 0
-  Changes: 76
+  Changes: 75
   
 Patch:
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,75 @@
 +import React from 'react';
 +import { cn } from '@/lib/utils';
 +import { Separator } from '@/components/ui/separator';
 +import {
 +  Breadcrumb,
-+  BreadcrumbEllipsis,
 +  BreadcrumbItem,
 +  BreadcrumbLink,
 +  BreadcrumbList,
@@ -936,8 +759,8 @@ Patch:
 +
 +      <header
 +        className={cn(
-+          'bg-background flex h-16 items-center gap-3 p-4 sm:gap-4',
-+          fixed && 'header-fixed peer/header fixed z-50 w-[inherit] rounded-md',
++          'bg-background flex h-16 items-center gap-3 m-4 p-4 sm:gap-4',
++          fixed && 'peer/header w-[inherit] rounded-md',
 +          offset > 10 && fixed ? 'shadow-sm' : 'shadow-none',
 +          className
 +        )}
@@ -945,7 +768,7 @@ Patch:
 +      >
 +        <h3 className='text-4xl font-bold'>Change Log</h3>
 +        <Separator orientation='vertical' className='h-6' />
-+        <span className='text-muted-foreground'>
++        <span className='text-muted-foreground hidden sm:block'>
 +          Read about our latest updates and features.
 +        </span>
 +      </header>
@@ -1054,15 +877,15 @@ Patch:
   ---
   File: src/components/search.tsx
   Status: added
-  Additions: 33
+  Additions: 31
   Deletions: 0
-  Changes: 33
+  Changes: 31
   
 Patch:
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,31 @@
 +import { IconSearch } from '@tabler/icons-react';
 +import { cn } from '@/lib/utils';
-+import { useSearch } from '@/context/search-context';
++
 +import { Button } from '@/components/ui/button';
 +
 +interface Props {
@@ -1072,15 +895,13 @@ Patch:
 +}
 +
 +export function Search({ className = '', placeholder = 'Search' }: Props) {
-+  const { setOpen } = useSearch();
 +  return (
 +    <Button
-+      variant='outline'
++      variant='ghost'
 +      className={cn(
 +        'bg-muted/25 text-muted-foreground hover:bg-muted/50 relative h-8 w-full flex-1 justify-start rounded-md text-sm font-normal shadow-none sm:pr-12 md:w-40 md:flex-none lg:w-56 xl:w-64',
 +        className
 +      )}
-+      onClick={() => setOpen(true)}
 +    >
 +      <IconSearch
 +        aria-hidden='true'
@@ -3201,61 +3022,6 @@ Patch:
 +
 +export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
   ---
-  File: src/context/search-context.tsx
-  Status: added
-  Additions: 46
-  Deletions: 0
-  Changes: 46
-  
-Patch:
-@@ -0,0 +1,46 @@
-+import React from 'react';
-+import { CommandMenu } from '@/components/command-menu';
-+
-+interface SearchContextType {
-+  open: boolean;
-+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-+}
-+
-+const SearchContext = React.createContext<SearchContextType | null>(null);
-+
-+interface Props {
-+  children: React.ReactNode;
-+}
-+
-+export function SearchProvider({ children }: Props) {
-+  const [open, setOpen] = React.useState(false);
-+
-+  React.useEffect(() => {
-+    const down = (e: KeyboardEvent) => {
-+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-+        e.preventDefault();
-+        setOpen((open) => !open);
-+      }
-+    };
-+    document.addEventListener('keydown', down);
-+    return () => document.removeEventListener('keydown', down);
-+  }, []);
-+
-+  return (
-+    <SearchContext.Provider value={{ open, setOpen }}>
-+      {children}
-+      <CommandMenu />
-+    </SearchContext.Provider>
-+  );
-+}
-+
-+// eslint-disable-next-line react-refresh/only-export-components
-+export const useSearch = () => {
-+  const searchContext = React.useContext(SearchContext);
-+
-+  if (!searchContext) {
-+    throw new Error('useSearch has to be used within <SearchContext.Provider>');
-+  }
-+
-+  return searchContext;
-+};
-  ---
   File: src/features/changes/components/change-desc.tsx
   Status: added
   Additions: 32
@@ -3297,225 +3063,19 @@ Patch:
 +  );
 +};
   ---
-  File: src/features/changes/components/search.tsx
-  Status: added
-  Additions: 5
-  Deletions: 0
-  Changes: 5
-  
-Patch:
-@@ -0,0 +1,5 @@
-+import { Search } from '@/components/search';
-+import { SearchForm } from './searchform';
-+export function SearchChanges() {
-+  return <SearchForm />;
-+}
-  ---
-  File: src/features/changes/components/searchform.tsx
-  Status: added
-  Additions: 90
-  Deletions: 0
-  Changes: 90
-  
-Patch:
-@@ -0,0 +1,90 @@
-+import { useForm } from 'react-hook-form';
-+import { z } from 'zod';
-+import { zodResolver } from '@hookform/resolvers/zod';
-+import {
-+  Form,
-+  FormControl,
-+  FormField,
-+  FormItem,
-+  FormLabel,
-+  FormMessage,
-+} from '@/components/ui/form';
-+import {
-+  Select,
-+  SelectContent,
-+  SelectItem,
-+  SelectTrigger,
-+  SelectValue,
-+} from '@/components/ui/select';
-+import { Input } from '@/components/ui/input';
-+
-+const formSchema = z.object({
-+  search: z.string().optional(),
-+  filter: z.string().optional(),
-+});
-+
-+type SearchForm = z.infer<typeof formSchema>;
-+
-+export function SearchForm() {
-+  const form = useForm<SearchForm>({
-+    resolver: zodResolver(formSchema),
-+    defaultValues: {
-+      search: '',
-+      filter: '',
-+    },
-+  });
-+
-+  const onSubmit = (values: SearchForm) => {
-+    console.log(values);
-+  };
-+
-+  return (
-+    <Form {...form}>
-+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-+        <div className='flex gap-4'>
-+          <FormField
-+            control={form.control}
-+            name='search'
-+            render={({ field }) => (
-+              <FormItem className='flex-1'>
-+                <FormControl>
-+                  <Input
-+                    placeholder='Search...'
-+                    className='w-full'
-+                    {...field}
-+                  />
-+                </FormControl>
-+                <FormMessage />
-+              </FormItem>
-+            )}
-+          />
-+
-+          <FormField
-+            control={form.control}
-+            name='filter'
-+            render={({ field }) => (
-+              <FormItem className='w-[200px]'>
-+                <Select
-+                  onValueChange={field.onChange}
-+                  defaultValue={field.value}
-+                >
-+                  <FormControl>
-+                    <SelectTrigger>
-+                      <SelectValue placeholder='Filter by' />
-+                    </SelectTrigger>
-+                  </FormControl>
-+                  <SelectContent>
-+                    <SelectItem value='all'>All</SelectItem>
-+                    <SelectItem value='recent'>Recent</SelectItem>
-+                    <SelectItem value='oldest'>Oldest</SelectItem>
-+                  </SelectContent>
-+                </Select>
-+                <FormMessage />
-+              </FormItem>
-+            )}
-+          />
-+        </div>
-+      </form>
-+    </Form>
-+  );
-+}
-  ---
-  File: src/features/changes/context/changes-context.tsx
-  Status: added
-  Additions: 63
-  Deletions: 0
-  Changes: 63
-  
-Patch:
-@@ -0,0 +1,63 @@
-+import React, { useState } from 'react';
-+import useDialogState from '../../../hooks/use-dialog-state';
-+import { Change } from '../data/schema';
-+import { useChanges } from '../hooks/use-changes';
-+type ChangesDialogType = 'feature' | 'bug' | 'deprecation' | 'task';
-+
-+interface ChangesContextType {
-+  open: ChangesDialogType | null;
-+  setOpen: (str: ChangesDialogType | null) => void;
-+  currentRow: Change | null;
-+  setCurrentRow: React.Dispatch<React.SetStateAction<Change | null>>;
-+  searchQuery: string;
-+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-+  filteredChanges: Change[];
-+}
-+
-+const ChangesContext = React.createContext<ChangesContextType | null>(null);
-+
-+interface Props {
-+  children: React.ReactNode;
-+}
-+
-+export default function ChangeProvider({ children }: Props) {
-+  const [searchQuery, setSearchQuery] = useState<string>('');
-+
-+  // You will need to get the full list of changes, e.g. from props or a data hook
-+  const { data: ChangelogData } = useChanges();
-+  const allChanges = data || [];
-+  const filteredChanges = allChanges.filter(
-+    (change) =>
-+      change.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-+      change.detailed_changes.some((detail) =>
-+        detail.toLowerCase().includes(searchQuery.toLowerCase())
-+      )
-+  );
-+
-+  return (
-+    <ChangesContext.Provider
-+      value={{
-+        open,
-+        setOpen,
-+        currentRow,
-+        setCurrentRow,
-+        searchQuery,
-+        setSearchQuery,
-+        filteredChanges,
-+      }}
-+    >
-+      {children}
-+    </ChangesContext.Provider>
-+  );
-+}
-+
-+// eslint-disable-next-line react-refresh/only-export-components
-+export const useChanges = () => {
-+  const changesContext = React.useContext(ChangesContext);
-+
-+  if (!changesContext) {
-+    throw new Error('useChanges has to be used within <ChangesContext>');
-+  }
-+
-+  return changesContext;
-+};
-  ---
   File: src/features/changes/data/data.tsx
   Status: added
-  Additions: 63
+  Additions: 42
   Deletions: 0
-  Changes: 63
+  Changes: 42
   
 Patch:
-@@ -0,0 +1,63 @@
+@@ -0,0 +1,42 @@
 +import {
-+  IconCash,
-+  IconShield,
-+  IconUsersGroup,
-+  IconUserShield,
 +  IconArrowDown,
 +  IconArrowRight,
 +  IconArrowUp,
 +} from '@tabler/icons-react';
-+import { changeCategory } from '@/features/changes/data/schema';
-+/*
-+export const callTypes = new Map<changeCategory, string>([
-+  [
-+    'Feature',
-+    'bg-teal-100/30 text-teal-900 dark:text-teal-200 border-teal-200',
-+  ],
-+  ['Bug Fix', 'bg-neutral-300/40 border-neutral-300'],
-+  [
-+    'Configuration',
-+    'bg-sky-200/40 text-sky-900 dark:text-sky-100 border-sky-300',
-+  ],
-+  [
-+    'Deprecation',
-+    'bg-destructive/10 dark:bg-destructive/50 text-destructive dark:text-primary border-destructive/10',
-+  ],
-+]);*/
 +
 +export const changeTypes = [
 +  {
@@ -3607,7 +3167,7 @@ Patch:
 +
 +export const changeListSchema = z.array(changeSchema);
   ---
-  File: src/features/changes/hooks/use-changes.ts
+  File: src/features/changes/index.tsx
   Status: added
   Additions: 46
   Deletions: 0
@@ -3615,63 +3175,7 @@ Patch:
   
 Patch:
 @@ -0,0 +1,46 @@
-+import { useState, useEffect } from 'react';
-+import type { Changelog, Change } from '../data/schema';
-+import mockChanges from '@/assets/changelog_master.json';
-+import mockChanges2 from '@/assets/changelog_cli.json';
-+
-+// Transform the mock data into the expected Changelog format
-+const transformMockData = (): Changelog[] => {
-+  // Transform each change to match our schema
-+
-+  const combinedChanges = [JSON.parse(JSON.stringify(mockChanges))];
-+  combinedChanges.push(JSON.parse(JSON.stringify(mockChanges2)));
-+  console.log(combinedChanges);
-+  return combinedChanges;
-+};
-+
-+export function useChanges() {
-+  const [data, setData] = useState<Changelog[] | null>(null);
-+  const [isLoading, setIsLoading] = useState(true);
-+  const [error, setError] = useState<Error | null>(null);
-+
-+  useEffect(() => {
-+    const fetchChanges = async () => {
-+      try {
-+        setIsLoading(true);
-+        // Simulate API delay
-+        await new Promise((resolve) => setTimeout(resolve, 500));
-+        setData(transformMockData());
-+      } catch (err) {
-+        setError(err instanceof Error ? err : new Error('An error occurred'));
-+      } finally {
-+        setIsLoading(false);
-+      }
-+    };
-+
-+    fetchChanges();
-+  }, []);
-+
-+  return { data, isLoading, error };
-+}
-+
-+export function useChange(title: string) {
-+  const { data, isLoading, error } = useChanges();
-+  return data?.map((changelog) =>
-+    changelog.changelog.find((change: Change) => change.title === title)
-+  );
-+}
-  ---
-  File: src/features/changes/index.tsx
-  Status: added
-  Additions: 48
-  Deletions: 0
-  Changes: 48
-  
-Patch:
-@@ -0,0 +1,48 @@
 +import { PropsWithChildren } from 'react';
-+import { useEffect, useState } from 'react';
 +import {
 +  Card,
 +  CardHeader,
@@ -3679,7 +3183,6 @@ Patch:
 +  CardDescription,
 +} from '@/components/ui/card';
 +import { ChangeSummary } from './components/change-desc';
-+import Summary from '../summary';
 +import { Change } from './data/schema';
 +
 +interface ChangesProps extends PropsWithChildren {
@@ -3696,7 +3199,7 @@ Patch:
 +        </h2>
 +        {children}
 +      </div>
-+      <div className='flex flex-col flex-start gap-y-4 p-4 outline-none text-left rounded-md'>
++      <div className='flex flex-col flex-start gap-y-2 p-2 md:gap-y-4 md:p-4 outline-none text-left rounded-md'>
 +        {changelog.map((change) => (
 +          <Card key={change.id}>
 +            <CardHeader>
@@ -3759,6 +3262,235 @@ Patch:
 +  version: string;
 +}
   ---
+  File: src/features/search/search-context.tsx
+  Status: added
+  Additions: 84
+  Deletions: 0
+  Changes: 84
+  
+Patch:
+@@ -0,0 +1,84 @@
++import React, { createContext, useContext, useState, useEffect } from 'react';
++import type { VersionLog } from '@/types/changelog';
++
++interface SearchContextType {
++  data: VersionLog[];
++  filteredData: VersionLog[] | undefined;
++  isFiltered: boolean;
++  handleFilterChange: (value: string, type?: string) => void;
++}
++
++const SearchContext = createContext<SearchContextType | null>(null);
++
++interface SearchProviderProps {
++  children: React.ReactNode;
++  initialData: VersionLog[];
++}
++
++export function SearchProvider({ children, initialData }: SearchProviderProps) {
++  const [data, setData] = useState<VersionLog[]>(initialData);
++  const [filteredData, setFilteredData] = useState<VersionLog[]>();
++  const [isFiltered, setIsFiltered] = useState(false);
++
++  // Update data when initialData changes
++  useEffect(() => {
++    setData(initialData);
++  }, [initialData]);
++
++  const handleFilterChange = (value: string, type?: string) => {
++    if (value.length > 2 || type) {
++      setIsFiltered(true);
++      const newArray: VersionLog[] = data.map((version) => {
++        const newChangelog = version.changelog.filter((item) => {
++          // Filter by type if specified
++          if (type && type !== 'all' && item.type !== type) {
++            return false;
++          }
++          // Filter by search text if specified
++          if (value.length > 0) {
++            const searchableText = [
++              item.title,
++              item.type,
++              ...item.detailed_changes,
++              item.impact,
++              item.public_explanation,
++              item.developer_explanation,
++              ...item.contributors,
++            ]
++              .join(' ')
++              .toLowerCase();
++
++            return searchableText.includes(value.toLowerCase());
++          }
++          return true;
++        });
++        return { ...version, changelog: newChangelog };
++      });
++      setFilteredData(newArray);
++    } else {
++      setIsFiltered(false);
++      setFilteredData(undefined);
++    }
++  };
++
++  return (
++    <SearchContext.Provider
++      value={{
++        data,
++        filteredData,
++        isFiltered,
++        handleFilterChange,
++      }}
++    >
++      {children}
++    </SearchContext.Provider>
++  );
++}
++
++export const useSearch = () => {
++  const context = useContext(SearchContext);
++  if (!context) {
++    throw new Error('useSearch must be used within a SearchProvider');
++  }
++  return context;
++};
+  ---
+  File: src/features/search/search.tsx
+  Status: added
+  Additions: 9
+  Deletions: 0
+  Changes: 9
+  
+Patch:
+@@ -0,0 +1,9 @@
++import { SearchForm } from './searchform';
++import { useSearch } from './search-context';
++
++export function SearchChanges() {
++  const { handleFilterChange } = useSearch();
++  return <SearchForm handleFilterChange={handleFilterChange} />;
++}
++
++export default SearchChanges;
+  ---
+  File: src/features/search/searchform.tsx
+  Status: added
+  Additions: 109
+  Deletions: 0
+  Changes: 109
+  
+Patch:
+@@ -0,0 +1,109 @@
++import { useForm } from 'react-hook-form';
++import { z } from 'zod';
++import { zodResolver } from '@hookform/resolvers/zod';
++import {
++  Form,
++  FormControl,
++  FormField,
++  FormItem,
++  FormMessage,
++} from '@/components/ui/form';
++import {
++  Select,
++  SelectContent,
++  SelectItem,
++  SelectTrigger,
++  SelectValue,
++} from '@/components/ui/select';
++import { Input } from '@/components/ui/input';
++
++const formSchema = z.object({
++  search: z.string().optional(),
++  filter: z.string().optional(),
++});
++
++type SearchForm = z.infer<typeof formSchema>;
++
++interface SearchFormProps {
++  handleFilterChange: (value: string, type?: string) => void;
++}
++
++export function SearchForm({ handleFilterChange }: SearchFormProps) {
++  const form = useForm<SearchForm>({
++    resolver: zodResolver(formSchema),
++    defaultValues: {
++      search: '',
++      filter: 'all',
++    },
++  });
++
++  const onSubmit = (values: SearchForm) => {
++    handleFilterChange(values.search || '', values.filter);
++  };
++
++  return (
++    <Form {...form}>
++      <form
++        onSubmit={form.handleSubmit(onSubmit)}
++        className='space-y-2 md:space-y-4'
++      >
++        <div className='flex gap-2 sm:gap-4'>
++          <FormField
++            control={form.control}
++            name='search'
++            render={({ field }) => (
++              <FormItem className='flex-1'>
++                <FormControl>
++                  <Input
++                    placeholder='Search...'
++                    className='w-full min-w-20'
++                    {...field}
++                    onChange={(e) => {
++                      field.onChange(e);
++                      form.handleSubmit(onSubmit)();
++                    }}
++                    value={field.value}
++                  />
++                </FormControl>
++                <FormMessage />
++              </FormItem>
++            )}
++          />
++
++          <FormField
++            control={form.control}
++            name='filter'
++            render={({ field }) => (
++              <FormItem className='w-[200px]'>
++                <Select
++                  onValueChange={(value) => {
++                    field.onChange(value);
++                    form.handleSubmit(onSubmit)();
++                  }}
++                  value={field.value}
++                >
++                  <FormControl>
++                    <SelectTrigger>
++                      <SelectValue placeholder='Filter by type' />
++                    </SelectTrigger>
++                  </FormControl>
++                  <SelectContent>
++                    <SelectItem value='all'>All Types</SelectItem>
++                    <SelectItem value='feature'>Features</SelectItem>
++                    <SelectItem value='bug fix'>Bug Fixes</SelectItem>
++                    <SelectItem value='deprecation'>Deprecations</SelectItem>
++                    <SelectItem value='configuration'>Configuration</SelectItem>
++                    <SelectItem value='dependency'>Dependencies</SelectItem>
++                    <SelectItem value='tooling'>Tooling</SelectItem>
++                    <SelectItem value='breaking'>Breaking Changes</SelectItem>
++                  </SelectContent>
++                </Select>
++                <FormMessage />
++              </FormItem>
++            )}
++          />
++        </div>
++      </form>
++    </Form>
++  );
++}
+  ---
   File: src/features/summary/index.tsx
   Status: added
   Additions: 23
@@ -3791,38 +3523,11 @@ Patch:
 +  );
 +}
   ---
-  File: src/hooks/use-dialog-state.tsx
-  Status: added
-  Additions: 18
-  Deletions: 0
-  Changes: 18
-  
-Patch:
-@@ -0,0 +1,18 @@
-+import { useState } from 'react';
-+
-+/**
-+ * Custom hook for confirm dialog
-+ * @param initialState string | null
-+ * @returns A stateful value, and a function to update it.
-+ * @example const [open, setOpen] = useDialogState<"approve" | "reject">()
-+ */
-+export default function useDialogState<T extends string | boolean>(
-+  initialState: T | null = null
-+) {
-+  const [open, _setOpen] = useState<T | null>(initialState);
-+
-+  const setOpen = (str: T | null) =>
-+    _setOpen((prev) => (prev === str ? null : str));
-+
-+  return [open, setOpen] as const;
-+}
-  ---
   File: src/index.css
   Status: modified
-  Additions: 115
-  Deletions: 30
-  Changes: 145
+  Additions: 139
+  Deletions: 29
+  Changes: 168
   
 Patch:
 @@ -1,3 +1,8 @@
@@ -3892,7 +3597,7 @@ Patch:
    min-width: 320px;
    min-height: 100vh;
  }
-@@ -35,34 +71,83 @@ h1 {
+@@ -35,34 +71,108 @@ h1 {
    line-height: 1.1;
  }
  
@@ -3906,6 +3611,33 @@ Patch:
 -  background-color: #1a1a1a;
 -  cursor: pointer;
 -  transition: border-color 0.25s;
++/* Add media query for small viewports */
++@media (max-width: 400px) {
++  :root {
++    font-size: 14px;
++  }
++
++  h1 {
++    font-size: 2.4em;
++  }
++
++  h2 {
++    font-size: 1.8em;
++  }
++
++  h3 {
++    font-size: 1.4em;
++  }
++
++  p,
++  span,
++  a {
++    font-size: 0.9em;
++  }
+ }
+-button:hover {
+-  border-color: #646cff;
++
 +@theme inline {
 +  --radius-sm: calc(var(--radius) - 4px);
 +  --radius-md: calc(var(--radius) - 2px);
@@ -3943,9 +3675,6 @@ Patch:
 +  --color-sidebar-border: var(--sidebar-border);
 +  --color-sidebar-ring: var(--sidebar-ring);
  }
--button:hover {
--  border-color: #646cff;
--}
 -button:focus,
 -button:focus-visible {
 -  outline: 4px auto -webkit-focus-ring-color;
@@ -4064,6 +3793,19 @@ Patch:
 +  changelog: Change[];
 +};
   ---
+  File: src/types/markdown.d.ts
+  Status: added
+  Additions: 4
+  Deletions: 0
+  Changes: 4
+  
+Patch:
+@@ -0,0 +1,4 @@
++declare module '*.md' {
++  const content: string;
++  export default content;
++}
+  ---
   File: tsconfig.app.json
   Status: modified
   Additions: 7
@@ -4130,29 +3872,32 @@ Patch:
   ---
   File: vite.config.ts
   Status: modified
-  Additions: 12
-  Deletions: 1
-  Changes: 13
+  Additions: 15
+  Deletions: 4
+  Changes: 19
   
 Patch:
 @@ -1,7 +1,18 @@
- import { defineConfig } from 'vite'
- import react from '@vitejs/plugin-react'
-+import tailwindcss from '@tailwindcss/vite'
-+import path from 'path'
+-import { defineConfig } from 'vite'
+-import react from '@vitejs/plugin-react'
++import { defineConfig } from 'vite';
++import react from '@vitejs/plugin-react';
++import tailwindcss from '@tailwindcss/vite';
++import path from 'path';
  
  // https://vitejs.dev/config/
  export default defineConfig({
 -  plugins: [react()],
+-})
 +  plugins: [tailwindcss(), react()],
 +  resolve: {
 +    alias: {
 +      '@': path.resolve(__dirname, './src'),
-+
 +      // fix loading all icon chunks in dev mode
 +      // https://github.com/tabler/tabler-icons/issues/1233
 +      '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
 +    },
 +  },
- })
++  assetsInclude: ['**/*.md'],
++});
   ---
